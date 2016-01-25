@@ -1,0 +1,17 @@
+
+<div class="user_list">
+
+	<% if @products %>
+		<% @products.each do |u| %>
+			번호 : <%= u.id %>
+			<%= u.img %>
+			제품명 : <%= u.name %>
+			가격 : <%= u.price %>
+			<br>
+		<% end %>
+
+	<% else %>
+		"리스트를 추가해주세요."
+	<% end %>
+
+</div>
