@@ -11,7 +11,7 @@ class ProductsController < ApplicationController
 			@user = current_user
 			@product = @user.products.new
 		else
-			render 'main'
+			render 'new_no_login'
 		end
 	end
 
@@ -36,9 +36,5 @@ class ProductsController < ApplicationController
 	end
 
 
-	private
-
-	def product_url_params
-		params.require(:product).permit(:url)
-	end
+	
 end
