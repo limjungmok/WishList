@@ -1,24 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<div class="home_url_form">
+		<input type="text" name="url" id="url"/>
+		<input type="submit" id="short" value="Submit"/>
+	</div>
+	<div class="home_url_list">
+	</div>
 
-<div class="home_form">
-	
-	<%= form_for(@product) do |p| %>
+</body>
+</html>
 
-		<div class="home_input_url">
-			<%= p.text_field :url %>
-		</div>
+<script type="text/javascript" 
+		src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function()
+{
+	//bit_url function
+	function bit_url(url)
+	{ 
+		var url=url;
+		var username="limjungmok"; // bit.ly username
+		var key="R_249fbb5a23da46259abafefc07de6d0e";
+		$.ajax({
+			url:"http://api.bit.ly/v3/shorten",
+			data:{longUrl:url,apiKey:key,login:username},
+			dataType:"jsonp",
+			success:function(v){
+				var bit_url=v.data.url;
+				submit_url(bit_url);
+			}
+		});
+	}
 
-		<div class="home_url_submit">
-			<%= p.submit "담기" %>
-		</div>
+	function submit_url(url){
+		var shorten_url = url;
+		console.log(shorten_url);
+		$.ajax({
+			url:"/users/<%=current_user.id%>/products",
+			type:'POST',
+			data:{'url':shorten_url},
+			success:function(v){
+				$('.home_url_list').append("<a href ="+shorten_url+" target=_blank>"+shorten_url+"</a>");
+			}
+		});
+	}
 
-	<% end %>
-
-</div>
-
-<div class="home_url_list">
-
-	<% current_user.products.order('created_at DESC').each do |u| %>
-		<%= link_to u.url, url=u.url %> <br>
-	<% end %>
-	
-</div>
+	$("#short").click(function()
+	{
+		var url=$("#url").val();
+		var urlRegex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+		var urltest=urlRegex.test(url);
+		if(urltest){
+			bit_url(url);
+		}
+		else{
+			alert("Bad URL");
+		}
+	});
+});
+</script>

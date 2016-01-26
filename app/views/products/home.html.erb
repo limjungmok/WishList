@@ -1,12 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+	<body>
+		<%= form_for(@product) do |p| %>
+			<div class="home_input_url">
+				<%= p.text_field :url %>
+			</div>
+			<div class="home_url_submit">
+				<%= p.submit "담기" %>
+			</div>
+		<% end %>
 
-<%= form_for(@product) do |p| %>
-	
-	<div class="home_input_url">
-		<%= p.text_field :url %>
-	</div>
-
-	<div class="home_url_submit">
-		<%= p.submit "담기" %>
-	</div>
-
-<% end %>
+		
+	</body>
+</html>
