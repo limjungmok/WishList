@@ -3,7 +3,7 @@
 	
 	<%= form_for(@product) do |p| %>
 
-		<div class="home_input_url">
+		<div class="home_url_text_field">
 			<%= p.text_field :url %>
 		</div>
 
@@ -15,7 +15,7 @@
 
 </div>
 
-<div class="home_url_list">
+<div class="home_url_lists">
 
 	<% current_user.products.order('created_at DESC').each do |u| %>
 		<%= link_to u.url, url=u.url %> <br>

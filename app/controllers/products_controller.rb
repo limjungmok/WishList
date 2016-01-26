@@ -10,7 +10,7 @@ class ProductsController < ApplicationController
 			@user = current_user
 			@product = @user.products.new
 		else
-			render 'main'
+			render 'new_no_login'
 		end
 	end
 
