@@ -5,15 +5,44 @@
 </head>
 <body>
 	<section class="mylist_products_list_container">
+
 		<div class="mylist_logo">
-			My List
+			PRODUCT
 		</div>
+
 		<% if @products %>
 		<ul class="mylist_products">
 			<% @products.each do |p| %>
+
+			<% if p.name == "" %>
+
+			<li class="mylist_product">
+				<%= image_tag("http://www.cosstores.com/Content/ProductContent/0360045003/0360045003_12_0.jpg", class: "mylist_product_img", size: "291x436") %>
+				<br>
+
+				<ul class="mylist_product_info">
+					<li>
+						<span class="mylist_product_name", text-align: "center">
+							-
+						</span>
+					</li><br>
+
+					<li>
+						<span class="mylist_product_price", text-align: "center">
+							-
+						</span>
+					</li>
+				</ul>
+			</li>
+
+			<% else %>
+
 			<li class="mylist_product">
 				<div id = "t1" style="height: 436px; width: 291px">
-					<td><%= image_tag p.avatar(:width) %></td>
+					<div id ="t2" >
+						<!-- <td><%= image_tag p.avatar(:width) %></td> -->
+						<td><%= link_to image_tag(p.avatar(:width), class: "mylist_product_img"), p.url , :target => "_blank" %></td>
+					</div>
 				</div> 				
 				<br>
 
@@ -23,16 +52,18 @@
 							<%= p.name %>
 						</span>
 					</li><br>
+
 					<li>
 						<span class="mylist_product_price", text-align: "center">
-							<%= number_with_delimiter(p.price, :delimiter => ',') %>
+							<%= number_with_delimiter(p.price, :delimiter => ',') %> ￦
 						</span>
 					</li>
 				</ul>
-
 			</li>
 			<% end %>
+			<% end %>
 		</ul>
+
 		<% else %>
 		"리스트를 추가해주세요."
 		<% end %>

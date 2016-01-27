@@ -1,6 +1,11 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
+@font-face {
+	font-family: 'UltimaPDac-UltraLight';
+	src: url(/assets/stylesheets/ultima_pd/UltimaPDac-UltraLight.ttf);
+}
+
 /* home */
 #home_url_form{
 	width: 100%;
@@ -57,39 +62,40 @@
 	width: 75px;
 }
 
+
 /* index 페이지 */
 .mylist_products_list_container {
-	width: 1180px;
-	margin: 10px 0 0 0;
-
-	ul {
-		margin-bottom: 50px;
-	}
+	width: 1280px;
+	margin-bottom : 50px;
 }
 
 /* My List 로고 */
 .mylist_logo {
-	font-size: 3.6em;
-	padding-top: 15px;
+	font-family: UltimaPDac-UltraLight;
+	font-size: 18pt;
+	font-weight: bold;
+	color: #757575;
+	letter-spacing: 0.1em;
 	text-align: center;
-	margin-bottom: 50px;
+	margin-top : 50px;
+	margin-bottom: 25px;
 }
 
 /* 제품 전체 */
 .mylist_products {
 	list-style: none;
-	padding-left: 0;
-	margin-left: 10px;
-	margin-right: auto;
-
+	padding :0px;
 	li {
 		display: inline-block;
-		padding-right: 10px;
 		position: relative;
 		vertical-align: top;
 		text-align: center;
-		width: 280px;
+
+		width : 291px;
 	}
+}
+.mylist_product {
+	margin : 10px;
 }
 
 /* 제품 이미지 */
@@ -101,9 +107,6 @@
 }
 
 /* 제품 개별 */
-.mylist_product {
-	padding-right: 10px;
-}
 
 .mylist_product_info {
 	padding-left: 0;
@@ -120,9 +123,10 @@
 	display: table-cell;
 	text-align: center;
 	vertical-align: middle;
+	background-color : rgba(0,0,0,0.08);
 }
 
 #t2{
-    display: inline-block;
-    text-align: left;
+	display: inline-block;
+	text-align: left;
 }
