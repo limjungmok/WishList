@@ -13,5 +13,6 @@ Rails.application.routes.draw do
   post   'login'   => 'sessions#create'
   delete 'logout'  => 'sessions#destroy'
 
+  get 'destroy_ajax' => 'products#destroy_ajax'
 
 end

@@ -1,18 +1,26 @@
-
-<div class="home_form">
-	
-		<div class="home_url_text_field">
-			<%= text_field_tag :url %>
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<div class="form-inline" align="center">
+		<div id="home_url_form">
+			<div id="home_url_input" align="center" class="form-group">
+				<input type="text" name="url" id="url" class="form-control" placeholder="URL 을 입력하세요" />
+				<input type="submit" id="short" value="제출" class="btn btn-default"/>
+			</div>
+			<div id="home_url_list" align="center">
+			</div>
 		</div>
-
-		<div class="home_url_submit">
-			<%= submit_tag "담기" %>
-		</div>
-</div>
+	</div>
+</body>
+</html>
 
 
 <script>
-$(".home_url_text_field").click(function() {
+$('.body').html("<%= flash.now[:danger] ="로그인 후 이용 가능합니다" %>")
+$("#url").click(function() {
 	document.location.href = '/login';
 });
 </script>

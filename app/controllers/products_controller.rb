@@ -17,9 +17,8 @@ class ProductsController < ApplicationController
 
 	def create
 		@user = current_user
-		@product = @user.products.new(:url => params[:url])
-		
-		if @product.save
+		@product = @user.products.create(:url => params[:url])
+		if @product
 			redirect_to root_path(@product)
 		else
 			render 'new'
@@ -33,8 +32,18 @@ class ProductsController < ApplicationController
 	end
 
 	def destroy
+		@user = User.find(params[:user_id])
+		@destroy_product = @user.products.find(params[:id])
+		@product = @user.products.find(params[:id]).destroy
+
+		respond_to do |format|
+			format.html
+			format.js
+		end
 	end
 
-
-	
+	def destroy_ajax
+		@product = Product.order("created_at DESC").find_by(url: params[:url]).destroy
+		redirect_to root_path
+	end
 end
