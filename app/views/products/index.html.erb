@@ -13,7 +13,7 @@
 			<% @products.each do |p| %>
 				<li class="mylist_product">
 
-					<%= link_to image_tag(p.img, :url => p.url, class: "mylist_product_img", size: "300x400") %>
+					<%= link_to image_tag(p.img, class: "mylist_product_img", size: "300x400"), p.url , :target => "_blank"%>
 					<br>
 
 					<ul class="mylist_product_info">
@@ -24,7 +24,7 @@
 						</li><br>
 						<li>
 							<span class="mylist_product_price", text-align: "center">
-								<%= p.price %>
+								<%= number_with_delimiter(p.price, :delimiter => ',') %>
 							</span>
 						</li>
 					</ul>

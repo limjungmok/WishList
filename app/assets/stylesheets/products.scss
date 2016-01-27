@@ -1,10 +1,6 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
-
-
-
-
 /* home */
 #home_url_form{
 	width: 100%;
@@ -15,18 +11,21 @@
 
 #home_url_input{
 	margin-bottom: 50px;
-	width: 60%;
+	width: 600px;
 }
 
 #home_url_list{
-	width: 60%;
-	margin-left: 110px;
+	width: 600px;
+	margin-left: auto;
+	margin-right: auto;
 }
 .user_url_list{
-	width: 500px;
+	width: 575px;
 	height: 50px;
 	background-color: #f0ebe8;
 	margin-bottom: 15px;
+	margin-left: auto;
+	margin-right: auto;
 	padding-left: 10px;
 	vertical-align: middle;	
 	border-radius: 3px;

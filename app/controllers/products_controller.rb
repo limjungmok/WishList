@@ -41,9 +41,4 @@ class ProductsController < ApplicationController
 			format.js
 		end
 	end
-
-	def destroy_ajax
-		@product = Product.order("created_at DESC").find_by(url: params[:url]).destroy
-		redirect_to root_path
-	end
 end
