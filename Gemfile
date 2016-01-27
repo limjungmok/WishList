@@ -23,6 +23,7 @@ gem 'cancan' # or cancancan
 gem 'draper'
 gem 'pundit'
 gem 'bitly', '~> 0.9.0'
+gem "paperclip", "~> 4.3"
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'

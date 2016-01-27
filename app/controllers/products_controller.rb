@@ -4,6 +4,25 @@ class ProductsController < ApplicationController
 	def index
 		@user = current_user
 		@products = @user.products.all
+
+		@width
+		@height
+		@products.each do |product|
+			product.avatar_remote_url = product.img
+			@width = Paperclip::Geometry.from_file(Paperclip.io_adapters.for(product.avatar)).width
+			@height = Paperclip::Geometry.from_file(Paperclip.io_adapters.for(product.avatar)).height
+			#@width = 2
+			#@height = 1
+			#false = 가로가 더 큼 / #true = 세로가 더 큼
+
+			if @width>@height
+				product.w_or_h = false 
+			else
+				product.w_or_h = true
+			end				
+			product.save
+		end
+
 	end
 
 	def new
