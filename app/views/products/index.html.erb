@@ -2,34 +2,59 @@
 <section class="mylist_products_list_container">
 
 	<div class="mylist_logo">
-		My List
+		PRODUCT
 	</div>
 
 	<% if @products %>
 		<ul class="mylist_products">
-		<% @products.each do |p| %>
-			<li class="mylist_product">
+			<% @products.each do |p| %>
 
-				<%= link_to image_tag("http://www.cosstores.com/Content/ProductContent/0301311001/0301311001_0_0.jpg", :url => p.url, class: "mylist_product_img", size: "300x400") %>
-				<br>
+				<% if p.name == "" %>
 
-				<ul class="mylist_product_info">
-					<li>
-						<span class="mylist_product_name", text-align: "center">
-							<%= p.name %>
-						</span>
-					</li><br>
+					<li class="mylist_product">
+						<%= image_tag("http://www.cosstores.com/Content/ProductContent/0360045003/0360045003_12_0.jpg", class: "mylist_product_img", size: "300x400") %>
+						<br>
 
-					<li>
-						<span class="mylist_product_price", text-align: "center">
-							<%= p.price %>
-						</span>
+						<ul class="mylist_product_info">
+							<li>
+								<span class="mylist_product_name", text-align: "center">
+									-
+								</span>
+							</li><br>
+
+							<li>
+								<span class="mylist_product_price", text-align: "center">
+									-
+								</span>
+							</li>
+						</ul>
 					</li>
-				</ul>
 
-			</li>
-		<% end %>
+				<% else %>
+
+					<li class="mylist_product">
+
+						<%= link_to image_tag("http://www.cosstores.com/Content/ProductContent/0301311001/0301311001_0_0.jpg", :url => p.url, class: "mylist_product_img", size: "300x400") %>
+						<br>
+
+						<ul class="mylist_product_info">
+							<li>
+								<span class="mylist_product_name", text-align: "center">
+									<%= p.name %>
+								</span>
+							</li><br>
+
+							<li>
+								<span class="mylist_product_price", text-align: "center">
+									<%= p.price %>
+								</span>
+							</li>
+						</ul>
+					</li>
+				<% end %>
+			<% end %>
 		</ul>
+
 	<% else %>
 		"리스트를 추가해주세요."
 	<% end %>

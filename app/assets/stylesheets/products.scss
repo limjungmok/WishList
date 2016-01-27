@@ -1,6 +1,11 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
+@font-face {
+	font-family: 'UltimaPDac-UltraLight';
+	src: url(/assets/stylesheets/ultima_pd/UltimaPDac-UltraLight.ttf);
+}
+
 
 /* index 페이지 */
 .mylist_products_list_container {
@@ -14,7 +19,11 @@
 
 /* My List 로고 */
 .mylist_logo {
-	font-size: 3.6em;
+	font-family: UltimaPDac-UltraLight;
+	font-size: 18pt;
+	font-weight: bold;
+	color: #757575;
+	letter-spacing: 0.1em;
 	padding-top: 15px;
 	text-align: center;
 	margin-bottom: 50px;
