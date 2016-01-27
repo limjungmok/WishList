@@ -1,19 +1,28 @@
-<% provide(:title, 'Sign up') %>
-<h1>Sign up</h1>
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+</head>
+<body>
+  <% provide(:title, 'Sign up') %>
+  <h1 align="center">회원 가입</h1><br>
 
-<div class="row">
-  <div class="col-md-6 col-md-offset-3">
-    <%= form_for(@user) do |f| %>
-      <%= f.label '아이디' %>
-      <%= f.text_field :login_id %>
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <%= form_for(@user) do |f| %>
+        <%= f.label '아이디' %>
+        <%= f.text_field :login_id, class: 'form-control' %><br>
 
-      <%= f.label '비밀번호' %>
-      <%= f.password_field :password %>
+        <%= f.label '비밀번호' %>
+        <%= f.password_field :password, class: 'form-control' %><br>
 
-      <%= f.label '비밀번호 확인'%>
-      <%= f.password_field :password_confirmation %>
+        <%= f.label '비밀번호 확인'%>
+        <%= f.password_field :password_confirmation, class: 'form-control' %><br>
 
-      <%= f.submit "계정 생성", class: "btn btn-primary" %>
-    <% end %>
-  </div>
-</div>
+        <%= f.submit "계정 생성", class: "btn btn-primary" %>
+      <% end %>
+    </div>
+  </div>  
+</body>
+</html>
+

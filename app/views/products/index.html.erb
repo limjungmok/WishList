@@ -1,5 +1,10 @@
-
-<section class="mylist_products_list_container">
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<section class="mylist_products_list_container">
 
 	<div class="mylist_logo">
 		PRODUCT
@@ -34,7 +39,7 @@
 
 					<li class="mylist_product">
 
-						<%= link_to image_tag("http://www.cosstores.com/Content/ProductContent/0301311001/0301311001_0_0.jpg", :url => p.url, class: "mylist_product_img", size: "300x400") %>
+						<%= link_to image_tag("http://www.cosstores.com/Content/ProductContent/0301311001/0301311001_0_0.jpg", class: "mylist_product_img", size: "300x400"), p.url , :target => "_blank" %>
 						<br>
 
 						<ul class="mylist_product_info">
@@ -46,7 +51,7 @@
 
 							<li>
 								<span class="mylist_product_price", text-align: "center">
-									<%= p.price %>
+									<%= number_with_delimiter(p.price, :delimiter => ',') %>
 								</span>
 							</li>
 						</ul>
@@ -59,3 +64,5 @@
 		"리스트를 추가해주세요."
 	<% end %>
 </section>
+</body>
+</html>

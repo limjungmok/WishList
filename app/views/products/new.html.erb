@@ -1,24 +1,96 @@
-
-<div class="home_form">
-	
-	<%= form_for(@product) do |p| %>
-
-		<div class="home_url_text_field">
-			<%= p.text_field :url %>
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<div class="form-inline" align="center">
+		<div id="home_url_form">
+			<div id="home_url_input" align="center" class="form-group">
+				<input type="text" name="url" id="url" class="form-control" placeholder="URL 을 입력하세요" />
+				<input type="submit" id="short" value="제출" class="btn btn-default"/>
+			</div>
+			<div id="home_url_list" align="left">
+				<% current_user.products.order("created_at DESC").each do |p| %>
+					<div class="user_url_list" id="url_list<%=p.id%>">
+					<a href="<%=p.url%>" id="url_list" target="_blank"><%=p.url%></a>
+					<%=link_to '삭제', user_product_path(:user_id => current_user.id, :id =>p.id), method: :delete, id: "delete_product", remote: true %>
+					</div>
+				<% end %>
+			</div> 
 		</div>
+	</div>
 
-		<div class="home_url_submit">
-			<%= p.submit "담기" %>
-		</div>
-
+	<!-- 그냥 플래시 없애주는거 -->
+	<% if !flash.empty? %>
+	  <div class="flash-messages-container">
+	    <% flash.each do |name, msg| %>
+	      <% if msg.is_a?(String) && [:success, :info, :error, :warning].include?(name) %>
+	        <div class="flash-message" data-type="<%= name %>" >
+	          <%= msg %>
+	        </div>
+	      <% end %>
+	    <% end %>
+	  </div>
+	  <% flash.clear %>
 	<% end %>
+</body>
 
-</div>
+</html>
 
-<div class="home_url_lists">
+<script type="text/javascript" 
+		src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function()
+{
+	//bit_url function
+	function bit_url(url)
+	{ 
+		var url=url;
+		var username="limjungmok"; // bit.ly username
+		var key="R_249fbb5a23da46259abafefc07de6d0e";
+		$.ajax({
+			url:"http://api.bit.ly/v3/shorten",
+			data:{longUrl:url,apiKey:key,login:username},
+			dataType:"jsonp",
+			success:function(v){
+				var bit_url=v.data.url;
+				submit_url(bit_url);
+			}
+		});
+	}
+	//URL 축소된 url을 전송하는 함수
+	function submit_url(url){
+		var shorten_url = url;
+		console.log("shorten url : ", shorten_url);
+		$.ajax({
+			url:"/users/<%=current_user.id%>/products",
+			type:'POST',
+			data:{'url':shorten_url},
+			success:function(v){
+				$('#home_url_list').append("<div class='user_url_list' id=url_list><a href ="+shorten_url+" target=_blank>"+shorten_url+"</a> <a id='delete_product' disabled>등록중 ..</a></div>");
+				document.getElementById("short").disabled = false;
+				document.getElementById("short").value = "제출";
+			}
+		});
+	}
 
-	<% current_user.products.order('created_at DESC').each do |u| %>
-		<%= link_to u.url, url=u.url %> <br>
-	<% end %>
-	
-</div>
+	//Submit 버튼 클릭시
+	$("#short").click(function()
+	{
+		var url=$("#url").val();
+		var urlRegex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+		var urltest=urlRegex.test(url);
+		console.log("url : ", url);
+		if(urltest){
+			document.getElementById("short").disabled = true;
+			document.getElementById("short").value = "제출중";
+			//URL 을 축소시킨다. 
+			bit_url(url);
+		}
+		else{
+			alert("Bad URL");
+		}
+	});
+});
+</script>
