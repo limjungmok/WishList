@@ -68,7 +68,7 @@ $(document).ready(function()
 			type:'POST',
 			data:{'url':shorten_url},
 			success:function(v){
-				$('#home_url_list').append("<div class='user_url_list' id=url_list><a href ="+shorten_url+" target=_blank>"+shorten_url+"</a> <p id='delete_product' >등록중 ..</p></div>");
+				$('#home_url_list').append("<div class='user_url_list' id=url_list><a href ="+shorten_url+" target=_blank>"+shorten_url+"</a> <a id='delete_product' disabled>등록중 ..</a></div>");
 				document.getElementById("short").disabled = false;
 				document.getElementById("short").value = "제출";
 			}

@@ -13,17 +13,8 @@
 			<% @products.each do |p| %>
 			<li class="mylist_product">
 				<div id = "t1" style="height: 436px; width: 291px">
-					<!--<div id="t2">
-						<% if p.w_or_h %>
-						<%= link_to image_tag(p.avatar(:width),class: "mylist_product_img"), p.url ,:target => "_blank"%>
-						<% else %>
-						<%= link_to image_tag(p.avatar(:height), class: "mylist_product_img"), p.url , :target => "_blank"%>
-						<% end %>
-					</div>-->
 					<td><%= image_tag p.avatar(:width) %></td>
-				</div> 
-
-				
+				</div> 				
 				<br>
 
 				<ul class="mylist_product_info">
