@@ -51,11 +51,6 @@ ActiveRecord::Schema.define(version: 20160127062333) do
     t.integer  "price",               limit: 4,   default: 0
     t.string   "url",                 limit: 255, default: ""
     t.string   "img",                 limit: 255, default: ""
-    t.boolean  "w_or_h",              limit: 1
-    t.string   "avater_file_name",    limit: 255
-    t.string   "avater_content_type", limit: 255
-    t.integer  "avater_file_size",    limit: 4
-    t.datetime "avater_updated_at"
     t.datetime "created_at",                                   null: false
     t.datetime "updated_at",                                   null: false
     t.integer  "user_id",             limit: 4

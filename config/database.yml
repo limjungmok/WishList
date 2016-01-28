@@ -5,7 +5,7 @@ development:
  database: WishList_development
  pool: 5
  username: root
- password: duwnsdld0
+ password: 3536
  socket: /tmp/mysql.sock
 
 
@@ -19,7 +19,7 @@ test:
  database: WishList_test
  pool: 5
  username: root
- password: duwnsdld0
+ password: 3536
  socket: /tmp/mysql.sock
 
 production:
@@ -29,5 +29,5 @@ production:
  database: WishList_production
  pool: 5
  username: root
- password: duwnsdld0
+ password: 3536
  socket: /tmp/mysql.sock
