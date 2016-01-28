@@ -1,0 +1,37 @@
+<style>
+	table, th, td {
+		border: 1px solid black;
+		border-collapse: collapse;
+	}
+	th, td {
+		padding: 5px;
+		text-align: center;
+	}
+</style>
+
+<h1 align="center">Admin Page for Add</h1>
+
+<br><br><br>
+
+<table width = "70%" align="center">
+	<tr>
+		<th width = "10%"> 링크 </th>
+		<th width = "10%"> 상품명 </th>
+		<th width = "30%"> 이미지 URL </th>
+		<th width = "10%"> 가격 </th>
+		<th width = "10%"> 등록 </th>
+	</tr>
+
+	<% @add_things.each do |f| %>
+	<tr>
+		<td><%= link_to( '바로가기', f.url , :target => "_blank")%></td>
+		<%= form_for f , url:{action: "update"}  do |form| %>
+			<%= form.hidden_field :id %>
+			<td><%= form.text_field :name %></td>
+			<td><%= form.text_field :img %></td>
+			<td><%= form.number_field :price %></td>
+			<td><%= form.submit %></td>
+		<% end %>
+	</tr>
+	<% end %>
+</table>
