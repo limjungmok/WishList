@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   
   has_many :products,   dependent: :destroy
+  has_many :logs,   dependent: :destroy
 
   before_save { self.login_id = login_id.downcase }
   validates :login_id, presence: true, length: { maximum: 30 },

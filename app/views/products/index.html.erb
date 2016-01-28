@@ -64,11 +64,24 @@
 </html>
 <script>
 $(document).ready(function(){
-	<% if @products.count%3 == 1 %>
+	<% if @products.count%4 == 1 %>
 		$('.mylist_products').append('<li class="mylist_product"></li>');
 		$('.mylist_products').append('<li class="mylist_product"></li>');
-		<% elsif @products.count%3 == 2%>
-			$('.mylist_products').append('<li class="mylist_product"></li>');
+		$('.mylist_products').append('<li class="mylist_product"></li>');
+	<% elsif @products.count%4 == 2%>
+		$('.mylist_products').append('<li class="mylist_product"></li>');
+		$('.mylist_products').append('<li class="mylist_product"></li>');
+	<%elsif @products.count%4 == 3%>
+		$('.mylist_products').append('<li class="mylist_product"></li>');
 	<% end %>
 });
+
+window.onbeforeunload = confirmExit;
+  function confirmExit()
+  {
+  	return 'a';
+    var current_time = Time.now;
+    <% @user.logs.last.logout_time = current_time %>
+    <% @user.logs.last.save %>
+  }
 </script>
