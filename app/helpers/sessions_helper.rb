@@ -2,6 +2,9 @@ module SessionsHelper
   # Logs in the given user.
   def log_in(user)
     session[:user_id] = user.id
+
+    #로그인시 현재 접속시간 로그찍기
+    current_user_log = current_user.logs.create
   end
 
 

@@ -2,10 +2,10 @@ development:
  adapter: mysql2
  encoding: utf8
  reconnect: false
- database: WishList_development
+ database: WishList
  pool: 5
  username: root
- password: duwnsdld0
+ password: 3536
  socket: /tmp/mysql.sock
 
 
@@ -16,18 +16,18 @@ test:
  adapter: mysql2
  encoding: utf8
  reconnect: false
- database: WishList_test
+ database: WishList
  pool: 5
  username: root
- password: duwnsdld0
+ password: 3536
  socket: /tmp/mysql.sock
 
 production:
  adapter: mysql2
  encoding: utf8
  reconnect: false
- database: WishList_production
+ database: WishList
  pool: 5
  username: root
- password: duwnsdld0
+ password: 3536
  socket: /tmp/mysql.sock

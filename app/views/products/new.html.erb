@@ -20,20 +20,6 @@
 			</div> 
 		</div>
 	</div>
-
-	<!-- 그냥 플래시 없애주는거 -->
-	<% if !flash.empty? %>
-	  <div class="flash-messages-container">
-	    <% flash.each do |name, msg| %>
-	      <% if msg.is_a?(String) && [:success, :info, :error, :warning].include?(name) %>
-	        <div class="flash-message" data-type="<%= name %>" >
-	          <%= msg %>
-	        </div>
-	      <% end %>
-	    <% end %>
-	  </div>
-	  <% flash.clear %>
-	<% end %>
 </body>
 
 </html>
