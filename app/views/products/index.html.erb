@@ -14,8 +14,10 @@
 			<% if p.name == "" %>
 				<li class="mylist_product">
 					<div id = "t1" style="height: 436px; width: 291px">
-						<div id ="t2" >
-							<td><%= link_to image_tag('registering.jpg', class: "mylist_product_img", height: '436px'), p.url , :target => "_blank" %></td>
+						<div id ="t2_<%=p.id%>" class ="product_image" >
+							<td>
+								<%= link_to image_tag('registering.jpg', class: "mylist_product_img", height: '436px'), p.url , :target => "_blank" %>
+							</td>
 						</div>
 					</div> 				
 					<br>
@@ -35,8 +37,10 @@
 				<% else %>
 				<li class="mylist_product">
 					<div id = "t1" style="height: 436px; width: 291px">
-						<div id ="t2" >
-							<td><%= link_to image_tag(p.avatar(:width), class: "mylist_product_img"), p.url , :target => "_blank" %></td>
+						<div id ="t2_<%=p.id%>" class ="product_image" >
+							<td>
+							<%= link_to image_tag(p.avatar(:width), class: "mylist_product_img"), p.url , :target => "_blank" %>
+						</td>
 						</div>
 					</div> 				
 					<br>
@@ -74,5 +78,18 @@ $(document).ready(function(){
 	<%elsif @products.count%4 == 3%>
 		$('.mylist_products').append('<li class="mylist_product"></li>');
 	<% end %>
+
 });
 </script>
+
+
+
+
+
+
+
+
+
+
+
+

@@ -3,6 +3,7 @@ class ProductsController < ApplicationController
 
 	def index
 		@user = current_user
+		@user_log = @user.logs.last
 		@products = @user.products.all
 
 		@width
