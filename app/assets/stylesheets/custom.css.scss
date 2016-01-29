@@ -1,6 +1,7 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
+
 /* universal */
 
 body {
@@ -74,6 +75,10 @@ a{
 
 #header_menu{
   width:95px;
+}
+
+.header_menu_mylist {
+  margin-left: -11px;
 }
 
 #header_drop{
