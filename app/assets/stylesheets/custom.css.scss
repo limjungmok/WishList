@@ -70,11 +70,34 @@ a{
 }
 
 .navbar-inverse .navbar-nav > li > a{
-  width:115px;
+  width:auto;
+
+  padding-left: 0px;
+  padding-right : 0px;
 }
 
 #header_menu{
-  width:95px;
+  width:auto;
+  padding-left : 15px;
+  padding-right : 15px;
+  text-align : center;
+  a{
+    display : inline-block;
+  }
+}
+
+#header_menu_right{
+  width:auto;
+  text-align : center;
+  padding-left : 15px;
+  padding-right : 15px;
+  a{
+    display : inline-block;
+  }
+}
+
+.header_menu_mylist {
+  margin-left: -11px;
 }
 
 .header_menu_mylist {
@@ -90,6 +113,20 @@ a{
   background-color: #fff; 
   border-color: transparent;
   color: #ccc;
-  
+}
+
+span.step {
+  background: #f06e35;
+  border-radius: 0.8em;
+  -moz-border-radius: 0.8em;
+  -webkit-border-radius: 0.8em;
+  color: #ffffff;
+  display: inline-block;
+  font-weight: bold;
+  line-height: 1.6em;
+
+  margin-right: 5px;
+  text-align: center;
+  width: 2.5em; 
 }
 
