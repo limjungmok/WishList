@@ -1,0 +1,2 @@
+module OyrAdminHelper
+end

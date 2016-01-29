@@ -13,6 +13,8 @@ Rails.application.routes.draw do
   post   'login'   => 'sessions#create'
   delete 'logout'  => 'sessions#destroy'
 
+  get 'oyr_admin' => "oyr_admin#index"
+  patch 'oyr_admin' => "oyr_admin#update"
 
   get 'guide_page' =>'users#guide'
 end

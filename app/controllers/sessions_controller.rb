@@ -18,6 +18,9 @@ class SessionsController < ApplicationController
   end
 
   def destroy
+    # current_user_log = current_user.logs.last
+    # current_user_log.logout_time = Time.now
+    # current_user_log.save
     log_out
     redirect_to root_url
   end
