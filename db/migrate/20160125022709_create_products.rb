@@ -5,6 +5,8 @@ class CreateProducts < ActiveRecord::Migration
       t.integer :price
       t.string :url
       t.string :img
+      t.boolean :w_or_h
+      t.attachment :avater
 
       t.timestamps null: false
     end

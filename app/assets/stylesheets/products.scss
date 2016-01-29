@@ -43,8 +43,8 @@
 	}
 	a:hover{
 		color: #9f9f9f;
-	  	text-decoration:none;
-	  	font-weight:bold;
+		text-decoration:none;
+		font-weight:bold;
 
 	}
 }
@@ -65,12 +65,8 @@
 
 /* index 페이지 */
 .mylist_products_list_container {
-	width: 1180px;
-	margin: 10px 0 0 0;
-
-	ul {
-		margin-bottom: 50px;
-	}
+	width: 1280px;
+	margin-bottom : 50px;
 }
 
 /* My List 로고 */
@@ -80,26 +76,26 @@
 	font-weight: bold;
 	color: #757575;
 	letter-spacing: 0.1em;
-	padding-top: 15px;
 	text-align: center;
-	margin-bottom: 50px;
+	margin-top : 50px;
+	margin-bottom: 25px;
 }
 
 /* 제품 전체 */
 .mylist_products {
 	list-style: none;
-	padding-left: 0;
-	margin-left: 10px;
-	margin-right: auto;
-
+	padding :0px;
 	li {
 		display: inline-block;
-		padding-right: 10px;
 		position: relative;
 		vertical-align: top;
 		text-align: center;
-		width: 280px;
+
+		width : 291px;
 	}
+}
+.mylist_product {
+	margin : 10px;
 }
 
 /* 제품 이미지 */
@@ -111,9 +107,6 @@
 }
 
 /* 제품 개별 */
-.mylist_product {
-	padding-right: 10px;
-}
 
 .mylist_product_info {
 	padding-left: 0;
@@ -122,4 +115,18 @@
 	letter-spacing: 1px;
 	text-transform: uppercase;
 	text-align: center;
+}
+
+#t1{
+	height : 436px; 
+	width : 291px;
+	display: table-cell;
+	text-align: center;
+	vertical-align: middle;
+	background-color : rgba(0,0,0,0.08);
+}
+
+#t2{
+	display: inline-block;
+	text-align: left;
 }
