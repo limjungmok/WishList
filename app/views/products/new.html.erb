@@ -1,31 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 	<title></title>
 </head>
-<body>
-	<div class="form-inline" align="center">
-		<div id="home_url_form">
-			<div id="home_url_input" align="center" class="form-group">
-				<input type="text" name="url" id="url" class="form-control" placeholder="URL 을 입력하세요" />
-				<input type="submit" id="short" value="제출" class="btn btn-default"/>
-			</div>
-			<div id="home_url_list" align="left">
-				<% current_user.products.order("created_at DESC").each do |p| %>
-					<div class="user_url_list" id="url_list<%=p.id%>">
-					<a href="<%=p.url%>" id="url_list" target="_blank"><%=p.url%></a>
-					<%=link_to '삭제', user_product_path(:user_id => current_user.id, :id =>p.id), method: :delete, id: "delete_product", remote: true %>
-					</div>
-				<% end %>
-			</div> 
-		</div>
-	</div>
-</body>
-
-</html>
 
 <script type="text/javascript" 
 		src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+
 <script type="text/javascript">
 $(document).ready(function()
 {
@@ -52,9 +34,9 @@ $(document).ready(function()
 		$.ajax({
 			url:"/users/<%=current_user.id%>/products",
 			type:'POST',
-			data:{'url':shorten_url},
+			data:{'url':url},
 			success:function(v){
-				$('#home_url_list').append("<div class='user_url_list' id=url_list><a href ="+shorten_url+" target=_blank>"+shorten_url+"</a> <a id='delete_product' disabled>등록중 ..</a></div>");
+				$('#home_url_list').append("<div class='user_url_list' id=url_list><a href ="+url+" target=_blank>"+url+"</a> <a id='delete_product' disabled></a></div>");
 				document.getElementById("short").disabled = false;
 				document.getElementById("short").value = "제출";
 			}
@@ -78,8 +60,58 @@ $(document).ready(function()
 			alert("Bad URL");
 		}
 	});
+
+	//URL 엔터키 먹였을때.
+	$("#url").bind("enterKey", function(e){
+		var url=$("#url").val();
+		var urlRegex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+		var urltest=urlRegex.test(url);
+		console.log("url : ", url);
+		if(urltest){
+			document.getElementById("short").disabled = true;
+			document.getElementById("short").value = "제출중";
+			//URL 을 축소시킨다. 
+			bit_url(url);
+		}
+		else{
+			alert("Bad URL");
+		}
+	});
+	$("#url").keyup(function(e){
+		if(e.keyCode == 13){
+			$(this).trigger("enterKey");
+		}
+	})
+
 });
+
 </script>
+
+<body>
+	<div class="form-inline" align="center">
+		<div id="home_url_form">
+			<div id="home_url_input" align="center" class="form-group">
+				<input type="text" name="url" id="url" class="form-control" placeholder="URL 을 입력하세요" />
+				<input type="submit" id="short" value="제출" class="btn btn-default"/>
+			</div>
+			
+			<div id="home_url_list" align="left">
+				<% current_user.products.order("created_at DESC").each do |p| %>
+				<% if p.name == "" %>
+					<div class="user_url_list" id="url_list<%=p.id%>">
+					<a href="<%=p.url%>" id="url_list" target="_blank"><%=p.url%></a>
+					<!--
+					<%=link_to '삭제', user_product_path(:user_id => current_user.id, :id =>p.id), method: :delete, id: "delete_product", remote: true %>
+					-->
+				<% end %>
+					</div>
+				<% end %>
+			</div> 
+		</div>
+	</div>
+</body>
+
+</html>
 
 <script>
 	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

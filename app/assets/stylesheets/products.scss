@@ -6,12 +6,14 @@
 	src: url(/assets/stylesheets/ultima_pd/UltimaPDac-UltraLight.ttf);
 }
 
+
 /* home */
 #home_url_form{
 	width: 100%;
 	margin-left:auto;
 	margin-right:auto;
-	margin-top: 100px;
+	margin-top: 50px;
+	margin-bottom: 200px;
 }
 
 #home_url_input{
@@ -55,11 +57,14 @@
 /* home input 상자 */
 #url{
 	width:500px;
+	line-height: 50px;
+
 }
 
 /* home submit 버튼 */
 #short{
 	width: 75px;
+	line-height: 50px;
 }
 
 
