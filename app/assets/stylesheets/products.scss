@@ -7,6 +7,7 @@
 }
 
 
+
 /* home */
 #home_url_form{
 	width: 100%;
@@ -64,14 +65,10 @@
 /* home submit 버튼 */
 #short{
 	width: 75px;
-<<<<<<< HEAD
-	line-height: 50px;
-=======
 	height: 65px;
 	background: url('submit.png') no-repeat 0 0 transparent;
 	color: transparent;
 	cursor: pointer;
->>>>>>> 29890ad73352f7466b85bc473c71c4d45d0db07f
 }
 
 #short:hover{
@@ -83,6 +80,12 @@
 }
 
 #short:focus { outline:0 !important; }
+
+#header_drop {
+	margin-right: 20px;
+}
+
+
 
 
 /* index 페이지 */
@@ -117,7 +120,6 @@
 	}
 }
 .mylist_product {
-	margin : 10px;
 	height: 486px;
 }
 
@@ -131,10 +133,29 @@
 	height: auto;
 }
 
-/* 제품 개별 */
+#mylist_product:hover{
+	.delete_product {
+		display: block;
+	}
+}
 
+#mylist_product {
+	margin-bottom: 5%;
+}
+
+/* 삭제 버튼 */
+.delete_product {
+	display: none;
+	margin-left: 267px;
+	position: absolute;
+	top: 0;
+	opacity: 0.4;
+}
+
+/* 제품 개별 */
 .mylist_product_info {
 	padding-left: 0;
+	margin-top: -3%;
 	color: #959595;
 	font-size: 11px;
 	letter-spacing: 1px;
@@ -154,4 +175,17 @@
 #t2{
 	display: inline-block;
 	text-align: left;
+}
+
+
+.guide {
+	width: 1000px;
+	height: 2220px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 100px;
+	background-image: url('guide.png');
+}
+.guide_bt{
+	margin-bottom: 150px;
 }

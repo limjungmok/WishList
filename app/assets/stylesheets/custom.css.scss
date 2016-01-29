@@ -69,31 +69,32 @@ a{
   font-family: 'UltimaPDac-UltraLight';
 }
 
-.navbar-inverse .navbar-nav > li > a{
-  width:auto;
 
-  padding-left: 0px;
-  padding-right : 0px;
+.navbar-inverse .navbar-nav > li > a{
+ width:auto;
+
+ padding-left: 0px;
+ padding-right : 0px;
 }
 
 #header_menu{
-  width:auto;
-  padding-left : 15px;
-  padding-right : 15px;
-  text-align : center;
-  a{
-    display : inline-block;
-  }
+ width:auto;
+ padding-left : 15px;
+ padding-right : 15px;
+ text-align : center;
+ a{
+   display : inline-block;
+ }
 }
 
 #header_menu_right{
-  width:auto;
-  text-align : center;
-  padding-left : 15px;
-  padding-right : 15px;
-  a{
-    display : inline-block;
-  }
+ width:auto;
+ text-align : center;
+ padding-left : 15px;
+ padding-right : 15px;
+ a{
+   display : inline-block;
+ }
 }
 
 .header_menu_mylist {
