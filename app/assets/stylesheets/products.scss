@@ -7,6 +7,7 @@
 }
 
 
+
 /* home */
 #home_url_form{
 	width: 100%;
@@ -68,6 +69,11 @@
 }
 
 
+
+
+
+
+
 /* index 페이지 */
 .mylist_products_list_container {
 	width: 100%;
@@ -111,10 +117,29 @@
 	position: relative;
 }
 
-/* 제품 개별 */
+#mylist_product:hover{
+	.delete_product {
+		display: block;
+	}
+}
 
+#mylist_product {
+	margin-bottom: 5%;
+}
+
+/* 삭제 버튼 */
+.delete_product {
+	display: none;
+	margin-left: 274px;
+	position: absolute;
+	top: 0;
+	opacity: 0.4;
+}
+
+/* 제품 개별 */
 .mylist_product_info {
 	padding-left: 0;
+	margin-top: -3%;
 	color: #959595;
 	font-size: 11px;
 	letter-spacing: 1px;

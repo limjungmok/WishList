@@ -2,11 +2,11 @@ development:
  adapter: mysql2
  encoding: utf8
  reconnect: false
- database: WishList
+ database: WishList_development
  pool: 5
  username: root
- password: 3536
- socket: /tmp/mysql.sock
+ password: wjdwldus11
+ socket: /var/run/mysqld/mysqld.sock
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -15,19 +15,18 @@ test:
  adapter: mysql2
  encoding: utf8
  reconnect: false
- database: WishList
+ database: WishList_test
  pool: 5
  username: root
- password: 3536
- socket: /tmp/mysql.sock
-
+ password: wjdwldus11
+ socket: /var/run/mysqld/mysqld.sock
 
 production:
  adapter: mysql2
  encoding: utf8
  reconnect: false
- database: WishList
+ database: WishList_production
  pool: 5
  username: root
- password: 3536
- socket: /tmp/mysql.sock
+ password: wjdwldus11
+ socket: /var/run/mysqld/mysqld.sock
