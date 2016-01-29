@@ -26,6 +26,7 @@
 
 <script type="text/javascript" 
 		src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+		</script>
 <script type="text/javascript">
 $(document).ready(function()
 {
@@ -57,6 +58,8 @@ $(document).ready(function()
 				$('#home_url_list').append("<div class='user_url_list' id=url_list><a href ="+shorten_url+" target=_blank>"+shorten_url+"</a> <a id='delete_product' disabled>등록중 ..</a></div>");
 				document.getElementById("short").disabled = false;
 				document.getElementById("short").value = "제출";
+
+				$.refresh();
 			}
 		});
 	}

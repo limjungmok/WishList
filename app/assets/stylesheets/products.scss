@@ -101,9 +101,12 @@
 
 /* 제품 이미지 */
 .mylist_product_img {
-	max-width: 100%;
+
 	margin: 0;
 	position: relative;
+
+	max-width: 291px;
+	height: auto;
 }
 
 /* 제품 개별 */

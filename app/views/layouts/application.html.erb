@@ -1,22 +1,56 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <%= stylesheet_link_tag 'application', media: 'all','data-turbolinks-track' => true %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-    <%= csrf_meta_tags %>
+<head>
+  <%= stylesheet_link_tag 'application', media: 'all','data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
     <!--[if lt IE 9]>
       <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/r29/html5.min.js">
       </script>
-    <![endif]-->
-  </head>
-  <body>
-    <%= render 'layouts/header' %>
-    <div class="container">
-      <% flash.each do |message_type, message| %>
-        <div class="alert alert-<%= message_type %>"><%= message %></div>
-      <% end %>
-    <%= render 'layouts/header' %>
+      <![endif]-->
+    </head>
+    <body>
+      <%= render 'layouts/header' %>
       <%= yield %>
     </div>
   </body>
-</html>
+  </html>
+
+  <script type="text/javascript" 
+  src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+  <script type="text/javascript">
+// var tmp = 1;
+//   $(document).ready(function(){
+
+//     $.refresh = function(){
+//       alert(<%=current_user.products.count%> + tmp);
+//       tmp = tmp + 1;
+
+//       $('#header_product_count').append("2");
+//   });
+$(document).ready(function(){
+  function a(){
+    $('#header_product_count').html(<%= current_user.products.count %>);
+  }
+
+  ////////////
+
+
+  /////////////
+
+  $.refresh = function(){
+    $.ajax({ 
+      type: 'GET',
+      url: '/get_aj',
+      success: function(data,status,xhr){
+        console.log(data);
+        $('#header_product_count').html(data.message);
+      },
+      error: function(xhr,status,error){
+        console.log(xhr);
+        alert(error);
+      }
+    });
+  }
+});
+</script>

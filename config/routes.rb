@@ -17,4 +17,6 @@ Rails.application.routes.draw do
   patch 'oyr_admin' => "oyr_admin#update"
 
   get 'guide_page' =>'users#guide'
+
+  get 'get_aj' => 'products#get_aj'
 end
