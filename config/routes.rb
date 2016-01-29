@@ -19,4 +19,6 @@ Rails.application.routes.draw do
 
   get 'guide_page' =>'users#guide'
 
+  get 'get_aj' => 'products#get_aj'
+
 end

@@ -65,8 +65,21 @@
 /* home submit 버튼 */
 #short{
 	width: 75px;
-	line-height: 50px;
+	height: 65px;
+	background: url('submit.png') no-repeat 0 0 transparent;
+	color: transparent;
+	cursor: pointer;
 }
+
+#short:hover{
+	background: url('submit_over.png') no-repeat 0 0 transparent;
+
+}
+#short:active{ 
+	background: url('submit_pressed.png') no-repeat 0 0 transparent;
+}
+
+#short:focus { outline:0 !important; }
 
 
 
@@ -112,9 +125,12 @@
 
 /* 제품 이미지 */
 .mylist_product_img {
-	max-width: 100%;
+
 	margin: 0;
 	position: relative;
+
+	max-width: 291px;
+	height: auto;
 }
 
 #mylist_product:hover{

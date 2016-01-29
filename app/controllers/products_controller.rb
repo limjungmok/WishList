@@ -47,4 +47,9 @@ class ProductsController < ApplicationController
 			format.js
 		end
 	end
+
+	def get_aj
+		data = {:message => current_user.products.count}
+		render :json => data, :status => :ok
+	end
 end
