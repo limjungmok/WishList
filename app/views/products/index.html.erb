@@ -6,9 +6,11 @@
 
 <body>
 	<section class="mylist_products_list_container">
+
 		<div class="mylist_logo">
 			PRODUCT
 		</div>
+
 		<% if @products %>
 		<ul class="mylist_products" align="center">
 			<% @products.each do |p| %>
@@ -33,11 +35,14 @@
 						</li>
 					</ul>
 				</li>
+
 				<% else %>
-				<li class="mylist_product">
+				<li class="mylist_product<%=p.id%>">
 					<div id = "t1" style="height: 436px; width: 291px">
 						<div id ="t2" >
-							<td><%= link_to image_tag(p.avatar(:width), class: "mylist_product_img"), p.url , :target => "_blank" %></td>
+							<td><%=link_to '삭제', user_product_destroy_path(:user_id => current_user.id, :id =>p.id), method: :delete, class: "delete_product", remote: true %></td>
+
+							<td><%= link_to image_tag(p.img, class: "mylist_product_img"), p.url , :target => "_blank" %></td>
 						</div>
 					</div> 				
 					<br>
