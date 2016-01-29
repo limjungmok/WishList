@@ -3,28 +3,8 @@ class ProductsController < ApplicationController
 
 	def index
 		@user = current_user
+		@user_log = @user.logs.last
 		@products = @user.products.all
-
-		# @width
-		# @height
-		# @products.each do |product|
-		# 	if product.name != ""
-		# 		product.avatar_remote_url = product.img
-		# 	end
-		# 	# @width = Paperclip::Geometry.from_file(Paperclip.io_adapters.for(product.avatar)).width
-		# 	# @height = Paperclip::Geometry.from_file(Paperclip.io_adapters.for(product.avatar)).height
-		# 	# #@width = 2
-		# 	# #@height = 1
-		# 	# #false = 가로가 더 큼 / #true = 세로가 더 큼
-
-		# 	# if @width>@height
-		# 	# 	product.w_or_h = false 
-		# 	# else
-		# 	# 	product.w_or_h = true
-		# 	# end				
-		# 	product.save
-		# end
-
 	end
 
 	def new
@@ -46,13 +26,18 @@ class ProductsController < ApplicationController
 		end
 	end
 
-	def edit
-	end
-
-	def update
-	end
-
 	def destroy
+		@user = User.find(params[:user_id])
+		@destroy_product = @user.products.find(params[:id])
+		@product = @user.products.find(params[:id]).destroy
+
+		respond_to do |format|
+			format.html
+			format.js
+		end
+	end
+
+	def destroy_index
 		@user = User.find(params[:user_id])
 		@destroy_product = @user.products.find(params[:id])
 		@product = @user.products.find(params[:id]).destroy

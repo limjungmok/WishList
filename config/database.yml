@@ -5,9 +5,8 @@ development:
  database: WishList
  pool: 5
  username: root
- password: duwnsdld0
+ password: 3536
  socket: /tmp/mysql.sock
-
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -19,8 +18,9 @@ test:
  database: WishList
  pool: 5
  username: root
- password: duwnsdld0
+ password: 3536
  socket: /tmp/mysql.sock
+
 
 production:
  adapter: mysql2
@@ -29,5 +29,5 @@ production:
  database: WishList
  pool: 5
  username: root
- password: duwnsdld0
+ password: 3536
  socket: /tmp/mysql.sock
