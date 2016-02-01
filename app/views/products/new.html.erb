@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html>
 <head>
 
@@ -12,12 +11,21 @@
 $(document).ready(function()
 {   
 
-    $("#url").keyup(function(e){
-        if(e.keyCode == 13){
-            $(this).trigger("enterKey");
-        }
-    });
-     
+     function refresh(){
+       $.ajax({ 
+         type: 'GET',
+         url: '/get_aj',
+         success: function(data,status,xhr){
+           console.log(data);
+           $('#header_product_count').html(data.message);
+         },
+         error: function(xhr,status,error){
+           console.log(xhr);
+           alert(error);
+         }
+       });
+     }
+
     //bit_url function
     function bit_url(url)
     { 
@@ -46,46 +54,44 @@ $(document).ready(function()
                 $('#home_url_list').append("<div class='user_url_list' id=url_list><a href ="+url+" target=_blank>"+url+"</a> <a id='delete_product' disabled></a></div>");
                 document.getElementById("short").disabled = false;
                 //document.getElementById("short").value = "제출";
-                $.refresh();
+                refresh();
             }
         });
     }
 
+    function parsing_url(){
+        var url=$("#url").val();
+        var urlRegex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+        var urltest=urlRegex.test(url);
+
+        if(urltest){
+            document.getElementById("short").disabled = true;
+            //document.getElementById("short").value = "제출중";
+            //URL 을 축소시킨다. 
+            bit_url(url);
+        }else{
+            alert("Bad URL");
+        }
+    }
+    
     //Submit 버튼 클릭시
     $("#short").click(function()
     {
-        var url=$("#url").val();
-        var urlRegex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
-        var urltest=urlRegex.test(url);
-        console.log("url : ", url);
-        if(urltest){
-            document.getElementById("short").disabled = true;
-            //document.getElementById("short").value = "제출중";
-            //URL 을 축소시킨다. 
-            bit_url(url);
-        }
-        else{
-            alert("Bad URL");
-        }
+        console.log("submit");
+        parsing_url();
+        
     });
 
     //URL 엔터키 먹였을때.
-    $("#url").bind("enterKey", function(e){
-        var url=$("#url").val();
-        var urlRegex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
-        var urltest=urlRegex.test(url);
-        console.log("url : ", url);
-        if(urltest){
-            document.getElementById("short").disabled = true;
-            //document.getElementById("short").value = "제출중";
-            //URL 을 축소시킨다. 
-            bit_url(url);
-        }
-        else{
-            alert("Bad URL");
+    $("#url").keydown(function(e){
+        if(e.keyCode == 13){
+            console.log("enter");
+            parsing_url();
+        }else{
+
         }
     });
-    
+
 
 });
 
