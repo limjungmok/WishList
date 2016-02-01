@@ -16,6 +16,7 @@ gem 'therubyracer', platforms: :ruby
 gem 'bootstrap-sass',       '3.2.0.0'
 
 gem 'activeadmin'
+gem 'better_errors'
 
 # Plus integrations with:
 gem 'devise'

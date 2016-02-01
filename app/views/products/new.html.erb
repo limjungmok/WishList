@@ -5,19 +5,17 @@
 </head>
 
 <script type="text/javascript" 
-        src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+        src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
 
 <script type="text/javascript">
 $(document).ready(function()
 {   
-
-     function refresh(){
+    function getWattingList(){
        $.ajax({ 
          type: 'GET',
-         url: '/get_aj',
+         url: '/get_watting_list',
          success: function(data,status,xhr){
-           console.log(data);
-           $('#header_product_count').html(data.message);
+           $('#home_url_list').html("<div class='user_url_info' id=url_list><p id='url_list'>현재 "+data.message+" 개의 상품이 분류 중입니다.</p></div>");
          },
          error: function(xhr,status,error){
            console.log(xhr);
@@ -26,19 +24,47 @@ $(document).ready(function()
        });
      }
 
-    //bit_url function
-    function bit_url(url)
-    { 
-        var url=url;
+    function refresh(){
+       $.ajax({ 
+         type: 'GET',
+         url: '/get_aj',
+         success: function(data,status,xhr){
+           //console.log(data);
+           $('#header_product_count').html(data.message);
+           //$('#home_url_list').html("<div class='user_url_info' id=url_list>현재 "+<%=@current_user_products.count%>+"개의 상품이 분류 중입니다.</div>");
+           getWattingList();
+         },
+         error: function(xhr,status,error){
+           console.log(xhr);
+           alert(error);
+         }
+       });
+     }
+
+    //bitly를 이용해 shorten ajax 처리
+    function bit_shorten_url(url){ 
         var username="limjungmok"; // bit.ly username
-        var key="R_249fbb5a23da46259abafefc07de6d0e";
+        var key="R_249fbb5a23da46259abafefc07de6d0e";// bit.ly API KEY
         $.ajax({
             url:"http://api.bit.ly/v3/shorten",
             data:{longUrl:url,apiKey:key,login:username},
             dataType:"jsonp",
             success:function(v){
-                var bit_url=v.data.url;
-                submit_url(bit_url);
+                var shorten_url=v.data.url;
+                submit_url(shorten_url);
+                bit_expand_url(shorten_url);
+            }
+        });
+    }
+    //bitly를 이용해 expand ajax 처리
+    function bit_expand_url(url){
+        var key="becb860398ed9e74775cd8dc8a5bf1724caeb2f1";
+        console.log("aa",url);
+        $.ajax({
+            url:"https://api-ssl.bitly.com/v3/expand?access_token="+key+"&shortUrl="+url+"&format=txt",
+            type:"GET",
+            success:function(v){
+                console.log(v);
             }
         });
     }
@@ -51,16 +77,17 @@ $(document).ready(function()
             type:'POST',
             data:{'url':url},
             success:function(v){
-                $('#home_url_list').append("<div class='user_url_list' id=url_list><a href ="+url+" target=_blank>"+url+"</a> <a id='delete_product' disabled></a></div>");
+                //$('#home_url_list').append("<div class='user_url_info' id=url_list><a href ="+url+" target=_blank>"+url+"</a> <a id='delete_product' disabled></a></div>");
                 document.getElementById("short").disabled = false;
                 //document.getElementById("short").value = "제출";
                 refresh();
             }
         });
     }
-
+    //URL 을 파싱한 뒤, 비틀리로 줄이기 위한 함수
     function parsing_url(){
         var url=$("#url").val();
+        //$('body').html(url);
         var urlRegex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
         var urltest=urlRegex.test(url);
 
@@ -68,7 +95,7 @@ $(document).ready(function()
             document.getElementById("short").disabled = true;
             //document.getElementById("short").value = "제출중";
             //URL 을 축소시킨다. 
-            bit_url(url);
+            bit_shorten_url(url);
         }else{
             alert("Bad URL");
         }
@@ -91,8 +118,6 @@ $(document).ready(function()
 
         }
     });
-
-
 });
 
 </script>
@@ -106,16 +131,9 @@ $(document).ready(function()
             </div>
             
             <div id="home_url_list" align="left">
-                <% current_user.products.order("created_at DESC").each do |p| %>
-                <% if p.name == "" %>
-                    <div class="user_url_list" id="url_list<%=p.id%>">
-                    <a href="<%=p.url%>" id="url_list" target="_blank"><%=p.url%></a>
-                    <!--
-                    <%=link_to '삭제', user_product_path(:user_id => current_user.id, :id =>p.id), method: :delete, id: "delete_product", remote: true %>
-                    -->
-                <% end %>
-                    </div>
-                <% end %>
+                <div class="user_url_info" id="url_list">
+                <p id="url_list">현재 <%=@current_user_products.count%> 개의 상품이 분류 중입니다.</p>
+                </div>
             </div> 
         </div>
     </div>

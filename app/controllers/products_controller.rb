@@ -11,6 +11,7 @@ class ProductsController < ApplicationController
 		if logged_in?
 			@user = current_user
 			@product = @user.products.new
+			@current_user_products = @user.products.where(name: "")
 		else
 			render 'new_no_login'
 		end
@@ -50,6 +51,11 @@ class ProductsController < ApplicationController
 
 	def get_aj
         data = {:message => current_user.products.count}
+        render :json => data, :status => :ok
+    end
+
+    def get_watting_list
+        data = {:message => current_user.products.where(name: "").count}
         render :json => data, :status => :ok
     end
 end
