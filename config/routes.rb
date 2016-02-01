@@ -20,5 +20,5 @@ Rails.application.routes.draw do
   get 'guide_page' =>'users#guide'
 
   get 'get_aj' => 'products#get_aj'
-
+  get 'send_email' => 'products#send_email'
 end

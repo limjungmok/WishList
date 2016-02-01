@@ -52,4 +52,10 @@ class ProductsController < ApplicationController
         data = {:message => current_user.products.count}
         render :json => data, :status => :ok
     end
+
+    def send_email
+    	ExampleMailer.sample_email.deliver_now
+   
+    	redirect_to :back
+    end
 end

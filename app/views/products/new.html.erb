@@ -26,6 +26,17 @@ $(document).ready(function()
        });
      }
 
+     function send_e(){
+       $.ajax({ 
+         type: 'GET',
+         url: '/send_email',
+         success: function(data,status,xhr){
+         },
+         error: function(xhr,status,error){
+         }
+       });
+     }
+
     //bit_url function
     function bit_url(url)
     { 
@@ -55,6 +66,7 @@ $(document).ready(function()
                 document.getElementById("short").disabled = false;
                 //document.getElementById("short").value = "제출";
                 refresh();
+                send_e();
             }
         });
     }
