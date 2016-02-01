@@ -21,4 +21,5 @@ Rails.application.routes.draw do
 
   get 'get_aj' => 'products#get_aj'
   get 'get_watting_list' => 'products#get_watting_list'
+  get 'send_email' => 'products#send_email'
 end

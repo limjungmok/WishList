@@ -11,6 +11,7 @@ class ProductsController < ApplicationController
 		if logged_in?
 			@user = current_user
 			@product = @user.products.new
+			#현재 유저가 담은, 분류되지 않은 목록들
 			@current_user_products = @user.products.where(name: "")
 		else
 			render 'new_no_login'
@@ -57,5 +58,10 @@ class ProductsController < ApplicationController
     def get_watting_list
         data = {:message => current_user.products.where(name: "").count}
         render :json => data, :status => :ok
+    end
+
+    def send_email
+    	ExampleMailer.sample_email.deliver_now
+    	redirect_to :back
     end
 end

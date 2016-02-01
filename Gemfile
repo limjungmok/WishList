@@ -25,6 +25,8 @@ gem 'draper'
 gem 'pundit'
 gem 'bitly', '~> 0.9.0'
 gem "paperclip", "~> 4.3"
+gem "figaro"
+gem 'mailgun-ruby', '~> 1.0', '>= 1.0.3'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'

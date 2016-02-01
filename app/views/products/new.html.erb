@@ -1,6 +1,5 @@
 <html>
 <head>
-
     <title></title>
 </head>
 
@@ -15,7 +14,9 @@ $(document).ready(function()
          type: 'GET',
          url: '/get_watting_list',
          success: function(data,status,xhr){
-           $('#home_url_list').html("<div class='user_url_info' id=url_list><p id='url_list'>현재 "+data.message+" 개의 상품이 분류 중입니다.</p></div>");
+            $('#home_url_list').html("<div class='user_url_info' id=url_list><p id='url_list'>현재 "+data.message+" 개의 상품이 분류 중입니다.</p></div>");
+                           //제출이 끝난뒤
+            document.getElementById("short").disabled = false;
          },
          error: function(xhr,status,error){
            console.log(xhr);
@@ -29,7 +30,6 @@ $(document).ready(function()
          type: 'GET',
          url: '/get_aj',
          success: function(data,status,xhr){
-           //console.log(data);
            $('#header_product_count').html(data.message);
            //$('#home_url_list').html("<div class='user_url_info' id=url_list>현재 "+<%=@current_user_products.count%>+"개의 상품이 분류 중입니다.</div>");
            getWattingList();
@@ -37,6 +37,18 @@ $(document).ready(function()
          error: function(xhr,status,error){
            console.log(xhr);
            alert(error);
+         }
+       });
+     }
+
+
+     function send_e(){
+       $.ajax({ 
+         type: 'GET',
+         url: '/send_email',
+         success: function(data,status,xhr){
+         },
+         error: function(xhr,status,error){
          }
        });
      }
@@ -78,9 +90,10 @@ $(document).ready(function()
             data:{'url':url},
             success:function(v){
                 //$('#home_url_list').append("<div class='user_url_info' id=url_list><a href ="+url+" target=_blank>"+url+"</a> <a id='delete_product' disabled></a></div>");
-                document.getElementById("short").disabled = false;
-                //document.getElementById("short").value = "제출";
+
+
                 refresh();
+                send_e();
             }
         });
     }
@@ -92,8 +105,9 @@ $(document).ready(function()
         var urltest=urlRegex.test(url);
 
         if(urltest){
+
+            //제출이 끝난 후
             document.getElementById("short").disabled = true;
-            //document.getElementById("short").value = "제출중";
             //URL 을 축소시킨다. 
             bit_shorten_url(url);
         }else{
@@ -104,7 +118,6 @@ $(document).ready(function()
     //Submit 버튼 클릭시
     $("#short").click(function()
     {
-        console.log("submit");
         parsing_url();
         
     });
@@ -112,10 +125,8 @@ $(document).ready(function()
     //URL 엔터키 먹였을때.
     $("#url").keydown(function(e){
         if(e.keyCode == 13){
-            console.log("enter");
             parsing_url();
         }else{
-
         }
     });
 });
