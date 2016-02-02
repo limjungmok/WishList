@@ -121,8 +121,40 @@ $(document).ready(function(){
         	</div>
         </div>
         <div id="div_product">
-        
-        </div>
+           <div id="div_product_title">
+               Product
+           </div>
+
+           <div id="div_product_info">
+               <div id="div_product_info_total">
+                   <div id="div_product_info_total_text">총</div>
+                   <div class="circle" id="div_product_info_total">10</div>
+                   <div id="div_product_info_total_text">개 상품이 등록되어 있습니다</div>
+               </div>
+
+               <% if logged_in? %>
+               <div id="div_product_lists">
+                   <ul id="ul_product_lists">
+                       <% current_user.products.each do |p| %>
+                           <% if p.name == "" %>
+                               <li id="li_product_lists">
+                                   <div id="div_prodcut_item_image">
+                                       <%= link_to image_tag('registering.jpg', class: "mylist_product_img", height: '436px'), p.url , :target => "_blank" %></td>
+                                   </div>
+                                   <div id="div_product_item_info">
+                                       <p>등록중</p>
+                                       <p>1,000,000원</p>
+                                   </div>
+                               </li>
+                           <% end %>
+                       <% end %>
+                   </ul>
+               </div>
+
+               <% end %>
+
+           </div>
+       </div>
     </div>
 </body>
 </html>
