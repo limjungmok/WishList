@@ -3,10 +3,122 @@
 <head>
     <title></title>
 </head>
+<script type="text/javascript"
+        src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	var w = window.innerWidth;
+	var h = window.innerHeight;
+	console.log("width : ", w);
+	console.log("height : ", h);
+	$('#div_main').css({'width': w, 'height': h});
+
+	//bitly를 이용해 shorten ajax 처리
+    function bit_shorten_url(url){
+        var origin_url = url;
+        var username="limjungmok"; // bit.ly username
+        var key="R_249fbb5a23da46259abafefc07de6d0e";// bit.ly API KEY
+        $.ajax({
+            url:"http://api.bit.ly/v3/shorten",
+            data:{longUrl:url,apiKey:key,login:username},
+            dataType:"jsonp",
+            success:function(v){
+                var shorten_url=v.data.url;
+                submit_url(shorten_url, origin_url);
+            }
+        });
+    }
+
+    //URL 축소된 url을 전송하는 함수
+    function submit_url(url, origin_url){
+        var shorten_url = url;
+        var origin_url = origin_url;
+        $.ajax({
+            url:"/users/<%=current_user.id%>/products",
+            type:'POST',
+            data:{'url':url, 'origin_url':origin_url},
+            success:function(v){
+            	document.getElementById("submit").disabled = false;
+                //refresh();
+                //send_e();
+            }
+        });
+    }
+
+    //URL 을 파싱한 뒤, 비틀리로 줄이기 위한 함수
+    function parsing_url(){
+        var url=$("#url").val();
+        var urlRegex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+        var urltest=urlRegex.test(url);
+
+        if(urltest){
+            //제출이 끝난 후
+            //URL 을 축소시킨다.
+            bit_shorten_url(url);
+        }else{
+            alert("Bad URL");
+        }
+    }
+
+    //Submit 버튼 클릭시
+    $("#submit").click(function(){
+        document.getElementById("submit").value = "상품 분석중";
+        document.getElementById("submit").disabled = true;
+        parsing_url();
+    });
+
+    //URL 엔터키 먹였을때.
+    $("#url").keydown(function(e){
+        if(e.keyCode == 13){
+	        document.getElementById("submit").value = "상품 분석중";
+   	        document.getElementById("submit").disabled = true;
+	        parsing_url();
+
+        }else{
+        }
+    });
+
+});
+
+</script>
 <body>
     <div id="div_total">
         <div id="div_main">
 
+        	<!--맨 위 타이틀-->
+        	<div id="div_main_title" align="center">
+        		환영합니다!
+        	</div>
+
+        	<!--타이틀 서브 텍스트-->
+        	<div id="div_main_title_sub" align="center">
+        		전 세계의 모든 상품을 분석 해 드립니다.
+        	</div>
+        	
+        	<!--메인 URL 입력 폼-->
+        	<div id="div_main_url_form" class="form-inline" align="center">
+        		<div id="div_main_url_input" align="center" class="form-group">
+	        		<input type="text" name="url" id="url" placeholder=" URL 을 입력하세요." class="form-control" />
+	        		<button type="submit" id="submit" class="btn btn-default">상품 분석</button>
+        		</div>
+        	</div>
+
+        	<!--URL 아래 주의사항 설명-->
+        	<div id="div_main_info" align="center">
+        		<div id="div_main_info_box" align="center">
+        		URL 등록 후 상품을 분석합니다. 1 - 3 분정도 소요됩니다.
+        		</div>
+        	</div>
+
+        	<!--맨 아래 SHOP IN 이용방법-->
+        	<div id="div_main_useage" align="center">
+   	        	<a href="#">
+	        		<div id="div_main_useage_box" align="center">
+	        			SHOP IN 이용방법
+	        		</div>
+        		</a>
+        	</div>
         </div>
         <div id="div_product">
         

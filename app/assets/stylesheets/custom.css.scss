@@ -3,15 +3,16 @@
 
 
 #logo {
-  font-family: 'UltimaPDac-UltraLight';
+  font-family: 'Nanum Gothic', sans-serif;
   float: left;
   margin-right: 10px;
-  font-size: 1.7em;
+  font-size: 23px;
   color: #000;
   text-transform: uppercase;
   letter-spacing: -1px;
   padding-top: 9px;
   font-weight: bold;
+  color:#fff;
 }
 
 #logo:hover {
@@ -25,11 +26,13 @@ input, textarea, select, .uneditable-input {
   border: 1px solid #bbb;
   width: 100%;
   margin-bottom: 15px;
+  font-family: 'Nanum Gothic', sans-serif;
+
 }
 
 #header{
-  font-family: 'UltimaPDac-UltraLight';
-  background-color:#f0ebe8;
+  font-family: 'Nanum Gothic', sans-serif;
+  background-color:transparent;
   border-color: transparent;
   a:hover{
     color:#222;
@@ -37,7 +40,7 @@ input, textarea, select, .uneditable-input {
   }
 }
 a{
-  font-family: 'UltimaPDac-UltraLight';
+  font-family: 'Nanum Gothic', sans-serif;
 }
 
 
@@ -45,6 +48,7 @@ a{
  width:auto;
  padding-left: 0px;
  padding-right : 0px;
+ color: #fff;
 }
 
 #header_menu{
@@ -54,6 +58,8 @@ a{
  text-align : center;
  a{
    display : inline-block;
+   color: #fff;
+   font-size: 17px;
  }
 }
 
@@ -64,6 +70,8 @@ a{
  padding-right : 15px;
  a{
    display : inline-block;
+   color: #fff;
+   font-size: 17px;
  }
 }
 
@@ -76,14 +84,16 @@ a{
 }
 
 #header_drop{
-  background-color: #f0ebe8; 
+  background-color: transparent; 
   border-color: transparent;
+  color: #fff;
+   font-size: 17px;
 }
 
 #header_drop:focus{
-  background-color: #fff; 
+  background-color: transparent; 
   border-color: transparent;
-  color: #ccc;
+  color: #222;
 }
 
 span.step {
