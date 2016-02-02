@@ -2,30 +2,6 @@
 @import "bootstrap";
 
 
-/* universal */
-
-body {
-  font-family: 'UltimaPDac-UltraLight';
-  padding-top: 60px;
-}
-
-section {
-  font-family: 'UltimaPDac-UltraLight';
-  overflow: auto;
-}
-
-textarea {
-  font-family: 'UltimaPDac-UltraLight';
-  resize: vertical;
-}
-
-.center {
-  text-align: center;
-}
-
-.center h1 {
-  margin-bottom: 10px;
-}
 #logo {
   font-family: 'UltimaPDac-UltraLight';
   float: left;
@@ -42,18 +18,13 @@ textarea {
   color: #ccc;
   text-decoration: none;
 }
+
 /* forms */
 
 input, textarea, select, .uneditable-input {
-  font-family: 'UltimaPDac-UltraLight';
   border: 1px solid #bbb;
   width: 100%;
   margin-bottom: 15px;
-}
-
-input {
-  font-family: 'UltimaPDac-UltraLight';
-  height: auto !important;
 }
 
 #header{
@@ -72,7 +43,6 @@ a{
 
 .navbar-inverse .navbar-nav > li > a{
  width:auto;
-
  padding-left: 0px;
  padding-right : 0px;
 }

@@ -20,7 +20,7 @@ class ProductsController < ApplicationController
 
 	def create
 		@user = current_user
-		@product = @user.products.create(:url => params[:url])
+		@product = @user.products.create(:url => params[:url], :origin_url => params[:origin_url])
 		if @product
 			redirect_to root_path(@product)
 		else
@@ -50,18 +50,18 @@ class ProductsController < ApplicationController
 		end
 	end
 
-	def get_aj
-        data = {:message => current_user.products.count}
-        render :json => data, :status => :ok
-    end
-
-    def get_watting_list
-        data = {:message => current_user.products.where(name: "").count}
+	def get_product_count
+        data = {:message => current_user.products.count, :watting => current_user.products.where(name: "").count}
         render :json => data, :status => :ok
     end
 
     def send_email
     	ExampleMailer.sample_email.deliver_now
     	redirect_to :back
+    end
+
+    def get_unclassify_list
+    	data = {:list => current_user.products.where(name: "")}
+        render :json => data, :status => :ok
     end
 end

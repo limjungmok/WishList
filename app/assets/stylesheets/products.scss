@@ -1,178 +1,20 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
-@font-face {
-	font-family: 'UltimaPDac-UltraLight';
-	src: url(/assets/stylesheets/ultima_pd/UltimaPDac-UltraLight.ttf);
-}
 
-/* home */
-#home_url_form{
+/* 전체 div */
+#div_total{
 	width: 100%;
-	margin-left:auto;
-	margin-right:auto;
-	margin-top: 50px;
-	margin-bottom: 200px;
+	height: 100%;
 }
-
-#home_url_input{
-	margin-bottom: 50px;
-	width: 600px;
-}
-
-#home_url_list{
-	width: 600px;
-	margin-left: auto;
-	margin-right: auto;
-}
-.user_url_info{
-	width: 575px;
-	height: 50px;
-	background-color: #f0ebe8;
-	margin-left: auto;
-	margin-right: auto;
-	padding-left: 10px;
-	border-radius: 3px;
-
-	p{
-		color: #222;
-		font-size: 14.5px;
-		position: relative;
-		top: 30%;
-	}
-}
-
-/* home input 상자 */
-#url{
-	width:500px;
-	line-height: 50px;
-
-}
-
-/* home submit 버튼 */
-#short{
-	width: 75px;
-	height: 65px;
-	background: url('submit.png') no-repeat 0 0 transparent;
-	color: transparent;
-	cursor: pointer;
-}
-
-#short:hover{
-	background: url('submit_over.png') no-repeat 0 0 transparent;
-
-}
-#short:active{ 
-	background: url('submit_pressed.png') no-repeat 0 0 transparent;
-}
-
-#short:focus { outline:0 !important; }
-
-#header_drop {
-	margin-right: 20px;
-}
-
-
-
-
-/* index 페이지 */
-.mylist_products_list_container {
+#div_main{
 	width: 100%;
-	margin-bottom : 50px;
+	height: 768px;
+	background-color: yellow;
 }
 
-/* My List 로고 */
-.mylist_logo {
-	font-size: 18pt;
-	font-weight: bold;
-	color: #757575;
-	letter-spacing: 0.1em;
-	text-align: center;
-	margin-top : 50px;
-	margin-bottom: 25px;
-}
-
-/* 제품 전체 */
-.mylist_products {
-	list-style: none;
-	padding :0px;
-	li {
-		display: inline-block;
-		position: relative;
-		vertical-align: top;
-		text-align: center;
-		margin-right: 0.5%;
-		margin-left: 0.5%;
-		width : 291px;
-	}
-}
-.mylist_product {
-	height: 486px;
-}
-
-/* 제품 이미지 */
-.mylist_product_img {
-
-	margin: 0;
-	position: relative;
-
-	max-width: 291px;
-	height: auto;
-}
-
-#mylist_product:hover{
-	.delete_product {
-		display: block;
-	}
-}
-
-#mylist_product {
-	margin-bottom: 5%;
-}
-
-/* 삭제 버튼 */
-.delete_product {
-	display: none;
-	margin-left: 267px;
-	position: absolute;
-	top: 0;
-	opacity: 0.4;
-}
-
-/* 제품 개별 */
-.mylist_product_info {
-	padding-left: 0;
-	margin-top: -3%;
-	color: #959595;
-	font-size: 11px;
-	letter-spacing: 1px;
-	text-transform: uppercase;
-	text-align: center;
-}
-
-#t1{
-	height : 436px; 
-	width : 291px;
-	display: table-cell;
-	text-align: center;
-	vertical-align: middle;
-	background-color : rgba(0,0,0,0.03);
-}
-
-#t2{
-	display: inline-block;
-	text-align: left;
-}
-
-
-.guide {
-	width: 1000px;
-	height: 2220px;
-	margin-left: auto;
-	margin-right: auto;
-	margin-bottom: 100px;
-	background-image: url('guide.png');
-}
-.guide_bt{
-	margin-bottom: 150px;
+#div_product{
+	width: 100%;
+	height: 768px;
+	background-color: blue;
 }
