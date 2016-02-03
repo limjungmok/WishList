@@ -14,7 +14,4 @@
  *= require_self
  */
 
-.container{
-  width : 100%;
-  max-width: 1500px;
-}
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);

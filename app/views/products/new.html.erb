@@ -1,131 +1,224 @@
 <!DOCTYPE html>
 <html>
 <head>
-
-	<title></title>
+    <title></title>
 </head>
-
-<script type="text/javascript" 
-src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
-</script>
-
-
+<script type="text/javascript"
+        src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
 
 <script type="text/javascript">
-	$(document).ready(function()
-	{
-	//bit_url function
-	function bit_url(url)
-	{ 
-		var url=url;
-		var username="limjungmok"; // bit.ly username
-		var key="R_249fbb5a23da46259abafefc07de6d0e";
-		$.ajax({
-			url:"http://api.bit.ly/v3/shorten",
-			data:{longUrl:url,apiKey:key,login:username},
-			dataType:"jsonp",
-			success:function(v){
-				var bit_url=v.data.url;
-				submit_url(bit_url);
-			}
-		});
-	}
-	//URL 축소된 url을 전송하는 함수
-	function submit_url(url){
-		var shorten_url = url;
-		console.log("shorten url : ", shorten_url);
-		$.ajax({
-			url:"/users/<%=current_user.id%>/products",
-			type:'POST',
-			data:{'url':url},
-			success:function(v){
-				$('#home_url_list').append("<div class='user_url_list' id=url_list><a href ="+url+" target=_blank>"+url+"</a> <a id='delete_product' disabled></a></div>");
-				document.getElementById("short").disabled = false;
+$(document).ready(function(){
+	var w = window.innerWidth;
+	var h = window.innerHeight;
 
 
-				$.refresh();
-				//document.getElementById("short").value = "제출";
+  $('#div_main').css({'height': h});
+  $('#div_main_box').css({'width': (w/1.9), 'height': (h/2)});
+  $('#url').css({'width': (w/4)});
 
-			}
-		});
-	}
+  $(function(){
+    var main = $('#div_product_lists'),
+        centerized = main.find('.div_product_lists_centerized'),
+        itemWidth = main.find('.div_product_item').outerWidth(true);
 
-	//Submit 버튼 클릭시
-	$("#short").click(function()
-	{
-		var url=$("#url").val();
-		var urlRegex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
-		var urltest=urlRegex.test(url);
-		console.log("url : ", url);
-		if(urltest){
-			document.getElementById("short").disabled = true;
-			//document.getElementById("short").value = "제출중";
-			//URL 을 축소시킨다. 
-			bit_url(url);
-		}
-		else{
-			alert("Bad URL");
-		}
-	});
-
-	//URL 엔터키 먹였을때.
-	$("#url").bind("enterKey", function(e){
-		var url=$("#url").val();
-		var urlRegex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
-		var urltest=urlRegex.test(url);
-		console.log("url : ", url);
-		if(urltest){
-			document.getElementById("short").disabled = true;
-			//document.getElementById("short").value = "제출중";
-			//URL 을 축소시킨다. 
-			bit_url(url);
-		}
-		else{
-			alert("Bad URL");
-		}
-	});
-	$("#url").keyup(function(e){
-		if(e.keyCode == 13){
-			$(this).trigger("enterKey");
-		}
-	})
-
+    $(window).resize(function(){
+        var fitItems = (main.width() / itemWidth) | 0;
+        centerized.width(fitItems * itemWidth);
+    }).trigger('resize');
 });
 
-</script>
+	//bitly를 이용해 shorten ajax 처리
+    function bit_shorten_url(url){
+        var origin_url = url;
+        var username="limjungmok"; // bit.ly username
+        var key="R_249fbb5a23da46259abafefc07de6d0e";// bit.ly API KEY
+        $.ajax({
+            url:"http://api.bit.ly/v3/shorten",
+            data:{longUrl:url,apiKey:key,login:username},
+            dataType:"jsonp",
+            success:function(v){
+                var shorten_url=v.data.url;
+                submit_url(shorten_url, origin_url);
+            }
+        });
+    }
 
+    //URL 축소된 url을 전송하는 함수
+    function submit_url(url, origin_url){
+        var shorten_url = url;
+        var origin_url = origin_url;
+        $.ajax({
+            url:"/users/<%=current_user.id%>/products",
+            type:'POST',
+            data:{'url':url, 'origin_url':origin_url},
+            success:function(v){
+            	document.getElementById("submit").disabled = false;
+                //refresh();
+                //send_e();
+            }
+        });
+    }
+
+    //URL 을 파싱한 뒤, 비틀리로 줄이기 위한 함수
+    function parsing_url(){
+        var url=$("#url").val();
+        var urlRegex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+        var urltest=urlRegex.test(url);
+
+        if(urltest){
+            //제출이 끝난 후
+            //URL 을 축소시킨다.
+            bit_shorten_url(url);
+        }else{
+            alert("Bad URL");
+        }
+    }
+
+    //Submit 버튼 클릭시
+    $("#submit").click(function(){
+        document.getElementById("submit").value = "상품 분석중";
+        document.getElementById("submit").disabled = true;
+        parsing_url();
+        $("#url").val('');
+
+    });
+
+    //URL 엔터키 먹였을때.
+    $("#url").keydown(function(e){
+        if(e.keyCode == 13){
+	        document.getElementById("submit").value = "상품 분석중";
+   	      document.getElementById("submit").disabled = true;
+	        parsing_url();
+          $("#url").val('');
+        }else{
+        }
+    });
+
+	var targetHeight = $('#header').outerHeight();
+
+	$(document).scroll(function() {
+		var scrollPercent = (targetHeight - window.scrollY) / targetHeight;
+		console.log(scrollPercent);
+
+	    if ($(this).scrollTop() > (h)){
+	    	$('#header').css({'background-color':'rgba(0, 0, 0, 1.0)'});	
+	    	
+	    }else{
+	    	$('#header').css({'background-color':'transparent'});
+	    }
+	    
+
+	});
+});
+
+$(function(){
+    var main = $('#div_product_lists'),
+        centerized = main.find('.div_product_lists_centerized'),
+        itemWidth = main.find('.div_product_item').outerWidth(true);
+
+    $(window).resize(function(){
+        var fitItems = (main.width() / itemWidth) | 0;
+        centerized.width(fitItems * itemWidth);
+    }).trigger('resize');
+});
+
+
+</script>
 <body>
-	<div class="form-inline" align="center">
-		<div id="home_url_form">
-			<div id="home_url_input" align="center" class="form-group">
-				<input type="text" name="url" id="url" class="form-control" placeholder="URL 을 입력하세요" />
-				<button type="submit" id="short" class="btn btn-default" />
-			</div>
-			
-			<div id="home_url_list" align="left">
-				<% current_user.products.order("created_at DESC").each do |p| %>
-				<% if p.name == "" %>
-				<div class="user_url_list" id="url_list<%=p.id%>">
-					<a href="<%=p.url%>" id="url_list" target="_blank"><%=p.url%></a>
-					<!--
-					<%=link_to '삭제', user_product_path(:user_id => current_user.id, :id =>p.id), method: :delete, id: "delete_product", remote: true %>
-				-->
-				<% end %>
-			</div>
-			<% end %>
-		</div> 
-	</div>
-</div>
+    <div id="div_total">
+        <div id="div_main">
+            <div id="div_main_box">
+                <div id="div_main_frame">
+                  <!--맨 위 타이틀-->
+                  <div id="div_main_title" align="center">
+                    환영합니다!
+                  </div>
+
+                  <!--타이틀 서브 텍스트-->
+                  <div id="div_main_title_sub" align="center">
+                        전 세계의 모든 상품을 분석 해 드립니다.
+                  </div>
+                  
+                  <!--메인 URL 입력 폼-->
+                  <div id="div_main_url_form" class="form-inline" align="center">
+                    <div id="div_main_url_input" align="center" class="form-group">
+                      <input type="text" name="url" id="url" placeholder=" URL 을 입력하세요." class="form-control" />
+                      <button type="submit" id="submit" class="btn btn-default">상품 분석</button>
+                    </div>
+                  </div>
+
+                  <!--URL 아래 주의사항 설명-->
+                  <div id="div_main_info" align="center">
+                    <div id="div_main_info_box" align="center">
+                    URL 등록 후 상품을 분석합니다. 1 - 3 분정도 소요됩니다.
+                    </div>
+                  </div>
+
+                  <!--맨 아래 SHOP IN 이용방법-->
+                  <a href="#">
+                  <div id="div_main_useage" align="center">
+                    <div id="div_main_useage_box" align="center">
+                      SHOP IN 이용방법
+                    </div>
+                  </div>
+                  </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="div_product">
+           <div id="div_product_title">
+               Product
+           </div>
+
+           <div id="div_product_info">
+               <div id="div_product_info_total">
+                   <div id="div_product_info_total_text">총</div>
+                   <div class="circle" id="div_product_info_total">10</div>
+                   <div id="div_product_info_total_text">개 상품이 등록되어 있습니다</div>
+               </div>
+
+               <% if logged_in? %>
+
+               <div id="div_product_lists">
+                   <div class="div_product_lists_centerized">
+
+                       <% @products.each do |p| %>
+
+                           <% if p.name == "" %>
+
+                               <div class="div_product_item">
+                                    <div id="div_prodcut_item_image">
+                                       <%= link_to image_tag('registering.jpg', class: "image_aspect_ratio"), p.url , :target => "_blank" %>
+                                   </div>
+                                   <div id="div_product_item_info">
+                                      <div class = "div_text" id="div_product_item_info_name">분석 중입니다</div><br>
+                                      <div class = "div_text" id="div_product_item_info_price"><%= number_with_delimiter(p.price, :delimiter => ',') %> ￦</div>
+                                   </div>
+                               </div>
+
+                            <% else %>
+
+                                <div class="div_product_item">
+                                   <div id="div_prodcut_item_image">
+                                       <%= link_to image_tag(p.img, class: "image_aspect_ratio"), p.url , :target => "_blank" %>
+                                   </div>
+                                   <div id="div_product_item_info">
+                                       <div class = "div_text" id="div_product_item_info_name"><%= p.name %></div><br>
+                                       <div class = "div_text" id="div_product_item_info_price"><%= number_with_delimiter(p.price, :delimiter => ',') %> ￦</div>
+                                   </div>
+                               </div>
+
+                            <% end %>
+
+                       <% end %>
+                   </div>
+               </div>
+
+               <% end %>
+
+           </div>
+       </div>
+    </div>
 </body>
-
 </html>
-
-<script>
-	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-	ga('create', 'UA-73008078-1', 'auto');
-	ga('send', 'pageview');
-</script>

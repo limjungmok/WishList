@@ -16,7 +16,7 @@ gem 'therubyracer', platforms: :ruby
 gem 'bootstrap-sass',       '3.2.0.0'
 
 gem 'activeadmin'
-gem 'jquery_block_ui', '~> 0.0.1'
+gem 'better_errors'
 
 # Plus integrations with:
 gem 'devise'
@@ -25,6 +25,8 @@ gem 'draper'
 gem 'pundit'
 gem 'bitly', '~> 0.9.0'
 gem "paperclip", "~> 4.3"
+gem "figaro"
+gem 'mailgun-ruby', '~> 1.0', '>= 1.0.3'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
@@ -37,7 +39,6 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
-gem 'jquery_block_ui', '~> 0.0.1'
 
 # Use Unicorn as the app server
 # gem 'unicorn'

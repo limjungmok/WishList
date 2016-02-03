@@ -1,178 +1,237 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
-@font-face {
-	font-family: 'UltimaPDac-UltraLight';
-	src: url(/assets/stylesheets/ultima_pd/UltimaPDac-UltraLight.ttf);
+body{
+	font-family: 'Nanum Gothic', sans-serif;
 }
-
-
-
-/* home */
-#home_url_form{
+/* 전체 div */
+#div_total{
 	width: 100%;
-	margin-left:auto;
-	margin-right:auto;
-	margin-top: 50px;
-	margin-bottom: 200px;
-}
+	height: 100%;
 
-#home_url_input{
-	margin-bottom: 50px;
-	width: 600px;
 }
-
-#home_url_list{
-	width: 600px;
+#div_main{
+	height: auto;
+    background-image: url('sample2.jpg');
+    background-size: cover;
+    padding-top: 15%;
+}
+#div_main_box{
+	width: auto;
+	height: auto;
+	background-color: rgba(0, 0, 0, 0.7);
 	margin-left: auto;
 	margin-right: auto;
-}
-.user_url_list{
-	width: 575px;
-	height: 50px;
-	background-color: #f0ebe8;
-	margin-bottom: 15px;
-	margin-left: auto;
-	margin-right: auto;
-	padding-left: 10px;
-	vertical-align: middle;	
+	display: table;
 	border-radius: 3px;
+}
 
+#div_main_frame{
+	display: table-cell;
+    vertical-align: middle;
+
+}
+#div_main_title{
+	font-weight: bold;
+	width: 70%;
+	height: 80px;
+	background-color: #transparent;
+	margin-left: auto;
+	margin-right: auto;
+	font-size: 60px;
+	color: #fff;
+}
+
+#div_main_title_sub{
+	width: 70%;
+	height: 30px;
+	background-color: transparent;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 20px;
+	font-size: 18px;
+	font-weight: lighter;
+	color: #fff;
+}
+
+#div_main_url_form{
+	width: 70%;
+	height: 100px;
+	background-color: transparent;
+	margin-left: auto;
+	margin-right: auto;
+
+
+	#form_box{
+		width: 100%;
+		margin-left: auto;
+		margin-right: auto;
+	}
+	#url{
+		width: auto;
+		height: 50px;
+	}
+	#submit{
+		width: 85px;
+		height: 50px;
+		font-weight: bold;
+	}
+}
+
+#div_main_info{
+	width: 70%;
+	height: 50px;
+	background-color: transparent;
+	margin-left: auto;
+	margin-right: auto;
+
+	#div_main_info_box{
+		width: 380px;
+		height: 40px;
+		background-color: rgba(255, 255, 255, 0.5);
+		display: table-cell;
+		vertical-align: middle;
+	    margin: 0 auto;
+		color: #fff;
+	}
+}
+
+
+#div_main_useage{
+	width: 150px;
+	height: 50px;
+	background-color: transparent;
+	margin-left: auto;
+	margin-right: auto;
+
+	#div_main_useage_box{
+		width: 150px;
+		height: 40px;
+		background-color: rgba(255, 255, 255, 0.5);
+		display: table-cell;
+		vertical-align: middle;
+	    margin: 0 auto;
+		color: #fff;
+		font-size: 16px;
+	}
 	a{
-		color: #000;
-		font-size: 14.5px;
-		position: relative;
-		top: 30%;
+	    text-decoration: none !important;
 	}
 	a:hover{
-		color: #9f9f9f;
-		text-decoration:none;
-		font-weight:bold;
-
+	    text-decoration: none !important;
 	}
 }
-#delete_product{
-	float: right;
-	padding-right: 15px;
-}
-/* home input 상자 */
-#url{
-	width:500px;
-	line-height: 50px;
 
-}
 
-/* home submit 버튼 */
-#short{
-	width: 75px;
-	height: 65px;
-	background: url('submit.png') no-repeat 0 0 transparent;
-	color: transparent;
-	cursor: pointer;
+
+#div_product{
+    width: 100%;
+    height: auto;
+    background-image: url('sample4.jpg');
+    background-size: cover;
 }
 
-#short:hover{
-	background: url('submit_over.png') no-repeat 0 0 transparent;
-
-}
-#short:active{ 
-	background: url('submit_pressed.png') no-repeat 0 0 transparent;
-}
-
-#short:focus { outline:0 !important; }
-
-
-
-
-
-
-
-/* index 페이지 */
-.mylist_products_list_container {
-	width: 100%;
-	margin-bottom : 50px;
-}
-
-/* My List 로고 */
-.mylist_logo {
-	font-size: 18pt;
-	font-weight: bold;
-	color: #757575;
-	letter-spacing: 0.1em;
+#div_product_title{
 	text-align: center;
-	margin-top : 50px;
-	margin-bottom: 25px;
+    vertical-align: middle;
+    line-height: 90px;
+    font-size: 40px;
+    font-weight: bold;
+    color: #fff;
 }
 
-/* 제품 전체 */
-.mylist_products {
-	list-style: none;
-	padding :0px;
-	li {
-		display: inline-block;
-		position: relative;
-		vertical-align: top;
-		text-align: center;
-		margin-right: 0.5%;
-		margin-left: 0.5%;
-		width : 291px;
-	}
-}
-.mylist_product {
-	margin : 10px;
-	height: 486px;
+#div_product_info{
+    text-align: center;
+    vertical-align: middle;
+    font-size: 20px;
+    color: #fff;
 }
 
-/* 제품 이미지 */
-.mylist_product_img {
-
-	margin: 0;
-	position: relative;
-
-	max-width: 291px;
-	height: auto;
+#div_product_info_total{
+    display: inline-block;
 }
 
-#mylist_product:hover{
-	.delete_product {
-		display: block;
-	}
+#div_product_info_total_text{
+    width:auto;
+    height:auto;
+    text-align: center;
+    vertical-align: middle;
+    display: inline-block;
+    color: #fff;
 }
 
-#mylist_product {
-	margin-bottom: 5%;
+#div_product_info_total.circle{
+    background:#ADD43C ;
+    width:30px;
+    font-weight: bold;
 }
 
-/* 삭제 버튼 */
-.delete_product {
-	display: none;
-	margin-left: 274px;
-	position: absolute;
-	top: 0;
-	opacity: 0.4;
+#div_product_info_current{
+    display: inline-block;
 }
 
-/* 제품 개별 */
-.mylist_product_info {
-	padding-left: 0;
-	margin-top: -3%;
-	color: #959595;
-	font-size: 11px;
-	letter-spacing: 1px;
-	text-transform: uppercase;
-	text-align: center;
+#div_product_info_text{
+
 }
 
-#t1{
-	height : 436px; 
+.div_product_item{
 	width : 291px;
-	display: table-cell;
-	text-align: center;
-	vertical-align: middle;
-	background-color : rgba(0,0,0,0.03);
+	height : 506px;
+	float : left;
+	margin : 30px;
+	background-color:rgba(0, 0, 0, 0.4);
 }
 
-#t2{
-	display: inline-block;
-	text-align: left;
+.div_product_lists_centerized{
+	overflow:hidden;
+    margin:0 auto;
 }
+
+#div_prodcut_item_image{
+    width : 291px;
+    height : 436px;
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+    background-color:rgba(0, 0, 0, 0.4);
+}
+
+#div_product_item_info{
+    line-height : 15px;
+    margin-top: 10px;
+    margin-bottom : 10px;
+    height: 50px;
+    font-size : 15px;
+    font-weight: lighter;
+}
+
+#div_product_item_info_name_{
+	height: 50px;
+	margin: 0px;
+}
+
+.circle{
+    width:30px;
+    height:30px;
+    border-radius:50px;
+    font-size:15px;
+    color:#fff;
+    line-height:30px;
+    text-align:center;
+    background : #3CADD4 ;
+}
+
+.div_text{
+	margin: 5px;
+	display: inline-block;
+}
+
+.image_aspect_ratio{
+    display: block;
+    max-width:291px;
+    max-height:436px;
+    width: auto;
+    height: auto;
+}
+
+ul li {list-style:none;}

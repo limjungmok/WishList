@@ -8,7 +8,10 @@
     </head>
     <body>
       <%= render 'layouts/header' %>
-
+        <div>
+          <% flash.each do |message_type, message| %>
+          <div class="alert alert-<%= message_type %>"><%= message %></div>
+      <% end %>
     <script>
        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -24,41 +27,30 @@
   </body>
   </html>
 
-  <script type="text/javascript" 
-  src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
-  <script type="text/javascript">
-// var tmp = 1;
-//   $(document).ready(function(){
 
-//     $.refresh = function(){
-//       alert(<%=current_user.products.count%> + tmp);
-//       tmp = tmp + 1;
+<script type="text/javascript" 
+ src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+ <script type="text/javascript">
+   $(document).ready(function(){
+     function a(){
+      <% if logged_in? %>
+       $('#header_product_count').html(<%= current_user.products.count %>);
+       <% end %>
+     }
 
-//       $('#header_product_count').append("2");
-//   });
-$(document).ready(function(){
-  function a(){
-    $('#header_product_count').html(<%= current_user.products.count %>);
-  }
-
-  ////////////
-
-
-  /////////////
-
-  $.refresh = function(){
-    $.ajax({ 
-      type: 'GET',
-      url: '/get_aj',
-      success: function(data,status,xhr){
-        console.log(data);
-        $('#header_product_count').html(data.message);
-      },
-      error: function(xhr,status,error){
-        console.log(xhr);
-        alert(error);
-      }
-    });
-  }
+ $.refresh = function(){
+   $.ajax({ 
+     type: 'GET',
+     url: '/get_aj',
+     success: function(data,status,xhr){
+       console.log(data);
+       $('#header_product_count').html(data.message);
+     },
+     error: function(xhr,status,error){
+       console.log(xhr);
+       alert(error);
+     }
+   });
+ }
 });
-</script>
+ </script>

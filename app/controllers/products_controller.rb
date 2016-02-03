@@ -11,6 +11,9 @@ class ProductsController < ApplicationController
 		if logged_in?
 			@user = current_user
 			@product = @user.products.new
+			#현재 유저가 담은, 분류되지 않은 목록들
+			@current_user_products = @user.products.where(name: "")
+			@products = @user.products.all
 		else
 			render 'new_no_login'
 		end
@@ -18,7 +21,7 @@ class ProductsController < ApplicationController
 
 	def create
 		@user = current_user
-		@product = @user.products.create(:url => params[:url])
+		@product = @user.products.create(:url => params[:url], :origin_url => params[:origin_url])
 		if @product
 			redirect_to root_path(@product)
 		else
@@ -48,8 +51,18 @@ class ProductsController < ApplicationController
 		end
 	end
 
-	def get_aj
-		data = {:message => current_user.products.count}
-		render :json => data, :status => :ok
-	end
+	def get_product_count
+        data = {:message => current_user.products.count, :watting => current_user.products.where(name: "").count}
+        render :json => data, :status => :ok
+    end
+
+    def send_email
+    	ExampleMailer.sample_email.deliver_now
+    	redirect_to :back
+    end
+
+    def get_unclassify_list
+    	data = {:list => current_user.products.where(name: "")}
+        render :json => data, :status => :ok
+    end
 end

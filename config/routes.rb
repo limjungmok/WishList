@@ -19,6 +19,10 @@ Rails.application.routes.draw do
 
   get 'guide_page' =>'users#guide'
 
-  get 'get_aj' => 'products#get_aj'
+  get 'get_product_count' => 'products#get_product_count'
 
-end
+  get 'send_email' => 'products#send_email'
+
+  get 'get_unclassify_list' => 'products#get_unclassify_list'
+
+end 
