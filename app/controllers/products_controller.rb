@@ -13,6 +13,7 @@ class ProductsController < ApplicationController
 			@product = @user.products.new
 			#현재 유저가 담은, 분류되지 않은 목록들
 			@current_user_products = @user.products.where(name: "")
+			@products = @user.products.all
 		else
 			render 'new_no_login'
 		end

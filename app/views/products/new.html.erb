@@ -12,7 +12,19 @@ $(document).ready(function(){
 	var h = window.innerHeight;
 	console.log("width : ", w);
 	console.log("height : ", h);
+    console.log(<%= current_user.products.count %>);
 	$('#div_main').css({'width': w, 'height': h});
+
+  $(function(){
+    var main = $('#div_product_lists'),
+        centerized = main.find('.div_product_lists_centerized'),
+        itemWidth = main.find('.div_product_item').outerWidth(true);
+
+    $(window).resize(function(){
+        var fitItems = (main.width() / itemWidth) | 0;
+        centerized.width(fitItems * itemWidth);
+    }).trigger('resize');
+});
 
 	//bitly를 이용해 shorten ajax 처리
     function bit_shorten_url(url){
@@ -81,6 +93,18 @@ $(document).ready(function(){
 
 });
 
+$(function(){
+    var main = $('#div_product_lists'),
+        centerized = main.find('.div_product_lists_centerized'),
+        itemWidth = main.find('.div_product_item').outerWidth(true);
+
+    $(window).resize(function(){
+        var fitItems = (main.width() / itemWidth) | 0;
+        centerized.width(fitItems * itemWidth);
+    }).trigger('resize');
+});
+
+
 </script>
 <body>
     <div id="div_total">
@@ -133,22 +157,40 @@ $(document).ready(function(){
                </div>
 
                <% if logged_in? %>
+
                <div id="div_product_lists">
-                   <ul id="ul_product_lists">
-                       <% current_user.products.each do |p| %>
+                   <div class="div_product_lists_centerized">
+
+                       <% @products.each do |p| %>
+
                            <% if p.name == "" %>
-                               <li id="li_product_lists">
-                                   <div id="div_prodcut_item_image">
-                                       <%= link_to image_tag('registering.jpg', class: "mylist_product_img", height: '436px'), p.url , :target => "_blank" %></td>
+
+                               <div class="div_product_item">
+                                    <div id="div_prodcut_item_image">
+                                       <%= link_to image_tag('registering.jpg', class: "image_aspect_ratio"), p.url , :target => "_blank" %>
                                    </div>
                                    <div id="div_product_item_info">
-                                       <p>등록중</p>
-                                       <p>1,000,000원</p>
+                                      <div class = "div_text" id="div_product_item_info_name">분석 중입니다</div><br>
+                                      <div class = "div_text" id="div_product_item_info_price"><%= number_with_delimiter(p.price, :delimiter => ',') %> ￦</div>
                                    </div>
-                               </li>
-                           <% end %>
+                               </div>
+
+                            <% else %>
+
+                                <div class="div_product_item">
+                                   <div id="div_prodcut_item_image">
+                                       <%= link_to image_tag(p.img, class: "image_aspect_ratio"), p.url , :target => "_blank" %>
+                                   </div>
+                                   <div id="div_product_item_info">
+                                       <div class = "div_text" id="div_product_item_info_name"><%= p.name %></div><br>
+                                       <div class = "div_text" id="div_product_item_info_price"><%= number_with_delimiter(p.price, :delimiter => ',') %> ￦</div>
+                                   </div>
+                               </div>
+
+                            <% end %>
+
                        <% end %>
-                   </ul>
+                   </div>
                </div>
 
                <% end %>
