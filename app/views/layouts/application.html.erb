@@ -26,31 +26,3 @@
     </div>
   </body>
   </html>
-
-
-<script type="text/javascript" 
- src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
- <script type="text/javascript">
-   $(document).ready(function(){
-     function a(){
-      <% if logged_in? %>
-       $('#header_product_count').html(<%= current_user.products.count %>);
-       <% end %>
-     }
-
- $.refresh = function(){
-   $.ajax({ 
-     type: 'GET',
-     url: '/get_aj',
-     success: function(data,status,xhr){
-       console.log(data);
-       $('#header_product_count').html(data.message);
-     },
-     error: function(xhr,status,error){
-       console.log(xhr);
-       alert(error);
-     }
-   });
- }
-});
- </script>

@@ -7,9 +7,9 @@
      <ul class="nav navbar-nav navbar-right">
        <% if logged_in? %>
 
-       <li id="header_menu"><%= link_to "상품 등록", root_path %></li>
+       <li id="header_menu"><%= link_to "상품 등록", '#div_main' %></li>
 
-       <li id="header_menu_right"><%= link_to "담은 상품", user_products_path(current_user.id) %> <span class="step" id="header_product_count"><%= current_user.products.count %></span></li>
+       <li id="header_menu_right"><%= link_to "담은 상품", '#div_product'%> <span class="step" id="header_product_count"><%= current_user.products.count %></span></li>
 
 
        <li class="dropdown">
