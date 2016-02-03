@@ -11,7 +11,11 @@ $(document).ready(function(){
 	var h = window.innerHeight;
 	console.log("width : ", w);
 	console.log("height : ", h);
-	$('#div_main').css({'width': w, 'height': h});
+	
+    $('#div_main').css({'height': h});
+    $('#div_main_box').css({'width': (w/1.9), 'height': (h/2)});
+    $('#url').css({'width': (w/4)});
+
 
 	$("#url").click(function() {
 		document.location.href = '/login';
@@ -22,41 +26,43 @@ $(document).ready(function(){
 <body>
     <div id="div_total">
         <div id="div_main">
+            <div id="div_main_box">
+                <div id="div_main_frame">
+                	<!--맨 위 타이틀-->
+                	<div id="div_main_title" align="center">
+                		환영합니다!
+                	</div>
 
-        	<!--맨 위 타이틀-->
-        	<div id="div_main_title" align="center">
-        		환영합니다!
-        	</div>
+                	<!--타이틀 서브 텍스트-->
+                	<div id="div_main_title_sub" align="center">
+                        전 세계의 모든 상품을 분석 해 드립니다.
+                	</div>
+                	
+                	<!--메인 URL 입력 폼-->
+                	<div id="div_main_url_form" class="form-inline" align="center">
+                		<div id="div_main_url_input" align="center" class="form-group">
+        	        		<input type="text" name="url" id="url" placeholder=" URL 을 입력하세요." class="form-control" />
+        	        		<button type="submit" id="submit" class="btn btn-default">상품 분석</button>
+                		</div>
+                	</div>
 
-        	<!--타이틀 서브 텍스트-->
-        	<div id="div_main_title_sub" align="center">
-        		190개국 현지인들의 독특한 숙소를 예약해 보세요.
-        	</div>
-        	
-        	<!--메인 URL 입력 폼-->
-        	<div id="div_main_url_form" class="form-inline" align="center">
-        		<div id="div_main_url_input" align="center" class="form-group">
-	        		<input type="text" name="url" id="url" placeholder=" URL 을 입력하세요." class="form-control" />
-	        		<button type="submit" id="submit" class="btn btn-default">상품 분석</button>
-        		</div>
-        	</div>
+                	<!--URL 아래 주의사항 설명-->
+                	<div id="div_main_info" align="center">
+                		<div id="div_main_info_box" align="center">
+                		URL 등록 후 상품을 분석합니다. 1 - 3 분정도 소요됩니다.
+                		</div>
+                	</div>
 
-        	<!--URL 아래 주의사항 설명-->
-        	<div id="div_main_info" align="center">
-        		<div id="div_main_info_box" align="center">
-        		URL 등록 후 상품을 분석합니다. 1 - 3 분정도 소요됩니다.
-        		</div>
-        	</div>
-
-        	<!--맨 아래 SHOP IN 이용방법-->
-        	<a href="#">
-        	<div id="div_main_useage" align="center">
-        		<div id="div_main_useage_box" align="center">
-        			SHOP IN 이용방법
-        		</div>
-        	</div>
-        	</a>
-
+                	<!--맨 아래 SHOP IN 이용방법-->
+                	<a href="#">
+                	<div id="div_main_useage" align="center">
+                		<div id="div_main_useage_box" align="center">
+                			SHOP IN 이용방법
+                		</div>
+                	</div>
+                	</a>
+                </div>
+            </div>
         </div>
 
     </div>

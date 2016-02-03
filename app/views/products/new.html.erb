@@ -10,9 +10,10 @@
 $(document).ready(function(){
 	var w = window.innerWidth;
 	var h = window.innerHeight;
-	console.log("width : ", w);
-	console.log("height : ", h);
-	$('#div_main').css({'width': w, 'height': h});
+
+  $('#div_main').css({'height': h});
+  $('#div_main_box').css({'width': (w/1.9), 'height': (h/2)});
+  $('#url').css({'width': (w/4)});
 
 	//bitly를 이용해 shorten ajax 처리
     function bit_shorten_url(url){
@@ -66,60 +67,81 @@ $(document).ready(function(){
         document.getElementById("submit").value = "상품 분석중";
         document.getElementById("submit").disabled = true;
         parsing_url();
+        $("#url").val('');
+
     });
 
     //URL 엔터키 먹였을때.
     $("#url").keydown(function(e){
         if(e.keyCode == 13){
 	        document.getElementById("submit").value = "상품 분석중";
-   	        document.getElementById("submit").disabled = true;
+   	      document.getElementById("submit").disabled = true;
 	        parsing_url();
-
+          $("#url").val('');
         }else{
         }
     });
 
+	var targetHeight = $('#header').outerHeight();
+
+	$(document).scroll(function() {
+		var scrollPercent = (targetHeight - window.scrollY) / targetHeight;
+		console.log(scrollPercent);
+
+	    if ($(this).scrollTop() > (h)){
+	    	$('#header').css({'background-color':'rgba(0, 0, 0, 1.0)'});	
+	    	
+	    }else{
+	    	$('#header').css({'background-color':'transparent'});
+	    }
+	    
+
+	});
 });
 
 </script>
 <body>
     <div id="div_total">
         <div id="div_main">
+            <div id="div_main_box">
+                <div id="div_main_frame">
+                  <!--맨 위 타이틀-->
+                  <div id="div_main_title" align="center">
+                    환영합니다!
+                  </div>
 
-        	<!--맨 위 타이틀-->
-        	<div id="div_main_title" align="center">
-        		환영합니다!
-        	</div>
+                  <!--타이틀 서브 텍스트-->
+                  <div id="div_main_title_sub" align="center">
+                        전 세계의 모든 상품을 분석 해 드립니다.
+                  </div>
+                  
+                  <!--메인 URL 입력 폼-->
+                  <div id="div_main_url_form" class="form-inline" align="center">
+                    <div id="div_main_url_input" align="center" class="form-group">
+                      <input type="text" name="url" id="url" placeholder=" URL 을 입력하세요." class="form-control" />
+                      <button type="submit" id="submit" class="btn btn-default">상품 분석</button>
+                    </div>
+                  </div>
 
-        	<!--타이틀 서브 텍스트-->
-        	<div id="div_main_title_sub" align="center">
-        		전 세계의 모든 상품을 분석 해 드립니다.
-        	</div>
-        	
-        	<!--메인 URL 입력 폼-->
-        	<div id="div_main_url_form" class="form-inline" align="center">
-        		<div id="div_main_url_input" align="center" class="form-group">
-	        		<input type="text" name="url" id="url" placeholder=" URL 을 입력하세요." class="form-control" />
-	        		<button type="submit" id="submit" class="btn btn-default">상품 분석</button>
-        		</div>
-        	</div>
+                  <!--URL 아래 주의사항 설명-->
+                  <div id="div_main_info" align="center">
+                    <div id="div_main_info_box" align="center">
+                    URL 등록 후 상품을 분석합니다. 1 - 3 분정도 소요됩니다.
+                    </div>
+                  </div>
 
-        	<!--URL 아래 주의사항 설명-->
-        	<div id="div_main_info" align="center">
-        		<div id="div_main_info_box" align="center">
-        		URL 등록 후 상품을 분석합니다. 1 - 3 분정도 소요됩니다.
-        		</div>
-        	</div>
-
-        	<!--맨 아래 SHOP IN 이용방법-->
-        	<div id="div_main_useage" align="center">
-   	        	<a href="#">
-	        		<div id="div_main_useage_box" align="center">
-	        			SHOP IN 이용방법
-	        		</div>
-        		</a>
-        	</div>
+                  <!--맨 아래 SHOP IN 이용방법-->
+                  <a href="#">
+                  <div id="div_main_useage" align="center">
+                    <div id="div_main_useage_box" align="center">
+                      SHOP IN 이용방법
+                    </div>
+                  </div>
+                  </a>
+                </div>
+            </div>
         </div>
+
         <div id="div_product">
            <div id="div_product_title">
                Product

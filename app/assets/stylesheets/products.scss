@@ -8,16 +8,29 @@ body{
 #div_total{
 	width: 100%;
 	height: 100%;
+
 }
 #div_main{
-	width: 100%;
 	height: auto;
-	display: table-cell;
-	vertical-align: middle;
-    background-image: url('sample1.jpg');
+    background-image: url('sample2.jpg');
     background-size: cover;
+    padding-top: 15%;
+}
+#div_main_box{
+	width: auto;
+	height: auto;
+	background-color: rgba(0, 0, 0, 0.7);
+	margin-left: auto;
+	margin-right: auto;
+	display: table;
+	border-radius: 3px;
 }
 
+#div_main_frame{
+	display: table-cell;
+    vertical-align: middle;
+
+}
 #div_main_title{
 	font-weight: bold;
 	width: 70%;
@@ -37,7 +50,7 @@ body{
 	margin-right: auto;
 	margin-bottom: 20px;
 	font-size: 18px;
-	font-weight: bold;
+	font-weight: lighter;
 	color: #fff;
 }
 
@@ -55,7 +68,7 @@ body{
 		margin-right: auto;
 	}
 	#url{
-		width: 500px;
+		width: auto;
 		height: 50px;
 	}
 	#submit{
