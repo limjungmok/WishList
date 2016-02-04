@@ -21,7 +21,7 @@ class ProductsController < ApplicationController
 
 	def create
 		@user = current_user
-		@product = @user.products.create(:url => params[:url], :origin_url => params[:origin_url])
+		@product = @user.products.create(:url => params[:url])
 		if @product
 			redirect_to root_path(@product)
 		else

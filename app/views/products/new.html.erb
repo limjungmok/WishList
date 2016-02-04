@@ -3,19 +3,19 @@
 <head>
     <title></title>
 </head>
+
 <script type="text/javascript"
         src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
 
 <script type="text/javascript">
 $(document).ready(function(){
+
 	var w = window.innerWidth;
 	var h = window.innerHeight;
 
-
   $('#div_main').css({'height': h});
-  $('#div_main_box').css({'width': (w/1.9), 'height': (h/1.6)});
+  $('#div_main_box').css({'height': (h/1.6)});
   $('#url').css({'width': (w/4)});
-
 
   $(function(){
     var main = $('#div_product_lists'),
@@ -27,7 +27,6 @@ $(document).ready(function(){
         centerized.width(fitItems * itemWidth);
     }).trigger('resize');
   });
-
 
   $(document).ready(function($) {
       $('a[href^="#"]').bind('click.smoothscroll', function(e) {
@@ -46,21 +45,21 @@ $(document).ready(function(){
   });
 
 
-	//bitly를 이용해 shorten ajax 처리
-    function bit_shorten_url(url){
-        var origin_url = url;
-        var username="limjungmok"; // bit.ly username
-        var key="R_249fbb5a23da46259abafefc07de6d0e";// bit.ly API KEY
-        $.ajax({
-            url:"http://api.bit.ly/v3/shorten",
-            data:{longUrl:url,apiKey:key,login:username},
-            dataType:"jsonp",
-            success:function(v){
-                var shorten_url=v.data.url;
-                submit_url(shorten_url, origin_url);
-            }
-        });
-    }
+ //   //bitly를 이용해 shorten ajax 처리
+ //    function bit_shorten_url(url){
+ //        var origin_url = url;
+ //        var username="limjungmok"; // bit.ly username
+ //        var key="R_249fbb5a23da46259abafefc07de6d0e";// bit.ly API KEY
+ //        $.ajax({
+ //            url:"http://api.bit.ly/v3/shorten",
+ //            data:{longUrl:url,apiKey:key,login:username},
+ //            dataType:"jsonp",
+ //            success:function(v){
+ //                var shorten_url=v.data.url;
+ //                submit_url(shorten_url, origin_url);
+ //            }
+ //        });
+ //    }
 
     function refresh(){
      $.ajax({ 
@@ -91,22 +90,20 @@ $(document).ready(function(){
               var fitItems = (main.width() / itemWidth) | 0;
               centerized.width(fitItems * itemWidth);
           }
+
     //URL 축소된 url을 전송하는 함수
-    function submit_url(url, origin_url){
-        var shorten_url = url;
-        var origin_url = origin_url;
+    function submit_url(url){
         $.ajax({
             url:"/users/<%=current_user.id%>/products",
             type:'POST',
-            data:{'url':url, 'origin_url':origin_url},
+            data:{'url':url},
             success:function(v){
             	document.getElementById("submit").disabled = false;
               $('#ex').append('<div class="div_product_item"><div id="div_prodcut_item_image">'+'<%= link_to image_tag("registering2.png", class: "image_aspect_ratio"), "#" , :target => "_blank" %></div><div id="div_product_item_info">'+'<div class = "div_text" id="div_product_item_info_name">분석 중입니다</div><br><div class = "div_text" id="div_product_item_info_price">'+'<%= number_with_delimiter("0", :delimiter => ",") %>'+' ￦</div></div></div>');
               
-
                 resize_();
                 refresh();
-                //send_e();
+                send_e();
             }
         });
     }
@@ -121,7 +118,9 @@ $(document).ready(function(){
         if(urltest){
             //제출이 끝난 후
             //URL 을 축소시킨다.
-            bit_shorten_url(url);
+            //bit_shorten_url(url);
+            submit_url(url);
+
         }else{
             alert("Bad URL");
         }
@@ -154,32 +153,31 @@ $(document).ready(function(){
 
 	    if ($(this).scrollTop() > (h-50)){
 	    	$('#header').css({'background-color':'rgba(0, 0, 0, 0.5)'});	
-	    	
 	    }else{
 	    	$('#header').css({'background-color':'transparent'});
 	    }
 	    
 
-	});
-});
+  	});
+  });
 
-$(function(){
-    var main = $('#div_product_lists'),
-        centerized = main.find('.div_product_lists_centerized'),
-        itemWidth = main.find('.div_product_item').outerWidth(true);
+  $(function(){
+      var main = $('#div_product_lists'),
+          centerized = main.find('.div_product_lists_centerized'),
+          itemWidth = main.find('.div_product_item').outerWidth(true);
 
-    $(window).resize(function(){
-        var fitItems = (main.width() / itemWidth) | 0;
-        centerized.width(fitItems * itemWidth);
-    }).trigger('resize');
-});
+      $(window).resize(function(){
+          var fitItems = (main.width() / itemWidth) | 0;
+          centerized.width(fitItems * itemWidth);
+      }).trigger('resize');
+  });
 
 
 </script>
 <body>
     <div id="div_total">
         <div id="div_main">
-            <div id="div_main_box">
+            <div id="div_main_box" style="width: 55%">
                 <div id="div_main_frame">
                   <!--맨 위 타이틀-->
                   <div id="div_main_title" align="center">
@@ -241,10 +239,10 @@ $(function(){
 
                                <div class="div_product_item">
                                     <div id="div_prodcut_item_image">
-                                       <%= link_to image_tag('registering2.png', class: "image_aspect_ratio"), p.url , :target => "_blank" %>
+                                       <%= link_to image_tag('loading.gif', class: "image_aspect_ratio"), p.url , :target => "_blank" %>
                                    </div>
                                    <div id="div_product_item_info">
-                                      <div class = "div_text" id="div_product_item_info_name">분석 중입니다</div><br>
+                                      <div class = "div_text" id="div_product_item_info_name">상품 분석중</div><br>
                                       <div class = "div_text" id="div_product_item_info_price"><%= number_with_delimiter(p.price, :delimiter => ',') %> ￦</div>
                                    </div>
                                </div>
@@ -256,7 +254,7 @@ $(function(){
                                        <%= link_to image_tag(p.img, class: "image_aspect_ratio"), p.url , :target => "_blank" %>
                                    </div>
                                    <div id="div_product_item_info">
-                                       <div class = "div_text" id="div_product_item_info_name"><%= p.name %></div><br>
+                                       <div class = "div_text" id="div_product_item_info_name"><%= truncate(p.name, length: 20) %></div><br>
                                        <div class = "div_text" id="div_product_item_info_price"><%= number_with_delimiter(p.price, :delimiter => ',') %> ￦</div>
                                    </div>
                                </div>
