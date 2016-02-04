@@ -25,4 +25,7 @@ Rails.application.routes.draw do
 
   get 'get_unclassify_list' => 'products#get_unclassify_list'
 
+  get 'extention_login' => 'products#extention_login'
+  get 'extention_add' => 'products#extention_add'
+
 end 

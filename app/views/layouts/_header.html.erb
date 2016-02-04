@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<header class="navbar navbar-fixed-top navbar-inverse"id="header">
+<header class="navbar navbar-fixed-top navbar-inverse" id="header">
  <div class="container">
    <%= link_to "# SHOP IN", root_path, id: "logo" %>
    <nav>
@@ -9,8 +9,9 @@
 
        <li id="header_menu"><%= link_to "상품 등록", '#div_main' %></li>
 
-       <li id="header_menu_right"><%= link_to "담은 상품", '#div_product'%> <span class="step" id="header_product_count"><%= current_user.products.count %></span></li>
-
+       <li id="header_menu_right"><%= link_to "담은 상품", '#div_product'%>
+        <span class="step" id="header_product_count"><%= current_user.products.count %></span>
+       </li>
 
        <li class="dropdown">
          <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="header_drop">
