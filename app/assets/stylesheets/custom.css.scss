@@ -1,23 +1,16 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
-
 #logo {
   font-family: 'Nanum Gothic', sans-serif;
   float: left;
   margin-right: 10px;
   font-size: 23px;
-  color: #000;
   text-transform: uppercase;
   letter-spacing: -1px;
   padding-top: 9px;
   font-weight: bold;
   color:#fff;
-}
-
-#logo:hover {
-  color: #ccc;
-  text-decoration: none;
 }
 
 /* forms */
@@ -36,14 +29,13 @@ input, textarea, select, .uneditable-input {
   border-color: transparent;
 
   a:hover{
-    color:#222;
-    font-weight:bold;
+    color:#ccc;
+    text-decoration: none;
   }
 }
 a{
   font-family: 'Nanum Gothic', sans-serif;
 }
-
 
 .navbar-inverse .navbar-nav > li > a{
  width:auto;
@@ -85,20 +77,20 @@ a{
 }
 
 #header_drop{
-  background-color: transparent; 
+  background-color: transparent;
   border-color: transparent;
   color: #fff;
-   font-size: 17px;
+  font-size: 17px;
 }
 
 #header_drop:focus{
-  background-color: transparent; 
+  background-color: transparent;
   border-color: transparent;
-  color: #222;
+  color: #ccc;
 }
 
 span.step {
-  background: #f06e35;
+  background: #CD2026;
   border-radius: 0.8em;
   -moz-border-radius: 0.8em;
   -webkit-border-radius: 0.8em;
@@ -106,9 +98,7 @@ span.step {
   display: inline-block;
   font-weight: bold;
   line-height: 1.6em;
-
   margin-right: 5px;
   text-align: center;
-  width: 2.5em; 
+  width: 2.5em;
 }
-
