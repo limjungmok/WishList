@@ -24,5 +24,8 @@ module WishList
     config.active_record.raise_in_transactional_callbacks = true
     config.time_zone = 'Seoul'
     config.active_record.default_timezone = :local
+
+    #corps 문제로 헤더추가!
+    config.action_dispatch.default_headers.merge!('Access-Control-Allow-Origin' => '*')
   end
 end

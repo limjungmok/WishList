@@ -46,21 +46,21 @@ $(document).ready(function(){
   });
 
 
-	//bitly를 이용해 shorten ajax 처리
-    function bit_shorten_url(url){
-        var origin_url = url;
-        var username="limjungmok"; // bit.ly username
-        var key="R_249fbb5a23da46259abafefc07de6d0e";// bit.ly API KEY
-        $.ajax({
-            url:"http://api.bit.ly/v3/shorten",
-            data:{longUrl:url,apiKey:key,login:username},
-            dataType:"jsonp",
-            success:function(v){
-                var shorten_url=v.data.url;
-                submit_url(shorten_url, origin_url);
-            }
-        });
-    }
+	// //bitly를 이용해 shorten ajax 처리
+ //    function bit_shorten_url(url){
+ //        var origin_url = url;
+ //        var username="limjungmok"; // bit.ly username
+ //        var key="R_249fbb5a23da46259abafefc07de6d0e";// bit.ly API KEY
+ //        $.ajax({
+ //            url:"http://api.bit.ly/v3/shorten",
+ //            data:{longUrl:url,apiKey:key,login:username},
+ //            dataType:"jsonp",
+ //            success:function(v){
+ //                var shorten_url=v.data.url;
+ //                submit_url(shorten_url, origin_url);
+ //            }
+ //        });
+ //    }
 
     function refresh(){
      $.ajax({ 
@@ -92,13 +92,11 @@ $(document).ready(function(){
               centerized.width(fitItems * itemWidth);
           }
     //URL 축소된 url을 전송하는 함수
-    function submit_url(url, origin_url){
-        var shorten_url = url;
-        var origin_url = origin_url;
+    function submit_url(url){
         $.ajax({
             url:"/users/<%=current_user.id%>/products",
             type:'POST',
-            data:{'url':url, 'origin_url':origin_url},
+            data:{'url':url},
             success:function(v){
             	document.getElementById("submit").disabled = false;
               $('#ex').append('<div class="div_product_item"><div id="div_prodcut_item_image">'+'<%= link_to image_tag("registering2.png", class: "image_aspect_ratio"), "#" , :target => "_blank" %></div><div id="div_product_item_info">'+'<div class = "div_text" id="div_product_item_info_name">분석 중입니다</div><br><div class = "div_text" id="div_product_item_info_price">'+'<%= number_with_delimiter("0", :delimiter => ",") %>'+' ￦</div></div></div>');
@@ -121,7 +119,7 @@ $(document).ready(function(){
         if(urltest){
             //제출이 끝난 후
             //URL 을 축소시킨다.
-            bit_shorten_url(url);
+            submit_url(url);
         }else{
             alert("Bad URL");
         }
