@@ -88,9 +88,9 @@
 
 <script>
 // 로그인_modal ajax
-$('#user_login_btn').click(function(){
-    var id = $('#login_ID').val();
-    var password = $('#login_PW').val();
+$('#div_modal_login_btn').click(function(){
+    var id = $('#div_modal_login_input_ID').val();
+    var password = $('#div_modal_login_input_PW').val();
     console.log("id : ", id);
     login(id,password);
 });
@@ -107,10 +107,10 @@ function login(ID, PW){
 }
 
 // 회원가입_modal ajax
-$('#user_signup_btn').click(function() {
-  var id = $('#signup_ID').val();
-  var password = $('#signup_PW').val();
-  var password_confirm = $('#signup_PW_confirm').val();
+$('#div_modal_signup_btn').click(function() {
+  var id = $('#div_modal_signup_input_ID').val();
+  var password = $('#div_modal_signup_input_PW').val();
+  var password_confirm = $('#div_modal_signup_input_PW_confirm').val();
   console.log("id: ", id);
   signup(id, password, password_confirm);
 });
