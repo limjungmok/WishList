@@ -1,3 +1,87 @@
-// Place all the styles related to the Users controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+.modal-dialog {
+	width: 30%;
+}
+
+.modal.in .modal-dialog {
+	margin-top: 10%;
+}
+
+.modal-backdrop.in {
+	opacity: 0.8 !important;
+}
+
+#div_modal_tab {
+	li {
+		width: 50%;
+		height: 70px;
+		line-height: 70px;
+		float: left;
+		font-size: 1.3em;
+		text-align: center;
+		background: #FFF;
+		color: #505260;
+	}
+
+	a {
+		border-radius: 2px;
+	}
+}
+
+.nav-tabs > li > a {
+	color: darkgrey;
+}
+
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+	color: #cd2026;
+	background-color: #fff;
+	border: 1px solid #ddd;
+	border-bottom-color: transparent;
+	cursor: default;
+}
+
+#div_modal_login {
+	margin-bottom: 10px;
+}
+
+#div_modal_login_input {
+	input{
+		font-size: 1.3em;
+		height: 40px;
+		border-radius: 2px;
+		margin-bottom: 6.25px;
+		padding: 8px 15px 3px
+	}
+}
+
+#div_modal_login_btn{
+	font-size: 1.3em;
+	margin-top: 20px;
+	padding: 10px;
+	border-color: #cd2026;
+	border-radius: 2px;
+	background-color: #cd2026;
+	color: #fff;
+}
+
+#div_modal_signup_input {
+	input {
+		font-size: 1.3em;
+		height: 40px;
+		border-radius: 2px;
+		margin-bottom: 6.25px;
+		padding: 8px 15px 3px
+	}
+}
+
+#div_modal_signup_btn{
+	font-size: 1.3em;
+	margin-top: 20px;
+	padding: 10px;
+	border-color: #cd2026;
+	border-radius: 2px;
+	background-color: #cd2026;
+	color: #fff;
+}
