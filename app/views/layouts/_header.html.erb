@@ -26,7 +26,7 @@
          </ul>
        </li>
        <% else %>
-       <li><%= link_to "로그인",  login_path %></li>
+         <li><%= link_to "로그인", "#", data: {toggle: "modal", target: "#div_modal"} %></li>
        <% end %>
 
      </ul>
@@ -34,5 +34,96 @@
  </div>
 </header>
 <body>
+
+<div class="modal fade" id="div_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+
+        <div role="tabpanel">
+          <ul class="nav nav-tabs" role="tablist" id="div_modal_tab">
+            <li role="presentation" class="active">
+              <a href="#div_modal_login" aria-controls="div_modal_login" role="tab" data-toggle="tab"> 로그인 </a>
+            </li>
+            <li role="presentation">
+              <a href="#div_modal_signup" aria-controls="div_modal_signup" role="tab" data-toggle="tab"> 회원가입 </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="tab-content">
+
+          <div role="tabpanel" class="tab-pane active" id="div_modal_login">
+            <div id="div_modal_login_input">
+              <input class="decorative-input inspectletIgnore" id="div_modal_login_input_ID" name="ID" placeholder="아이디">
+              <input class="decorative-input inspectletIgnore" id="div_modal_login_input_PW" name="PW" placeholder="비밀번호" type="password">
+            </div>
+
+            <button type="submit" class="btn btn-block btn-primary btn-large" id="div_modal_login_btn">
+              로그인
+            </button>
+          </div>
+
+          <div role="tabpanel" class="tab-pane" id="div_modal_signup">
+            <div id="div_modal_signup_input">
+              <input class="decorative-input inspectletIgnore" id="div_modal_signup_input_ID" name="ID" placeholder="아이디">
+              <input class="decorative-input inspectletIgnore" id="div_modal_signup_input_PW" name="PW" placeholder="비밀번호" type="password">
+              <input class="decorative-input inspectletIgnore" id="div_modal_signup_input_PW_confirm" name="PW_confirm" placeholder="비밀번호 확인" type="password">
+            </div>
+
+            <button type="submit" class="btn btn-block btn-primary btn-large" id="div_modal_signup_btn">
+              회원가입
+            </button>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
+
+<script>
+// 로그인_modal ajax
+$('#div_modal_login_btn').click(function(){
+    var id = $('#div_modal_login_input_ID').val();
+    var password = $('#div_modal_login_input_PW').val();
+    console.log("id : ", id);
+    login(id,password);
+});
+
+function login(ID, PW){
+    $.ajax({
+        url: '/login',
+        type:'POST',
+        data:{'login_id':ID, 'password':PW},
+        success:function(v){
+          location.reload();
+        }
+    });
+}
+
+// 회원가입_modal ajax
+$('#div_modal_signup_btn').click(function() {
+  var id = $('#div_modal_signup_input_ID').val();
+  var password = $('#div_modal_signup_input_PW').val();
+  var password_confirm = $('#div_modal_signup_input_PW_confirm').val();
+  console.log("id: ", id);
+  signup(id, password, password_confirm);
+});
+
+function signup(ID, PW, PW_confirm){
+    $.ajax({
+        url: '/users',
+        type:'POST',
+        data:{'user[login_id]':ID, 'user[password]':PW, 'user[password_confirmation]':PW_confirm},
+        success:function(v){
+          location.reload();
+        }
+    });
+}
+
+</script>

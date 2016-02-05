@@ -11,5 +11,4 @@ class ExampleMailer < ApplicationMailer
                       :text    => @add_things.count.to_s + "개 등록대기중"}
     mg_client.send_message ENV['domain'], message_params
   end
-
 end
