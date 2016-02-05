@@ -64,6 +64,17 @@ $(document).ready(function(){
      });
    }
 
+   function send_e(){
+    $.ajax({
+       type: 'GET',
+       url: '/send_email',
+       success: function(data,status,xhr){
+       },
+       error: function(xhr,status,error){
+       }
+    });
+    }
+
    function resize_(){
 
     var main = $('#div_product_lists'),

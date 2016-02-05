@@ -1,12 +1,14 @@
 class SessionsController < ApplicationController
+    skip_before_filter :verify_authenticity_token, :only => :create
+
   def new
   end
 
   def create
-  	user = User.find_by(login_id: params[:session][:login_id].downcase)
-  	if user && user.authenticate(params[:session][:password])
+  	user = User.find_by(login_id: params[:login_id].downcase)
+  	if user && user.authenticate(params[:password])
   		log_in user
-      	redirect_to root_path
+      redirect_to root_path
   	else
 	    flash[:danger] = 'Invalid email/password combination' # Not quite right!
   		render 'new'
