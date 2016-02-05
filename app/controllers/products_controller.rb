@@ -20,7 +20,6 @@ class ProductsController < ApplicationController
 	end
 
 	def create
-		byebug
 		@user = current_user
 		@product = @user.products.create(:url => params[:url])
 		if @product
@@ -62,30 +61,32 @@ class ProductsController < ApplicationController
 		redirect_to :back
 	end
 
+	def send_email2
+		ExampleMailer.sample_email.deliver_now
+		redirect_to "/"
+	end
+
 	def get_unclassify_list
 		data = {:list => current_user.products.where(name: "")}
 		render :json => data, :status => :ok
 	end
 
 	def extention_login
-		user = User.find_by(login_id: params[:id])
+		@user = User.find_by(login_id: params[:id])
 
 		data = {:message => "success"}
 		data_ = {:message => "fail"}
 
-
-		if user && user.authenticate(params[:pw])
+		if @user && @user.authenticate(params[:pw])
 
 			respond_to do |format|
 				format.html
-				format.js
 				format.json { render :json => data}
 			end
 			
 		else
 			respond_to do |format|
 				format.html
-				format.js
 				format.json { render :json => data_}
 			end
 		end
@@ -93,8 +94,8 @@ class ProductsController < ApplicationController
 
 	def extention_add
 
-		user = User.find_by(login_id: params[:id])
-		user.products.create(:url => params[:url])
+		@user = User.find_by(login_id: params[:id])
+		@user.products.create(:url => params[:url])
 
 	end
 
