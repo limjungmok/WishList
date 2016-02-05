@@ -20,7 +20,6 @@ class ProductsController < ApplicationController
 	end
 
 	def create
-		byebug
 		@user = current_user
 		@product = @user.products.create(:url => params[:url])
 		if @product

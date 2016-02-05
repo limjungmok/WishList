@@ -8,8 +8,62 @@ body{
 #div_total{
 	width: 100%;
 	height: 100%;
-
 }
+
+#div_guide{
+	display: none;
+	width: 100%;
+	background-color: #cd2026;
+	overflow-y: hidden;
+
+	#div_guide_contents {
+		width: 1053px;
+		margin-left: auto;
+		margin-right: auto;
+		margin-top: 70px;
+		color: #fff;
+
+		ul {
+			padding: 0;
+		}
+
+		li {
+			width: 33.33333%;
+			float: left;
+			padding-left: 15px;
+			padding-right: 25px;
+			text-align: center;
+		}
+	}
+}
+#div_guide_close_btn {
+
+	span {
+	margin-left: 92%;
+	margin-top: 90px;
+	}
+
+	.glyphicon {
+		color: #fff;
+	}
+}
+#div_guide_content_icon {
+	img {
+		height: 190px;
+		margin-bottom: 40px;
+	}
+}
+#div_guide_content_title {
+	margin-bottom: 15px;
+}
+#div_guide_content_text {
+	margin-bottom: 70px;
+}
+#div_guide_content_meant {
+	text-align: center;
+	margin-bottom: 120px;
+}
+
 #div_main{
 	height: 100%;
     background-image: url('sample10.jpg');
@@ -102,7 +156,12 @@ body{
 	}
 }
 
-
+#div_main_useage_box_guide {
+	color: #fff;
+}
+#div_main_useage_box_guide:hover {
+	color: #ccc;
+}
 #div_main_useage{
 	width: 150px;
 	height: 50px;
@@ -117,19 +176,15 @@ body{
 		display: table-cell;
 		vertical-align: middle;
 	    margin: 0 auto;
-		color: #fff;
-		font-size: 16px;
 		border-radius: 3px;
 	}
-	a{
-	    text-decoration: none !important;
-	}
-	a:hover{
-	    text-decoration: none !important;
-	}
+
 }
 
-
+	
+a:hover{
+	text-decoration: none !important;
+}
 
 #div_product{
     width: 100%;
@@ -199,18 +254,21 @@ body{
     display: table-cell;
     text-align: center;
     vertical-align: middle;
-    background-color:rgba(0, 0, 0, 0.0001);
-    border-radius : 10px;
+    background-color:#fff;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
 }
 
 #div_product_item_info{
     line-height : 15px;
-    margin-top: 10px;
+    margin-top: 0px;
     margin-bottom : 10px;
     height: 80px;
     font-weight: lighter;
     background-color: #fff;
-
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-top: 3px solid #EDECE8;
 }
 
 #div_product_item_info_name{
@@ -250,15 +308,15 @@ body{
     height: auto;
     margin-left: auto;
     margin-right: auto;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
 }
 
 ul li {list-style:none;}
 
-
-
-
-
-
-
-
-
+#div_main_flash {
+	display: none;
+	position: absolute;
+	font-size: 1.3em;
+	color: white;
+}
