@@ -65,6 +65,17 @@ $(document).ready(function(){
      });
    }
 
+   function send_e(){
+    $.ajax({
+       type: 'GET',
+       url: '/send_email',
+       success: function(data,status,xhr){
+       },
+       error: function(xhr,status,error){
+       }
+    });
+    }
+
    function resize_(){
 
     var main = $('#div_product_lists'),
@@ -83,11 +94,16 @@ $(document).ready(function(){
             data:{'url':url},
             success:function(v){
             	document.getElementById("submit").disabled = false;
+<<<<<<< HEAD
               $('#ex').append('<div class="div_product_item"><div id="div_prodcut_item_image">'+'<%= link_to image_tag("registering2.png", class: "image_aspect_ratio"), "#" , :target => "_blank" %></div><div id="div_product_item_info">'+'<div class = "div_text" id="div_product_item_info_name">분석 중입니다</div><br><div class = "div_text" id="div_product_item_info_price">'+'<%= number_with_delimiter("0", :delimiter => ",") %>'+' ￦</div></div></div>');
             
                 $("#div_main_flash").show();
                 $("#div_main_flash").fadeOut(3000);
 
+=======
+              $('#ex').append('<div class="div_product_item"><div id="div_prodcut_item_image">'+'<%= link_to image_tag("loading.gif", class: "image_aspect_ratio"), "#" , :target => "_blank" %></div><div id="div_product_item_info">'+'<div class = "div_text" id="div_product_item_info_name">분석 중입니다</div><br><div class = "div_text" id="div_product_item_info_price">'+'<%= number_with_delimiter("0", :delimiter => ",") %>'+' ￦</div></div></div>');
+              
+>>>>>>> 570a8567aa5f937200a9192dc43f435e66c567bb
                 resize_();
                 refresh();
                 send_e();
