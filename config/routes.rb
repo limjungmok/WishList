@@ -22,6 +22,8 @@ Rails.application.routes.draw do
   get 'get_product_count' => 'products#get_product_count'
 
   get 'send_email' => 'products#send_email'
+  get 'send_email_for_extention' => 'products#send_email_for_extention'
+
 
   get 'get_unclassify_list' => 'products#get_unclassify_list'
 
