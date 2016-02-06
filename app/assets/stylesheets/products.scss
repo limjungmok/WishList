@@ -172,6 +172,7 @@ body{
 	#div_main_useage_box{
 		width: 150px;
 		height: 40px;
+		color: #fff;
 		background-color: #CD2026;
 		display: table-cell;
 		vertical-align: middle;
@@ -179,9 +180,10 @@ body{
 		border-radius: 3px;
 	}
 
-}
-
-	
+	#div_main_useage_box:hover {
+		color: #ccc;
+	}
+}	
 a:hover{
 	text-decoration: none !important;
 }
