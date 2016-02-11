@@ -4,64 +4,11 @@
 body{
 	font-family: 'Nanum Gothic', sans-serif;
 }
+
 /* 전체 div */
 #div_total{
 	width: 100%;
 	height: 100%;
-}
-
-#div_guide{
-	display: none;
-	width: 100%;
-	background-color: #cd2026;
-	overflow-y: hidden;
-
-	#div_guide_contents {
-		width: 1053px;
-		margin-left: auto;
-		margin-right: auto;
-		margin-top: 70px;
-		color: #fff;
-
-		ul {
-			padding: 0;
-		}
-
-		li {
-			width: 33.33333%;
-			float: left;
-			padding-left: 15px;
-			padding-right: 25px;
-			text-align: center;
-		}
-	}
-}
-#div_guide_close_btn {
-
-	span {
-	margin-left: 92%;
-	margin-top: 90px;
-	}
-
-	.glyphicon {
-		color: #fff;
-	}
-}
-#div_guide_content_icon {
-	img {
-		height: 190px;
-		margin-bottom: 40px;
-	}
-}
-#div_guide_content_title {
-	margin-bottom: 15px;
-}
-#div_guide_content_text {
-	margin-bottom: 70px;
-}
-#div_guide_content_meant {
-	text-align: center;
-	margin-bottom: 120px;
 }
 
 #div_main{
@@ -84,11 +31,9 @@ body{
   	left: 50%;
   	transform: translate(-50%, -50%);
 }
-
 #div_main_frame{
 	display: table-cell;
     vertical-align: middle;
-
 }
 #div_main_title{
 	font-weight: bold;
@@ -100,7 +45,6 @@ body{
 	font-size: 60px;
 	color: #fff;
 }
-
 #div_main_title_sub{
 	width: 70%;
 	height: 30px;
@@ -112,14 +56,12 @@ body{
 	font-weight: lighter;
 	color: #fff;
 }
-
 #div_main_url_form{
 	width: 100%;
-	height: 100px;
+	height: 80px;
 	background-color: transparent;
 	margin-left: auto;
 	margin-right: auto;
-
 
 	#form_box{
 		width: 100%;
@@ -136,7 +78,6 @@ body{
 		font-weight: bold;
 	}
 }
-
 #div_main_info{
 	width: 100%;
 	height: 50px;
@@ -155,22 +96,38 @@ body{
 		border-radius: 3px;
 	}
 }
+#div_main_chrome{
+	width: 210px;
+	height: 50px;
+	background-color: transparent;
+	margin-left: 20%;
+	margin-right: 4px;
+	float: left;
 
-#div_main_useage_box_guide {
-	color: #fff;
-}
-#div_main_useage_box_guide:hover {
-	color: #ccc;
+	#div_main_chrome_box{
+		width: 210px;
+		height: 40px;
+		color: #fff;
+		background-color: #CD2026;
+		display: table-cell;
+		vertical-align: middle;
+	    margin: 0 auto;
+		border-radius: 3px;
+	}
+
+	#div_main_chrome_box:hover {
+		color: #ccc;
+	}
 }
 #div_main_useage{
-	width: 150px;
+	width: 210px;
 	height: 50px;
 	background-color: transparent;
 	margin-left: auto;
 	margin-right: auto;
 
 	#div_main_useage_box{
-		width: 150px;
+		width: 210px;
 		height: 40px;
 		color: #fff;
 		background-color: #CD2026;
@@ -183,9 +140,16 @@ body{
 	#div_main_useage_box:hover {
 		color: #ccc;
 	}
-}	
-a:hover{
+}
+a:hover, a:visited, a:link, a:active{
 	text-decoration: none !important;
+}
+a span{
+	outline: none;
+}
+
+a:active, a:focus {
+	outline: none !important;
 }
 
 #div_product{
@@ -193,7 +157,6 @@ a:hover{
     height: auto;
     background-color: #EDECE8;
 }
-
 #div_product_title{
 	font-family: 'Jeju Gothic', serif;
 	padding-top : 60px;
@@ -203,17 +166,14 @@ a:hover{
     font-size: 50px;
     font-weight: bold;
 }
-
 #div_product_info{
     text-align: center;
     vertical-align: middle;
     font-size: 20px;
 }
-
 #div_product_info_total{
     display: inline-block;
 }
-
 #div_product_info_total_text{
     width:auto;
     height:auto;
@@ -221,20 +181,14 @@ a:hover{
     vertical-align: middle;
     display: inline-block;
 }
-
 #div_product_info_total.circle{
-    background:#CD2026 ;
+    background:#CD2026;
     width:30px;
     font-weight: bold;
 }
-
 #div_product_info_current{
     display: inline-block;
 }
-
-#div_product_info_text{
-}
-
 .div_product_item{
 	width : 291px;
 	height : 506px;
@@ -242,14 +196,11 @@ a:hover{
 	margin : 30px;
 	background-color:rgba(0, 0, 0, 0.0001);
 	border-radius : 10px;
-
 }
-
 .div_product_lists_centerized{
 	overflow:hidden;
     margin:0 auto;
 }
-
 #div_prodcut_item_image{
     width : 291px;
     height : 436px;
@@ -260,7 +211,6 @@ a:hover{
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
 }
-
 #div_product_item_info{
     line-height : 15px;
     margin-top: 0px;
@@ -272,7 +222,6 @@ a:hover{
     border-bottom-left-radius: 5px;
     border-top: 3px solid #EDECE8;
 }
-
 #div_product_item_info_name{
 	font-family: 'Jeju Gothic', serif;
 	border : 0px;
@@ -280,7 +229,6 @@ a:hover{
 	font-size: 18px;
 	font-weight: bold;
 }
-
 .circle{
     width:30px;
     height:30px;
@@ -291,13 +239,11 @@ a:hover{
     text-align:center;
     background : #3CADD4 ;
 }
-
 .div_text{
 	margin: 5px;
 	display: inline-block;
 	font-size: 15px;
 }
-
 #div_product_item_info_price{
 	margin-top: 8px;
 	color: #999;
@@ -315,10 +261,3 @@ a:hover{
 }
 
 ul li {list-style:none;}
-
-#div_main_flash {
-	display: none;
-	position: absolute;
-	font-size: 1.3em;
-	color: white;
-}
