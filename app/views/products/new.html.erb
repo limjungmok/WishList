@@ -145,6 +145,12 @@ $(document).ready(function(){
         }
     });
 
+
+    //가격순으로 보기
+    $("#sort_by_id").click(function(){
+        $('.div_product_lists_centerized').html('<%= escape_javascript(render "sort.html.erb") %>');
+    });
+
   	var targetHeight = $('#header').outerHeight();
 
   	$(document).scroll(function() {
@@ -304,11 +310,15 @@ $(document).ready(function(){
                    <div id="div_product_info_total_text">개 상품이 등록되어 있습니다</div>
                </div>
 
+               <div id="div_product_sort">
+                  <%= link_to("가격순으로 보기", "" ,id: "sort_by_id", :remote => true) %>
+                  <%= link_to("등록순으로 보기", "" ,id: "sort_by_create") %>
+               </div>
+
                <% if logged_in? %>
 
                <div id="div_product_lists">
                    <div class="div_product_lists_centerized" id="ex">
-
                        <% @products.each do |p| %>
 
                            <% if p.name == "" %>
@@ -331,7 +341,8 @@ $(document).ready(function(){
                                    </div>
                                    <div id="div_product_item_info">
                                        <div class = "div_text" id="div_product_item_info_name"><%= truncate(p.name, length: 20) %></div><br>
-                                       <div class = "div_text" id="div_product_item_info_price"><%= number_with_delimiter(p.price, :delimiter => ',') %> ￦</div>
+                                       <div class = "div_text" id="div_product_item_info_price"><%= number_with_delimiter(p.price, :delimiter => ',') %> ￦</div><br>
+                                       <div class = "div_text" id="div_product_item_info_date"><%= p.created_at.strftime("%Y-%m-%d") %></div>
                                    </div>
                                </div>
 
