@@ -120,16 +120,18 @@ body{
 		color: #fff;
 		font-size: 16px;
 		border-radius: 3px;
+
+		a:hover{
+			color:#ccc;
+		}
 	}
-	a{
-	    text-decoration: none !important;
-	}
-	a:hover{
-	    text-decoration: none !important;
-	}
+
 }
 
-
+	
+a:hover{
+	text-decoration: none !important;
+}
 
 #div_product{
     width: 100%;
@@ -199,8 +201,9 @@ body{
     display: table-cell;
     text-align: center;
     vertical-align: middle;
-    background-color:rgba(0, 0, 0, 0.0001);
-    border-radius : 10px;
+    background-color:#fff;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
 }
 
 #div_product_item_info{
@@ -210,7 +213,9 @@ body{
     height: 80px;
     font-weight: lighter;
     background-color: #fff;
-
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-top: 3px solid #EDECE8;
 }
 
 #div_product_item_info_name{
