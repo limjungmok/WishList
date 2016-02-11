@@ -16,6 +16,7 @@ $(document).ready(function(){
   $('#div_main').css({'height': h});
   $('#div_main_box').css({'height': (h/1.6)});
   $('#url').css({'width': (w/4)});
+  $('#div_main_flash').css({'top': (h/2.8), 'left': (w/4.5)});
 
   $(function(){
     var main = $('#div_product_lists'),
@@ -93,7 +94,11 @@ $(document).ready(function(){
             data:{'url':url},
             success:function(v){
             	document.getElementById("submit").disabled = false;
-              $('#ex').append('<div class="div_product_item"><div id="div_prodcut_item_image">'+'<%= link_to image_tag("loading.gif", class: "image_aspect_ratio"), "#" , :target => "_blank" %></div><div id="div_product_item_info">'+'<div class = "div_text" id="div_product_item_info_name">분석 중입니다</div><br><div class = "div_text" id="div_product_item_info_price">'+'<%= number_with_delimiter("0", :delimiter => ",") %>'+' ￦</div></div></div>');
+
+              $('#ex').append('<div class="div_product_item"><div id="div_prodcut_item_image">'+'<%= link_to image_tag("registering2.png", class: "image_aspect_ratio"), "#" , :target => "_blank" %></div><div id="div_product_item_info">'+'<div class = "div_text" id="div_product_item_info_name">분석 중입니다</div><br><div class = "div_text" id="div_product_item_info_price">'+'<%= number_with_delimiter("0", :delimiter => ",") %>'+' ￦</div></div></div>');
+            
+                $("#div_main_flash").show();
+                $("#div_main_flash").fadeOut(3000);
 
                 resize_();
                 refresh();
@@ -101,7 +106,6 @@ $(document).ready(function(){
             }
         });
     }
-                                  
 
     //URL 을 파싱한 뒤
     function parsing_url(){
@@ -138,37 +142,106 @@ $(document).ready(function(){
         }
     });
 
-	var targetHeight = $('#header').outerHeight();
+  	var targetHeight = $('#header').outerHeight();
 
-	$(document).scroll(function() {
-		var scrollPercent = (targetHeight - window.scrollY) / targetHeight;
-		console.log(scrollPercent);
+  	$(document).scroll(function() {
+  		var scrollPercent = (targetHeight - window.scrollY) / targetHeight;
+  		console.log(scrollPercent);
 
-	    if ($(this).scrollTop() > (h-50)){
-	    	$('#header').css({'background-color':'rgba(0, 0, 0, 0.5)'});	
-	    }else{
-	    	$('#header').css({'background-color':'transparent'});
-	    }
-	    
+  	    if ($(this).scrollTop() > (h-50)){
+  	    	$('#header').css({'background-color':'rgba(0, 0, 0, 0.5)'});	
+  	    }else{
+  	    	$('#header').css({'background-color':'transparent'});
+  	    }
+    	});
+    });
 
-  	});
-  });
+    $(function(){
+        var main = $('#div_product_lists'),
+            centerized = main.find('.div_product_lists_centerized'),
+            itemWidth = main.find('.div_product_item').outerWidth(true);
 
-  $(function(){
-      var main = $('#div_product_lists'),
-          centerized = main.find('.div_product_lists_centerized'),
-          itemWidth = main.find('.div_product_item').outerWidth(true);
+        $(window).resize(function(){
+            var fitItems = (main.width() / itemWidth) | 0;
+            centerized.width(fitItems * itemWidth);
+        }).trigger('resize');
+    });
 
-      $(window).resize(function(){
-          var fitItems = (main.width() / itemWidth) | 0;
-          centerized.width(fitItems * itemWidth);
-      }).trigger('resize');
-  });
+     function toggle(id) {
+       var e = document.getElementById(id);
+       if(e.style.display == 'block')
+          e.style.display = 'none';
+       else
+          e.style.display = 'block';
+    }
+
+    function close(id) {
+       var e = document.getElementById(id);
+       if(e.style.display == 'block')
+          e.style.display = 'none';
+    }
 
 
 </script>
+
 <body>
     <div id="div_total">
+
+        <div id="div_guide">
+          <a href="#div_main" onclick="close('div_guide');" id="div_guide_close_btn">
+          <span class="glyphicon glyphicon-remove"> </span>
+          </a>
+
+            <div id="div_guide_contents">
+              <ul>
+                <li>
+                    <div id="div_guide_content_1">
+                        <div id="div_guide_content_icon">
+                            <%= image_tag('guide_1.png') %>
+                        </div>
+                        <div id="div_guide_content_title">
+                            <h3> 상품 찾기 </h3>
+                        </div>
+                        <div id="div_guide_content_text">
+                            <h5> 원하는 상품을 찾아주세요 </h5>
+                        </div>
+                    </div>
+                </li>
+
+                <li>
+                  <div id="div_guide_content_2">
+                    <div id="div_guide_content_icon">
+                        <%= image_tag('guide_2.png') %>
+                    </div>
+                    <div id="div_guide_content_title">
+                        <h3> 상품 담기 </h3>
+                    </div>
+                    <div id="div_guide_content_text">
+                        <h5> 상품의 URL을 복사한 뒤, 입력해 주세요 </h5>
+                    </div>
+                  </div>
+                </li>
+
+                <li>
+                  <div id="div_guide_content_3">
+                    <div id="div_guide_content_icon">
+                        <%= image_tag('guide_3.png') %>
+                    </div>
+                    <div id="div_guide_content_title">
+                        <h3> 상품 보기 </h3>
+                    </div>
+                    <div id="div_guide_content_text">
+                        분석된 상품을 한 눈에 비교하세요
+                    </div>
+                  </div>
+                </li>
+                <div id="div_guide_content_meant">
+                    <h5> #Shop In의 이 놀라운 기능을 통해 좀 더 편리하고 현명한 쇼핑을 즐기세요. </h5>
+                </div>
+            </div>
+        </div>
+
+
         <div id="div_main">
             <div id="div_main_box" style="width: 55%">
                 <div id="div_main_frame">
@@ -190,6 +263,10 @@ $(document).ready(function(){
                     </div>
                   </div>
 
+                  <div id="div_main_flash">
+                    등록되었습니다.
+                  </div>
+
                   <!--URL 아래 주의사항 설명-->
                   <div id="div_main_info" align="center">
                     <div id="div_main_info_box" align="center">
@@ -198,7 +275,7 @@ $(document).ready(function(){
                   </div>
 
                   <!--맨 아래 SHOP IN 이용방법-->
-                  <a href="#">
+                  <a href="#div_guide" onclick="toggle('div_guide');" id="div_main_useage_box_guide">
                   <div id="div_main_useage" align="center">
                     <div id="div_main_useage_box" align="center">
                       SHOP IN 이용방법

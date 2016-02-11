@@ -24,7 +24,6 @@ Rails.application.routes.draw do
   get 'send_email' => 'products#send_email'
   get 'send_email_for_extention' => 'products#send_email_for_extention'
 
-
   get 'get_unclassify_list' => 'products#get_unclassify_list'
 
   get 'extention_login' => 'products#extention_login'
