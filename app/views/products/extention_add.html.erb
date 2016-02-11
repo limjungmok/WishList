@@ -9,30 +9,11 @@ src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
 
     function submit_url(url){
         $.ajax({
-            url:"/users/<%=current_user.id%>/products",
+            url:"/users/<%=@user.id%>/products",
             type:'POST',
             data:{'url':url},
             success:function(v){
-                alert("f");
-            //send_e();
             }
         });
-    }
-
-
-    //URL 을 파싱한 뒤, 비틀리로 줄이기 위한 함수
-    function parsing_url(url_value){
-        var url=url_value;
-        console.log("유알엘은?"+url);
-        var urlRegex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
-        var urltest=urlRegex.test(url);
-
-        if(urltest){
-            //제출이 끝난 후
-            //URL 을 축소시킨다.
-            submit_url(url);
-        }else{
-            alert("Bad URL");
-        }
     }
 </script>
