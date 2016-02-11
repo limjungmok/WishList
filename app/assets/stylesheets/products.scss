@@ -39,8 +39,8 @@ body{
 #div_guide_close_btn {
 
 	span {
-	margin-left: 92%;
-	margin-top: 90px;
+		margin-left: 92%;
+		margin-top: 90px;
 	}
 
 	.glyphicon {
@@ -66,10 +66,10 @@ body{
 
 #div_main{
 	height: 100%;
-    background-image: url('sample10.jpg');
-    background-size: cover;
-    padding-top: 15%;
-    position: relative;
+	background-image: url('sample10.jpg');
+	background-size: cover;
+	padding-top: 15%;
+	position: relative;
 }
 #div_main_box{
 	width: auto;
@@ -80,14 +80,14 @@ body{
 	display: table;
 	border-radius: 3px;
 	position: absolute;
-  	top: 50%;
-  	left: 50%;
-  	transform: translate(-50%, -50%);
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
 }
 
 #div_main_frame{
 	display: table-cell;
-    vertical-align: middle;
+	vertical-align: middle;
 
 }
 #div_main_title{
@@ -150,7 +150,7 @@ body{
 		background-color: #CD2026;
 		display: table-cell;
 		vertical-align: middle;
-	    margin: 0 auto;
+		margin: 0 auto;
 		color: #fff;
 		border-radius: 3px;
 	}
@@ -176,7 +176,7 @@ body{
 		background-color: #CD2026;
 		display: table-cell;
 		vertical-align: middle;
-	    margin: 0 auto;
+		margin: 0 auto;
 		border-radius: 3px;
 	}
 
@@ -189,107 +189,113 @@ a:hover{
 }
 
 #div_product{
-    width: 100%;
-    height: auto;
-    background-color: #EDECE8;
+	width: 100%;
+	height: auto;
+	background-color: #F0F0F0;
 }
 
 #div_product_title{
-	font-family: 'Jeju Gothic', serif;
+	font-family: 'Noto Sans Korean', sans-serif;
 	padding-top : 60px;
 	text-align: center;
-    vertical-align: middle;
-    line-height: 90px;
-    font-size: 50px;
-    font-weight: bold;
+	vertical-align: middle;
+	line-height: 90px;
+	font-size: 50px;
+	font-weight: bold;
 }
 
 #div_product_info{
-    text-align: center;
-    vertical-align: middle;
-    font-size: 20px;
+	text-align: center;
+	vertical-align: middle;
+	font-size: 20px;
 }
 
 #div_product_info_total{
-    display: inline-block;
+	display: inline-block;
 }
 
 #div_product_info_total_text{
-    width:auto;
-    height:auto;
-    text-align: center;
-    vertical-align: middle;
-    display: inline-block;
+	width:auto;
+	height:auto;
+	text-align: center;
+	vertical-align: middle;
+	display: inline-block;
 }
 
 #div_product_info_total.circle{
-    background:#CD2026 ;
-    width:30px;
-    font-weight: bold;
+	background:#CD2026 ;
+	width:30px;
+	font-weight: bold;
+}
+
+#div_product_sort{
+	width : 100%;
+	height : 100px;
 }
 
 #div_product_info_current{
-    display: inline-block;
+	display: inline-block;
 }
 
 #div_product_info_text{
 }
 
 .div_product_item{
-	width : 291px;
-	height : 506px;
-	float : left;
-	margin : 30px;
-	background-color:rgba(0, 0, 0, 0.0001);
-	border-radius : 10px;
+	width : auto;
+	height : auto;
+	display: inline-block;
+	margin : 22px;
+	
+	border-color : #D4D4D4;
+	border-style : solid;
+	border-width : 1px;
+}
 
+.div_product_item:hover{
+	margin : 20px;
+	border-width : 3px;
+	border-color : #CD2026;
 }
 
 .div_product_lists_centerized{
 	overflow:hidden;
-    margin:0 auto;
+	margin:0 auto;
 }
 
 #div_prodcut_item_image{
-    width : 291px;
-    height : 436px;
-    display: table-cell;
-    text-align: center;
-    vertical-align: middle;
-    background-color:#fff;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
+	width : auto;
+	height : 310px;
+	display: table-cell;
+	text-align: center;
+	vertical-align: middle;
+	background-color:#fff;
 }
 
 #div_product_item_info{
-    line-height : 15px;
-    margin-top: 0px;
-    margin-bottom : 10px;
-    height: 80px;
-    font-weight: lighter;
-    background-color: #fff;
-    border-bottom-right-radius: 5px;
-    border-bottom-left-radius: 5px;
-    border-top: 3px solid #EDECE8;
+	line-height : 15px;
+	height: auto;
+	font-weight: lighter;
+	background-color: #fff;
+	padding-top : 5px;
+	padding-bottom : 5px;
 }
 
 #div_product_item_info_name{
-	font-family: 'Jeju Gothic', serif;
+	font-family: 'Noto Sans Korean', sans-serif;
 	border : 0px;
-	padding-top : 10px;
 	font-size: 18px;
-	font-weight: bold;
+	font-weight: 600;
 }
 
 .circle{
-    width:30px;
-    height:30px;
-    border-radius:50px;
-    font-size:15px;
-    color:#fff;
-    line-height:30px;
-    text-align:center;
-    background : #3CADD4 ;
+	width:30px;
+	height:30px;
+	border-radius:50px;
+	font-size:15px;
+	color:#fff;
+	line-height:30px;
+	text-align:center;
+	background : #3CADD4 ;
 }
 
 .div_text{
@@ -298,20 +304,18 @@ a:hover{
 	font-size: 15px;
 }
 
-#div_product_item_info_price{
-	margin-top: 8px;
+#div_product_item_info_date{
 	color: #999;
 }
 .image_aspect_ratio{
-    display: block;
-    max-width:291px;
-    max-height:436px;
-    width: auto;
-    height: auto;
-    margin-left: auto;
-    margin-right: auto;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
+	display: block;
+	max-width:290px;
+	max-height:290px;
+	width: auto;
+	height: auto;
+	margin-left: auto;
+	margin-right: auto;
+	margin : 10px;
 }
 
 ul li {list-style:none;}
