@@ -1,0 +1,30 @@
+<% @products_date.each do |p| %>
+
+<% if p.name == "" %>
+
+<div class="div_product_item">
+  <div id="div_prodcut_item_image">
+   <%= link_to image_tag('loading.gif', class: "image_aspect_ratio"), p.url , :target => "_blank" %>
+ </div>
+ <div id="div_product_item_info">
+  <div class = "div_text" id="div_product_item_info_name">상품 분석중</div><br>
+  <div class = "div_text" id="div_product_item_info_price"><%= number_with_delimiter(p.price, :delimiter => ',') %> ￦</div>
+</div>
+</div>
+
+<% else %>
+
+<div class="div_product_item">
+ <div id="div_prodcut_item_image">
+   <%= link_to image_tag(p.img, class: "image_aspect_ratio"), p.url , :target => "_blank" %>
+ </div>
+ <div id="div_product_item_info">
+   <div class = "div_text" id="div_product_item_info_name"><%= truncate(p.name, length: 20) %></div><br>
+   <div class = "div_text" id="div_product_item_info_price"><%= number_with_delimiter(p.price, :delimiter => ',') %> ￦</div><br>
+   <div class = "div_text" id="div_product_item_info_date"><%= p.created_at.strftime("%Y-%m-%d") %></div>
+ </div>
+</div>
+
+<% end %>
+
+<% end %>

@@ -14,6 +14,7 @@ class ProductsController < ApplicationController
 			#현재 유저가 담은, 분류되지 않은 목록들
 			@current_user_products = @user.products.where(name: "")
 			@products = @user.products.all
+			@products_date = @user.products.all.sort_by(&:price).reverse
 		else
 			render 'new_no_login'
 		end
