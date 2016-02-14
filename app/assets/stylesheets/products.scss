@@ -274,6 +274,14 @@ a:hover, a:visited, a:link, a:active{
 	font-size: 18px;
 	font-weight: 600;
 }
+#div_product_item_edit_name {
+	display: none;
+}
+#edit_name {
+	float: left;
+	width: 77%;
+	margin-right: 4px;
+}
 .circle{
 	width:30px;
 	height:30px;
@@ -304,13 +312,3 @@ a:hover, a:visited, a:link, a:active{
 }
 
 ul li {list-style:none;}
-
-#div_product_item_edit_name {
-	display: none;
-}
-
-#edit_name {
-	float: left;
-	width: 77%;
-	margin-right: 4px;
-}
