@@ -1,1 +1,0 @@
-$("#div_product_item_info_name").html('<%= j form_for(@product) do |p| %><%= p.text_field :name, id: "div_product_item_edit_name" %><%= p.submit "수정", id: "div_product_item_edit_submit", class: "btn btn-success", data: {disable_with: "수정중.."}, remote: true %><% end %>');
