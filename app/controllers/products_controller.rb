@@ -30,13 +30,24 @@ class ProductsController < ApplicationController
 		end
 	end
 
+	def update
+		@user = current_user
+		@product = @user.products.find(params[:id])
+		@product.name = params[:name]
+		@product.save
+
+		respond_to do |format|
+			format.html
+			format.js
+		end
+	end
+
 	def destroy
 		@user = User.find(params[:user_id])
 		@destroy_product = @user.products.find(params[:id])
 		@product = @user.products.find(params[:id]).destroy
 
 		respond_to do |format|
-			format.html
 			format.js
 		end
 	end
@@ -97,5 +108,4 @@ class ProductsController < ApplicationController
 		user.products.create(:url => params[:url])
 
 	end
-
 end

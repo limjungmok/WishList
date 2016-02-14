@@ -135,17 +135,7 @@ body{
 		vertical-align: middle;
 		margin: 0 auto;
 		border-radius: 3px;
-
-		a:hover{
-			color:#ccc;
-		}
 	}
-
-}
-
-	
-a:hover{
-	text-decoration: none !important;
 
 	#div_main_useage_box:hover {
 		color: #ccc;
@@ -153,13 +143,16 @@ a:hover{
 }
 a:hover, a:visited, a:link, a:active{
 	text-decoration: none !important;
-}
-a span{
-	outline: none;
-}
-
-a:active, a:focus {
 	outline: none !important;
+}
+.modal.in .modal-dialog {
+	display: table;
+}
+#div_main_useage_modal .modal-content {
+	background-color: transparent !important;
+}
+#div_main_useage_modal_img {
+	margin-left: 10px;
 }
 
 #div_product{
@@ -213,17 +206,53 @@ a:active, a:focus {
 	border-style : solid;
 	border-width : 1px;
 }
+.no-hover{
+	#div_product_item_image {
+	  -webkit-filter: brightness(100%) !important;
+	}
+
+	#div_product_item_info {
+		-webkit-filter: brightness(100%) !important;
+	}
+
+	#div_product_item_hover_icon {
+		display: none !important;
+	}	
+}
 .div_product_item:hover{
-	margin : 20px;
-	border-width : 3px;
-	border-color : #CD2026;
+
+	#div_product_item_image {
+	  -webkit-filter: brightness(20%);
+	}
+
+	#div_product_item_info {
+		-webkit-filter: brightness(20%);
+	}
+}
+.div_product_item:hover #div_product_item_hover_icon {
+	display: inline-block;
+	visibility: visible !important;
+	-webkit-filter: brightness(100%);
+	opacity: 1 !important;
+	z-index: 1;
+}
+#div_product_item_hover_icon {
+	display: none;
+	position: absolute;
+	-webkit-filter: brightness(100%);
+	margin-top: -125px;
+	margin-left: -33px;
+	z-index: 1;
+
+	a {
+		color: white;
+	}
 }
 .div_product_lists_centerized{
 	overflow:hidden;
 	margin:0 auto;
 }
-#div_prodcut_item_image{
-
+#div_product_item_image{
 	width : auto;
 	height : 310px;
 	display: table-cell;
@@ -232,7 +261,6 @@ a:active, a:focus {
 	background-color:#fff;
 }
 #div_product_item_info{
-
 	line-height : 15px;
 	height: auto;
 	font-weight: lighter;
@@ -276,3 +304,13 @@ a:active, a:focus {
 }
 
 ul li {list-style:none;}
+
+#div_product_item_edit_name {
+	display: none;
+}
+
+#edit_name {
+	float: left;
+	width: 77%;
+	margin-right: 4px;
+}
