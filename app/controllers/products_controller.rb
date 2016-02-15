@@ -28,18 +28,19 @@ class ProductsController < ApplicationController
 		# 내칭구 왤캐 열심히하냥ㅎ
 	end
 
+	def update
+ 		@user = current_user
+ 		@product = @user.products.find(params[:id])
+ 		@product.name = params[:name]
+ 		@product.save
+ 
+ 		respond_to do |format|
+ 			format.html
+ 			format.js
+ 		end
+ 	end
+
 	def destroy
-		@user = User.find(params[:user_id])
-		@destroy_product = @user.products.find(params[:id])
-		@product = @user.products.find(params[:id]).destroy
-
-		respond_to do |format|
-			format.html
-			format.js
-		end
-	end
-
-	def destroy_index
 		@user = User.find(params[:user_id])
 		@destroy_product = @user.products.find(params[:id])
 		@product = @user.products.find(params[:id]).destroy
