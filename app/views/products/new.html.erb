@@ -250,21 +250,21 @@ $(document).ready(function(){
 
           var id = $(this).attr('customClass');
 
-          $(".div_product_lists_centerized").find('.item' + id).remove();
-
           if(isConfirm) {
+
+                $(".div_product_lists_centerized").find('.item' + id).remove();
+
+                sweetAlert({
+                    title: "삭제되었습니다.",
+                    type: "success",
+                    timer: 1200,
+                    showConfirmButton: false
+                });
+
                 $.ajax({
                     url:"/users/<%=@user.id%>/products/" + id,
                     type:"DELETE",
-                    success:function(v) {
-
-                        sweetAlert({
-                            title: "삭제되었습니다.",
-                            type: "success",
-                            timer: 1200,
-                            showConfirmButton: false
-                        });
-                    }
+                    success:function(v) {}
                 });
           }
           else {
