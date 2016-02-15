@@ -218,17 +218,17 @@ a:hover, a:visited, a:link, a:active{
 .div_product_item:hover{
 
 	#div_product_item_image {
-	  -webkit-filter: brightness(20%);
+	  -webkit-filter: brightness(20%) !important;
 	}
 
 	#div_product_item_info {
-		-webkit-filter: brightness(20%);
+		-webkit-filter: brightness(20%) !important;
 	}
 }
 .div_product_item:hover #div_product_item_hover_icon {
 	display: inline-block;
 	visibility: visible !important;
-	-webkit-filter: brightness(100%);
+	-webkit-filter: brightness(100%) !important;
 	opacity: 1 !important;
 	z-index: 1;
 }
