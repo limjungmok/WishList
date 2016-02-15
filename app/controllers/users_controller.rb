@@ -8,7 +8,7 @@ class UsersController < ApplicationController
   end
 
   def create
-  	@user = User.new(user_params)	
+  	@user = User.new(user_params)
   	if @user.save
   	    flash.now[:success] = "회원가입 성공"
   	    log_in @user

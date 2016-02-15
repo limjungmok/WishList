@@ -25,6 +25,7 @@ class ProductsController < ApplicationController
 		else
 			render 'new'
 		end
+		# 내칭구 왤캐 열심히하냥ㅎ
 	end
 
 	def destroy

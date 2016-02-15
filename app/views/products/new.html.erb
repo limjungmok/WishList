@@ -4,8 +4,10 @@
     <title></title>
 </head>
 
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>     
-<script>
+<script type="text/javascript"
+        src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+
+<script type="text/javascript">
 $(document).ready(function(){
 
   //전체 뷰, 박스, url창 리사이징 준비
@@ -167,6 +169,7 @@ $(document).ready(function(){
 		var scrollPercent = (targetHeight - window.scrollY) / targetHeight;
 		console.log(scrollPercent);
 
+
 	    if ($(this).scrollTop() > (h-50)){
 	    	$('#header').css({'background-color':'rgba(0, 0, 0, 0.5)'});	
 	    }else{
@@ -188,10 +191,100 @@ $(document).ready(function(){
     }).trigger('resize');
   });
 
+    // 수정버튼 클릭 시
+    $(document).ready(function() {
+      $(".div_product_item_hover_icon_edit").click(function() {
+          
+          $('.div_product_item').addClass('no-hover');
+
+          var id = [];
+          id = $(this).attr('class').split(" ");
+          var a = id[1];
+
+          $(".div_product_item_info").find('.name' + a).hide();
+          $(".div_product_item_info").find('.edit' + a).show();
+      });
+    });
+
+    // 등록된 제품명 수정
+    function edit(id) {
+
+      var item = $(".div_product_item_info").find('.edit' + id);
+      var edit_name = $(item).children().val();
+
+      $(".div_product_item_info").find('.name' + id).html(edit_name);
+
+      $(".div_product_item_info").find('.name' + id).show();
+      $(".div_product_item_info").find('.edit' + id).hide();
+      $('.div_product_item').removeClass('no-hover');
+
+      $.ajax({
+          url:"/users/<%=@user.id%>/products/" + id,
+          type:"PUT",
+          data:{'name':edit_name},
+          success:function(v) {}
+      });
+    }
+
+    // 등록된 제품 삭제
+    $(document).ready(function() {
+      $(".div_product_item_hover_icon_delete").click(function() {
+
+        var id = [];
+        id = $(this).attr('class').split(" ");
+        var a = id[1];
+
+        sweetAlert ({
+            title: "정말 삭제하시겠습니까?",
+            type: "warning",
+            customClass: a,
+            confirmButtonColor: "#cd2026",
+            confirmButtonText: "예, 삭제하겠습니다",
+            showCancelButton: true,
+            cancelButtonText: "아니오, 삭제하지 않습니다",          
+            closeOnConfirm: false,
+            closeOnCancel: false
+        },
+
+        function(isConfirm) {
+
+          var id = $(this).attr('customClass');
+
+          $(".div_product_lists_centerized").find('.item' + id).remove();
+
+          if(isConfirm) {
+                $.ajax({
+                    url:"/users/<%=@user.id%>/products/" + id,
+                    type:"DELETE",
+                    success:function(v) {
+
+                        sweetAlert({
+                            title: "삭제되었습니다.",
+                            type: "success",
+                            timer: 1200,
+                            showConfirmButton: false
+                        });
+                    }
+                });
+          }
+          else {
+            sweetAlert({
+              title: "삭제되지 않았습니다.",
+              type: "error",
+              timer: 1200,
+              showConfirmButton: false
+          });
+          }
+        });
+      });
+    });
+
 </script>
 
 <body>
+
     <div id="div_total">
+
         <div id="div_main">
             <div id="div_main_box" style="width: 55%">
                 <div id="div_main_frame">
@@ -202,7 +295,7 @@ $(document).ready(function(){
 
                   <!--타이틀 서브 텍스트-->
                   <div id="div_main_title_sub" align="center">
-                        전 세계의 모든 상품을 분석 해 드립니다.
+                        여러 사이트의 상품들을 한 곳에 담아 비교하세요.
                   </div>
                   
                   <!--메인 URL 입력 폼-->
@@ -228,6 +321,7 @@ $(document).ready(function(){
                     </div>
                     </a>
                   </div>
+
                 </div>
             </div>
         </div>
@@ -236,7 +330,7 @@ $(document).ready(function(){
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-body">
-                a
+                  <%= image_tag('guide.png', id: "div_main_useage_modal_img") %>
               </div>
             </div>
           </div>
@@ -254,11 +348,6 @@ $(document).ready(function(){
                    <div id="div_product_info_total_text">개 상품이 등록되어 있습니다</div>
                </div>
 
-               <div id="div_product_sort">
-                  <%= link_to("가격순으로 보기", "" ,id: "sort_by_id", :remote => true) %>
-                  <%= link_to("등록순으로 보기", "" ,id: "sort_by_create") %>
-               </div>
-
                <% if logged_in? %>
 
                <div id="div_product_lists">
@@ -268,7 +357,7 @@ $(document).ready(function(){
                            <% if p.name == "" %>
 
                                <div class="div_product_item">
-                                    <div id="div_prodcut_item_image">
+                                    <div id="div_product_item_image">
                                        <%= link_to image_tag('loading.gif', class: "image_aspect_ratio"), p.url , :target => "_blank" %>
                                    </div>
                                    <div id="div_product_item_info">
@@ -279,12 +368,32 @@ $(document).ready(function(){
 
                             <% else %>
 
-                                <div class="div_product_item">
-                                   <div id="div_prodcut_item_image">
-                                       <%= link_to image_tag(p.img, class: "image_aspect_ratio"), p.url , :target => "_blank" %>
+
+                                <div class="div_product_item item<%= p.id %>">
+                                   <div id="div_product_item_image">
+                                       <%= image_tag(p.img, class: "image_aspect_ratio") %>
                                    </div>
-                                   <div id="div_product_item_info">
-                                       <div class = "div_text" id="div_product_item_info_name"><%= truncate(p.name, length: 20) %></div><br>
+
+                                   <div id="div_product_item_hover_icon">
+                                        <span>
+                                          <%= link_to p.url, :target => "_blank" do %>
+                                            <i class="glyphicon glyphicon-search"></i>
+                                          <% end %>
+                                        </span>
+
+                                        <a id="div_product_item_hover_icon_edit" href="#" class="div_product_item_hover_icon_edit <%= p.id %>">
+                                        <i class="glyphicon glyphicon-pencil"> </i> </a>
+
+                                        <a id="div_product_item_hover_icon_delete" href="#" class="div_product_item_hover_icon_delete <%= p.id %>">
+                                          <i class="glyphicon glyphicon-trash"> </i></a>
+                                    </div>
+
+                                   <div id="div_product_item_info" class="div_product_item_info">
+                                       <div class = "div_text name<%= p.id %>" id="div_product_item_info_name"><%= truncate(p.name, length: 20) %></div><br>
+                                       <div class = "div_text edit<%= p.id %>" id="div_product_item_edit_name">
+                                        <input type="text" name="name" id="edit_name" class="form-control" value="<%= p.name %>">
+                                        <button type="submit" id="edit_submit" class="btn btn-default" onclick="edit(<%= p.id %>);">수정</button>
+                                       </div>
                                        <div class = "div_text" id="div_product_item_info_price"><%= number_with_delimiter(p.price, :delimiter => ',') %> ￦</div><br>
                                        <div class = "div_text" id="div_product_item_info_date"><%= p.created_at.strftime("%Y-%m-%d") %></div>
                                    </div>

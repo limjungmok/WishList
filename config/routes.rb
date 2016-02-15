@@ -7,7 +7,6 @@ Rails.application.routes.draw do
 
   resources :users do
   	resources :products
-      delete 'products/:id/destroy' => 'products#destroy_index', as: 'product_destroy'
   end
   
   get    'login'   => 'sessions#new'
