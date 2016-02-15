@@ -16,8 +16,8 @@ $(document).ready(function(){
 	console.log("height : ", h);
 	
     $('#div_main').css({'height': h});
-    $('#div_main_box').css({'width': (w/1.9), 'height': (h/2)});
-    $('#url').css({'width': (w/4)});
+    //$('#div_main_box').css({'width': (w/1.9), 'height': (h/2)});
+    //$('#url').css({'width': (w/4)});
 
     $('.navbar-inverse .navbar-nav').hide();
 
@@ -47,34 +47,25 @@ $(document).ready(function(){
                 	<div id="div_main_url_form" class="form-inline" align="center">
                 		<div id="div_main_url_input" align="center" class="form-group">
         	        		<input type="text" name="url" id="url" placeholder=" 로그인 후 이용해주세요. (클릭)" class="form-control" />
-        	        		<button type="submit" id="submit" class="btn btn-default">상품 분석</button>
+        	        		<button type="submit" id="submit" class="btn btn-default">상품 담기</button>
                 		</div>
                 	</div>
 
-                	<!-- URL 아래 주의사항 설명
-                    <div id="div_main_info" align="center">
-                        <div id="div_main_info_box" align="center">
-                            URL 등록 후 상품을 분석합니다. 1 - 3 분정도 소요됩니다.
-                        </div>
-                    </div>
-                    -->
+                	<div id="div_main_help">
 
                     <a href="https://chrome.google.com/webstore/detail/shop-in/inkgpdfkjhckpjhimallbplbnjhdnmdd?hl=ko" target="_blank">
-                        <span id="div_main_chrome" align="center">
-                            <span id="div_main_chrome_box" align="center">
-                                확장프로그램 다운로드
-                            </span>
-                        </span>
+                    <div id ="div_main_help_extend" style="float:left">
+                      확장프로그램
+                    </div>  
                     </a>
 
-                	<!--맨 아래 SHOP IN 이용방법-->
+                    <!--맨 아래 SHOP IN 이용방법-->
                     <a data-toggle="modal" href="#div_main_useage_modal">
-                      <span id="div_main_useage" align="center">
-                        <span id="div_main_useage_box" align="center">
-                          SHOP IN 이용방법
-                        </span>
-                      </span>
+                    <div id ="div_main_help_guide" style="float:right">
+                      SHOP IN 이용방법
+                    </div>
                     </a>
+                  </div>
                 </div>
             </div>
         </div>

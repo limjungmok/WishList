@@ -19,8 +19,8 @@ body{
 	position: relative;
 }
 #div_main_box{
-	width: auto;
-	height: auto;
+	width: 50%;
+	height: 50%;
 	background-color: rgba(0, 0, 0, 0.4);
 	margin-left: auto;
 	margin-right: auto;
@@ -60,8 +60,11 @@ body{
 	width: 100%;
 	height: 80px;
 	background-color: transparent;
-	margin-left: auto;
-	margin-right: auto;
+
+	#div_main_url_input{
+		width: 100%;
+		height: 80px;
+	}
 
 	#form_box{
 		width: 100%;
@@ -69,15 +72,17 @@ body{
 		margin-right: auto;
 	}
 	#url{
-		width: auto;
+		width: 60%;
 		height: 50px;
 	}
 	#submit{
-		width: 85px;
+		width: auto;
 		height: 50px;
 		font-weight: bold;
 	}
 }
+
+
 #div_main_info{
 	width: 100%;
 	height: 50px;
@@ -96,70 +101,43 @@ body{
 		border-radius: 3px;
 	}
 }
-#div_main_chrome{
-	width: 210px;
+#div_main_help{
+	width: 70%;
 	height: 50px;
-	background-color: transparent;
-	margin-left: 20%;
-	margin-right: 4px;
-	float: left;
-
-	#div_main_chrome_box{
-		width: 210px;
-		height: 40px;
-		color: #fff;
-		background-color: #CD2026;
-		display: table-cell;
-		vertical-align: middle;
-	    margin: 0 auto;
-		border-radius: 3px;
-	}
-
-	#div_main_chrome_box:hover {
-		color: #ccc;
-	}
-}
-#div_main_useage{
-	width: 210px;
-	height: 50px;
-	background-color: transparent;
 	margin-left: auto;
 	margin-right: auto;
-
-	#div_main_useage_box{
-		width: 210px;
-		height: 40px;
-		color: #fff;
-		background-color: #CD2026;
-		display: table-cell;
-		vertical-align: middle;
-		margin: 0 auto;
-		border-radius: 3px;
-
-		a:hover{
-			color:#ccc;
-		}
-	}
-
 }
 
-	
-a:hover{
-	text-decoration: none !important;
-
-	#div_main_useage_box:hover {
-		color: #ccc;
-	}
-}
-a:hover, a:visited, a:link, a:active{
-	text-decoration: none !important;
-}
-a span{
-	outline: none;
+#div_main_help_extend{
+	width: 49%;
+	height: 40px;
+	background-color: #CD2026;
+	border-radius: 3px;
+	color: #fff;
+	text-align: center;
+	vertical-align: middle;
+	line-height: 40px;
+	font-size: 16px;
 }
 
-a:active, a:focus {
-	outline: none !important;
+#div_main_help_extend:hover{
+	color: #ccc;
+}
+
+#div_main_help_guide{
+	width: 49%;
+	height: 40px;
+	background-color: #CD2026;
+	border-radius: 3px;
+	color: #fff;
+	text-align: center;
+	vertical-align: middle;
+	line-height: 40px;
+	font-size: 16px;
+}
+
+#div_main_help_guide:hover{
+	color: #ccc;
 }
 
 #div_product{

@@ -17,7 +17,6 @@ Rails.application.routes.draw do
   get 'oyr_admin' => "oyr_admin#index"
   patch 'oyr_admin' => "oyr_admin#update"
 
-  get 'guide_page' =>'users#guide'
 
   get 'get_product_count' => 'products#get_product_count'
 
