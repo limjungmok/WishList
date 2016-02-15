@@ -8,11 +8,11 @@ class UsersController < ApplicationController
   end
 
   def create
-  	@user = User.new(user_params)	
+  	@user = User.new(user_params)
   	if @user.save
   	    flash.now[:success] = "회원가입 성공"
   	    log_in @user
-        redirect_to guide_page_path
+        redirect_to root_path
   	else
       if(User.find_by(:login_id => params[:user][:login_id]))
         flash.now[:danger] = "아이디가 존재합니다"

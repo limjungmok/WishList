@@ -19,8 +19,8 @@ body{
 	position: relative;
 }
 #div_main_box{
-	width: auto;
-	height: auto;
+	width: 50%;
+	height: 50%;
 	background-color: rgba(0, 0, 0, 0.4);
 	margin-left: auto;
 	margin-right: auto;
@@ -60,8 +60,11 @@ body{
 	width: 100%;
 	height: 80px;
 	background-color: transparent;
-	margin-left: auto;
-	margin-right: auto;
+
+	#div_main_url_input{
+		width: 100%;
+		height: 80px;
+	}
 
 	#form_box{
 		width: 100%;
@@ -69,15 +72,17 @@ body{
 		margin-right: auto;
 	}
 	#url{
-		width: auto;
+		width: 60%;
 		height: 50px;
 	}
 	#submit{
-		width: 85px;
+		width: auto;
 		height: 50px;
 		font-weight: bold;
 	}
 }
+
+
 #div_main_info{
 	width: 100%;
 	height: 50px;
@@ -96,72 +101,56 @@ body{
 		border-radius: 3px;
 	}
 }
-#div_main_chrome{
-	width: 210px;
+#div_main_help{
+	width: 70%;
 	height: 50px;
-	background-color: transparent;
-	margin-left: 20%;
-	margin-right: 4px;
-	float: left;
-
-	#div_main_chrome_box{
-		width: 210px;
-		height: 40px;
-		color: #fff;
-		background-color: #CD2026;
-		display: table-cell;
-		vertical-align: middle;
-	    margin: 0 auto;
-		border-radius: 3px;
-	}
-
-	#div_main_chrome_box:hover {
-		color: #ccc;
-	}
-}
-#div_main_useage{
-	width: 210px;
-	height: 50px;
-	background-color: transparent;
 	margin-left: auto;
 	margin-right: auto;
-
-	#div_main_useage_box{
-		width: 210px;
-		height: 40px;
-		color: #fff;
-		background-color: #CD2026;
-		display: table-cell;
-		vertical-align: middle;
-		margin: 0 auto;
-		border-radius: 3px;
-
-		a:hover{
-			color:#ccc;
-		}
-	}
-
 }
 
-	
-a:hover{
-	text-decoration: none !important;
+#div_main_help_extend{
+	width: 49%;
+	height: 40px;
+	background-color: #CD2026;
+	border-radius: 3px;
+	color: #fff;
+	text-align: center;
+	vertical-align: middle;
+	line-height: 40px;
+	font-size: 16px;
+}
 
-	#div_main_useage_box:hover {
-		color: #ccc;
-	}
+#div_main_help_extend:hover{
+	color: #ccc;
+}
+
+#div_main_help_guide{
+	width: 49%;
+	height: 40px;
+	background-color: #CD2026;
+	border-radius: 3px;
+	color: #fff;
+	text-align: center;
+	vertical-align: middle;
+	line-height: 40px;
+	font-size: 16px;
+}
+#div_main_help_guide:hover{
+	color: #ccc;
 }
 a:hover, a:visited, a:link, a:active{
 	text-decoration: none !important;
-}
-a span{
-	outline: none;
-}
-
-a:active, a:focus {
 	outline: none !important;
 }
-
+.modal.in .modal-dialog {
+	display: table;
+}
+#div_main_useage_modal .modal-content {
+	background-color: transparent !important;
+}
+#div_main_useage_modal_img {
+	margin-left: 10px;
+}
 #div_product{
 	width: 100%;
 	height: auto;
@@ -213,17 +202,53 @@ a:active, a:focus {
 	border-style : solid;
 	border-width : 1px;
 }
+.no-hover{
+	#div_product_item_image {
+	  -webkit-filter: brightness(100%) !important;
+	}
+
+	#div_product_item_info {
+		-webkit-filter: brightness(100%) !important;
+	}
+
+	#div_product_item_hover_icon {
+		display: none !important;
+	}	
+}
 .div_product_item:hover{
-	margin : 20px;
-	border-width : 3px;
-	border-color : #CD2026;
+
+	#div_product_item_image {
+	  -webkit-filter: brightness(20%) !important;
+	}
+
+	#div_product_item_info {
+		-webkit-filter: brightness(20%) !important;
+	}
+}
+.div_product_item:hover #div_product_item_hover_icon {
+	display: inline-block;
+	visibility: visible !important;
+	-webkit-filter: brightness(100%) !important;
+	opacity: 1 !important;
+	z-index: 1;
+}
+#div_product_item_hover_icon {
+	display: none;
+	position: absolute;
+	-webkit-filter: brightness(100%);
+	margin-top: -125px;
+	margin-left: -33px;
+	z-index: 1;
+
+	a {
+		color: white;
+	}
 }
 .div_product_lists_centerized{
 	overflow:hidden;
 	margin:0 auto;
 }
-#div_prodcut_item_image{
-
+#div_product_item_image{
 	width : auto;
 	height : 310px;
 	display: table-cell;
@@ -232,7 +257,6 @@ a:active, a:focus {
 	background-color:#fff;
 }
 #div_product_item_info{
-
 	line-height : 15px;
 	height: auto;
 	font-weight: lighter;
@@ -245,6 +269,14 @@ a:active, a:focus {
 	border : 0px;
 	font-size: 18px;
 	font-weight: 600;
+}
+#div_product_item_edit_name {
+	display: none;
+}
+#edit_name {
+	float: left;
+	width: 77%;
+	margin-right: 4px;
 }
 .circle{
 	width:30px;

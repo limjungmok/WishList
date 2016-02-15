@@ -4,7 +4,8 @@ module SessionsHelper
     session[:user_id] = user.id
 
     #로그인시 현재 접속시간 로그찍기
-    current_user_log = current_user.logs.create
+    current_user_log = current_user.logs.create(user_info: @_params[:login_id])
+
   end
 
 

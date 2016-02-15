@@ -1,11 +1,7 @@
 class ProductsController < ApplicationController
 	skip_before_filter  :verify_authenticity_token
 
-	def index
-		@user = current_user
-		@user_log = @user.logs.last
-		@products = @user.products.all
-	end
+	
 
 	def new
 		if logged_in?
@@ -22,13 +18,27 @@ class ProductsController < ApplicationController
 
 	def create
 		@user = current_user
-		@product = @user.products.create(:url => params[:url])
+		@product = @user.products.create(:url => params[:url], :user_info => @user.login_id)
+
 		if @product
 			redirect_to root_path(@product)
 		else
 			render 'new'
 		end
+		# 내칭구 왤캐 열심히하냥ㅎ
 	end
+
+	def update
+ 		@user = current_user
+ 		@product = @user.products.find(params[:id])
+ 		@product.name = params[:name]
+ 		@product.save
+ 
+ 		respond_to do |format|
+ 			format.html
+ 			format.js
+ 		end
+ 	end
 
 	def destroy
 		@user = User.find(params[:user_id])
@@ -36,18 +46,6 @@ class ProductsController < ApplicationController
 		@product = @user.products.find(params[:id]).destroy
 
 		respond_to do |format|
-			format.html
-			format.js
-		end
-	end
-
-	def destroy_index
-		@user = User.find(params[:user_id])
-		@destroy_product = @user.products.find(params[:id])
-		@product = @user.products.find(params[:id]).destroy
-
-		respond_to do |format|
-			format.html
 			format.js
 		end
 	end
