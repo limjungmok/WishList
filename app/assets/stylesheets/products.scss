@@ -207,41 +207,43 @@ a:hover, a:visited, a:link, a:active{
 	  -webkit-filter: brightness(100%) !important;
 	}
 
-	#div_product_item_info {
-		-webkit-filter: brightness(100%) !important;
-	}
-
 	#div_product_item_hover_icon {
 		display: none !important;
-	}	
+	}
 }
 .div_product_item:hover{
 
 	#div_product_item_image {
-	  -webkit-filter: brightness(20%) !important;
-	}
-
-	#div_product_item_info {
-		-webkit-filter: brightness(20%) !important;
+		-webkit-filter: brightness(70%);
 	}
 }
 .div_product_item:hover #div_product_item_hover_icon {
 	display: inline-block;
-	visibility: visible !important;
-	-webkit-filter: brightness(100%) !important;
-	opacity: 1 !important;
+	-webkit-filter: brightness(100%);
 	z-index: 1;
 }
 #div_product_item_hover_icon {
 	display: none;
 	position: absolute;
 	-webkit-filter: brightness(100%);
-	margin-top: -125px;
-	margin-left: -33px;
+	margin-top: -180px;
+	margin-left: -70px;
 	z-index: 1;
 
-	a {
+	.glyphicon {
 		color: white;
+		font-size: 50px;
+		margin-left: 10px;
+	}
+}
+#div_product_item_hover_icon_edit:hover {
+	.glyphicon {
+		color: #cd2026;
+	}
+}
+#div_product_item_hover_icon_delete:hover {
+	.glyphicon {
+		color: #cd2026;
 	}
 }
 .div_product_lists_centerized{
@@ -263,6 +265,11 @@ a:hover, a:visited, a:link, a:active{
 	background-color: #fff;
 	padding-top : 5px;
 	padding-bottom : 5px;
+
+	p {
+		margin-bottom: 5px;
+		margin-top: 5px;
+	}
 }
 #div_product_item_info_name{
 	font-family: 'Noto Sans Korean', sans-serif;
@@ -272,11 +279,25 @@ a:hover, a:visited, a:link, a:active{
 }
 #div_product_item_edit_name {
 	display: none;
+	width: 95%;
+	margin-top: -9px;
+	margin-left: auto;
+	margin-right: auto;
 }
 #edit_name {
 	float: left;
-	width: 77%;
-	margin-right: 4px;
+	width: 75%;
+	margin-left: 1px;
+}
+#edit_name:focus {
+	outline: none;
+    border-color: #CD2026;
+    box-shadow: 0 0 10px #ccc;
+}
+#edit_submit {
+	width: 20%;
+	height:34px;
+	padding: 0;
 }
 .circle{
 	width:30px;
