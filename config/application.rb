@@ -31,7 +31,7 @@ module WishList
     config.middleware.use Rack::Cors do
       allow do
         origins '*'
-        resource %r{/users/\d+/products/\d+},
+        resource %r{/update_for_extention/\d+/products/\d+},
         :headers => ['Origin', 'Accept', 'Content-Type'],
         :methods => [:put]
             end
