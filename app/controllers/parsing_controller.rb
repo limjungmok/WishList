@@ -19,6 +19,9 @@ class ParsingController < ApplicationController
 
         when "http://www.zara.com"
 
+        when "http://item2.gmarket.co.kr"
+            gmarket(sUrl)
+
         end
 
         if @@b_in == false
@@ -59,5 +62,24 @@ class ParsingController < ApplicationController
     	end
 
     	@@b_in = true
+    end
+
+    def gmarket(url)
+        doc = Nokogiri::HTML(open(url))
+
+        title = doc.css("meta[@property='twitter:description']")[0]['content']
+        price_1 = doc.css("span[@id='dc_price']").text.split("원")[0]
+        price_2 = price_1.split(",")
+        price = price_2[0] + price_2[1]
+        img = doc.css("meta[@property='twitter:image:src']")[0]['content']
+
+        data = {:message => "success", :title => title, :price => price ,:img => img, :url => url}
+
+        respond_to do |format|
+            format.html
+            format.json { render :json => data }
+        end
+
+        @@b_in = true
     end
 end
