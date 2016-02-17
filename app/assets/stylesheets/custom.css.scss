@@ -107,3 +107,19 @@ span.step {
   text-align: center;
   width: 2.5em;
 }
+
+#div_modal_login_input {
+  input:focus {
+    outline: none;
+    border-color: #CD2026;
+    box-shadow: none;
+  }
+}
+
+#div_modal_signup_input {
+  input:focus {
+    outline: none;
+    border-color: #CD2026;
+    box-shadow: none;
+  }
+}

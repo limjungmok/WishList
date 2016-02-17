@@ -21,10 +21,15 @@ $(document).ready(function(){
 
     $('.navbar-inverse .navbar-nav').hide();
 
-	$("#url").click(function() {
+	$("#no_login_btn").click(function() {
         jQuery.noConflict();
         $('#div_modal').modal('show');
 	});
+
+    $("#url").click(function() {
+        jQuery.noConflict();
+        $('#div_modal').modal('show');
+    });
 });
 
 </script>
@@ -46,8 +51,8 @@ $(document).ready(function(){
                 	<!--메인 URL 입력 폼-->
                 	<div id="div_main_url_form" class="form-inline" align="center">
                 		<div id="div_main_url_input" align="center" class="form-group">
-        	        		<input type="text" name="url" id="url" placeholder=" 로그인 후 이용해주세요. (클릭)" class="form-control" />
-        	        		<button type="submit" id="submit" class="btn btn-default">상품 담기</button>
+        	        		<input type="text" name="url" id="url" placeholder=" 로그인 후 이용해주세요." class="form-control" />
+        	        		<button type="button" id="no_login_btn" class="btn btn-default"> 로그인 </button>
                 		</div>
                 	</div>
 
