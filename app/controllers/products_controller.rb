@@ -32,12 +32,14 @@ class ProductsController < ApplicationController
  		@user = current_user
  		@product = @user.products.find(params[:id])
  		@product.name = params[:name]
+ 		if params[:price] != nil
+ 			@product.price = params[:price]
+ 			@product.url = params[:url]
+ 			@product.img = params[:img]
+ 		end
  		@product.save
  
- 		respond_to do |format|
- 			format.html
- 			format.js
- 		end
+ 		
  	end
 
 	def destroy
@@ -52,6 +54,12 @@ class ProductsController < ApplicationController
 
 	def get_product_count
 		data = {:message => current_user.products.count, :watting => current_user.products.where(name: "").count}
+		render :json => data, :status => :ok
+	end
+
+	def get_product_last_product
+		last_product = current_user.products.last
+		data = {:id => last_product.id, :created_at => last_product.created_at.strftime("%Y-%m-%d")}
 		render :json => data, :status => :ok
 	end
 
@@ -93,7 +101,6 @@ class ProductsController < ApplicationController
 	end
 
 	def extention_add
-
 		@user = User.find_by(login_id: params[:id])
 		@user.products.create(:url => params[:url])
 

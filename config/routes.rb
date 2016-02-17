@@ -27,4 +27,7 @@ Rails.application.routes.draw do
   get 'extention_login' => 'products#extention_login'
   get 'extention_add' => 'products#extention_add'
 
+  get 'findParsingAction' => 'parsing#findParsingAction'
+  get 'get_product_last_product' => 'products#get_product_last_product'
+
 end 

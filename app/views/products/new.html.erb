@@ -101,9 +101,7 @@ $(document).ready(function(){
         data:{'url':url},
         success:function(v){
         	document.getElementById("submit").disabled = false;
-
-          $('#ex').append('<div class="div_product_item"><div id="div_prodcut_item_image">'+'<%= link_to image_tag("loading.gif", class: "image_aspect_ratio"), "#" , :target => "_blank" %></div><div id="div_product_item_info">'+'<div class = "div_text" id="div_product_item_info_name">분석 중입니다</div><br><div class = "div_text" id="div_product_item_info_price">'+'<%= number_with_delimiter("0", :delimiter => ",") %>'+' ￦</div></div></div>');
-
+            analyze(url);
             sweetAlert ({
               title: "상품이 등록되었습니다.",
               timer: 2000,
@@ -114,6 +112,7 @@ $(document).ready(function(){
             resize_();
             refresh();
             send_e();
+            
         }
     });
   }
@@ -133,6 +132,48 @@ $(document).ready(function(){
         alert("Bad URL");
     }
   }
+
+  function analyze(_url){
+      $.ajax({
+     type: 'GET',
+     crossDomain: true,
+     dataType: 'json',
+     url: '/findParsingAction.json?url=' + _url,
+     success: function(data,status,xhr){
+          if(data.message == "success"){
+            var product_title = data.title;
+            var product_img = data.img;
+            var product_price = data.price;
+            var product_url = data.url;
+            $.ajax({
+              url:"/get_product_last_product",
+              type:"GET",
+              success:function(data) {
+                 var product_id = data.id;
+                 var product_create_at = data.created_at;
+
+                 $.ajax({
+          url:"/users/<%=@user.id%>/products/" + product_id,
+          type:"PUT",
+          data:{'name':product_title , 'price':product_price, 'url':product_url, 'img':product_img},
+          success:function(v) {
+          },
+          error: function(v){
+           location.reload();
+          }
+      });
+                 $('#ex').append(' <div class="div_product_item item'+product_id+'"><div id="div_product_item_image"><img class="image_aspect_ratio" src='+product_img+'></div><div id="div_product_item_hover_icon"><span><a target="_blank" href='+product_url+'><i class="glyphicon glyphicon-search"></i></a></span><a id="div_product_item_hover_icon_edit" href="#" class="div_product_item_hover_icon_edit '+product_id+'"><i class="glyphicon glyphicon-pencil"> </i> </a><a id="div_product_item_hover_icon_delete" href="#" class="div_product_item_hover_icon_delete '+product_id+'"><i class="glyphicon glyphicon-trash"> </i></a></div><div id="div_product_item_info" class="div_product_item_info"><div class = "div_text name'+product_id+'" id="div_product_item_info_name" style="width : 100px">'+product_title+'</div><br><div class = "div_text edit'+product_id+'" id="div_product_item_edit_name"><input type="text" name='+product_title+' id="edit_name" class="form-control" value='+product_title+'><button type="submit" id="edit_submit" class="btn btn-default" onclick="edit('+product_id+');">수정</button></div><div class = "div_text" id="div_product_item_info_price">'+ product_price+' ￦</div><br><div class = "div_text" id="div_product_item_info_date">'+product_create_at+'</div></div></div>')
+              }
+            });
+
+          }
+          else{
+            $('#ex').append('<div class="div_product_item"><div id="div_prodcut_item_image">'+'<%= link_to image_tag("loading.gif", class: "image_aspect_ratio"), "#", :target => "_blank" %></div><div id="div_product_item_info">'+'<div class = "div_text" id="div_product_item_info_name">상품 분석중</div><br><div class = "div_text" id="div_product_item_info_price">'+'<%= number_with_delimiter("0", :delimiter => ",") %>'+' ￦</div></div></div>');
+          }
+      } 
+        
+      });
+    }
 
   //Submit 버튼 클릭시
   $("#submit").click(function(){
@@ -167,7 +208,6 @@ $(document).ready(function(){
     var h = window.innerHeight;//화면세로
 
 		var scrollPercent = (targetHeight - window.scrollY) / targetHeight;
-		console.log(scrollPercent);
 
 
 	    if ($(this).scrollTop() > (h-50)){
