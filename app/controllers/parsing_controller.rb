@@ -6,8 +6,6 @@ class ParsingController < ApplicationController
 
 		sUrl = params[:url]
 		
-
-		byebug
 		if sUrl.index("/",8) != nil
             sUrlOriginal = sUrl[0,sUrl.index("/",8)] # url 중 original 주소만 가져 옴
         end
@@ -30,7 +28,8 @@ class ParsingController < ApplicationController
             gmarket(sUrl)
 
         when "http://itempage3.auction.co.kr"
-            auction(sUrl)
+        	for_auction = params[:url] + "&ItemNo=" + params[:ItemNo]
+            auction(for_auction)
             
         when "http://www.wemakeprice.com"
             wemakeprice(sUrl)
@@ -115,8 +114,7 @@ class ParsingController < ApplicationController
 
     	title = doc.xpath("//meta[@property='og:title']/@content")[0].value
     	img = doc.xpath("//meta[@property='og:image']/@content")[0].value
-    	price_original = doc.xpath("//strong[@class='price']").text.split ","
-    	price = price_original[0] + price_original[1]
+    	price = breakcomma(doc.xpath("//strong[@class='price']").text)
 
     	data = {:message => "success", :title => title, :price => price ,:img => img, :url => url}
     	respond_to do |format|
@@ -130,9 +128,7 @@ class ParsingController < ApplicationController
         doc = Nokogiri::HTML(open(url))
 
         title = doc.css("meta[@property='twitter:description']")[0]['content']
-        price_1 = doc.css("span[@id='dc_price']").text.split("원")[0]
-        price_2 = price_1.split(",")
-        price = price_2[0] + price_2[1]
+        price = breakcomma(doc.css("span[@id='dc_price']").text.split("원")[0])
         img = doc.css("meta[@property='twitter:image:src']")[0]['content']
 
         data = {:message => "success", :title => title, :price => price ,:img => img, :url => url}
@@ -151,9 +147,7 @@ class ParsingController < ApplicationController
 
         title_s = doc.css('h4').children[0].text
         title = title_s[4..title_s.length]
-        price = doc.css('li').css('.sale').children[0].children.text
-        price_s = price.split ","
-        price = price_s[0] + price_s[1]
+        price = breakcomma(doc.css('li').css('.sale').children[0].children.text)
         img = doc.css('meta')[9].attributes['content'].value
        
         data = {:message => "success", :title => title, :price => price ,:img => img, :url => url}
