@@ -67,6 +67,7 @@ class ParsingController < ApplicationController
     def breakParameter(params)
     	#  http://www.naver.com?id=abcd&pw=qwer
     	sFinalUrl = params[:url]
+    	byebug
     	if params.count > 1
     		params.each do |key,value|
     			sFinalUrl = sFinalUrl + "&" + key + "=" + value
