@@ -60,6 +60,11 @@ class ProductsController < ApplicationController
 		redirect_to :back
 	end
 
+	def send_email_for_extention
+		ExampleMailer.sample_email.deliver_now
+		redirect_to "/"
+	end
+
 	def get_unclassify_list
 		data = {:list => current_user.products.where(name: "")}
 		render :json => data, :status => :ok
@@ -91,8 +96,8 @@ class ProductsController < ApplicationController
 
 	def extention_add
 
-		user = User.find_by(login_id: params[:id])
-		user.products.create(:url => params[:url])
+		@user = User.find_by(login_id: params[:id])
+		@user.products.create(:url => params[:url])
 
 	end
 
