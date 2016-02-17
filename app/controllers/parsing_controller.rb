@@ -78,6 +78,8 @@ class ParsingController < ApplicationController
     		end
     	end
 
+    	byebug
+
     	return sFinalUrl
     end
 
