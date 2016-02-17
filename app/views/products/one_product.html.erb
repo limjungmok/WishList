@@ -1,0 +1,29 @@
+ <div class="div_product_item item<%= p.id %>">
+                                   <div id="div_product_item_image">
+                                       <%= image_tag(p.img, class: "image_aspect_ratio") %>
+                                   </div>
+
+                                   <div id="div_product_item_hover_icon">
+                                        <span>
+                                          <%= link_to p.url, :target => "_blank" do %>
+                                            <i class="glyphicon glyphicon-search"></i>
+                                          <% end %>
+                                        </span>
+
+                                        <a id="div_product_item_hover_icon_edit" href="#" class="div_product_item_hover_icon_edit <%= p.id %>">
+                                        <i class="glyphicon glyphicon-pencil"> </i> </a>
+
+                                        <a id="div_product_item_hover_icon_delete" href="#" class="div_product_item_hover_icon_delete <%= p.id %>">
+                                          <i class="glyphicon glyphicon-trash"> </i></a>
+                                    </div>
+
+                                   <div id="div_product_item_info" class="div_product_item_info">
+                                       <div class = "div_text name<%= p.id %>" id="div_product_item_info_name"><%= truncate(p.name, length: 20) %></div><br>
+                                       <div class = "div_text edit<%= p.id %>" id="div_product_item_edit_name">
+                                        <input type="text" name="name" id="edit_name" class="form-control" value="<%= p.name %>">
+                                        <button type="submit" id="edit_submit" class="btn btn-default" onclick="edit(<%= p.id %>);">수정</button>
+                                       </div>
+                                       <div class = "div_text" id="div_product_item_info_price"><%= number_with_delimiter(p.price, :delimiter => ',') %> ￦</div><br>
+                                       <div class = "div_text" id="div_product_item_info_date"><%= p.created_at.strftime("%Y-%m-%d") %></div>
+                                   </div>
+                               </div>
