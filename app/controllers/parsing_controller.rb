@@ -14,7 +14,6 @@ class ParsingController < ApplicationController
 
         # 액션과 연결시켜 주는 곳
         puts case sUrlOriginal
-
         when "http://store.musinsa.com"
         	musinsa(sUrl)
 
@@ -26,6 +25,16 @@ class ParsingController < ApplicationController
 
         when "https://www.coupang.com"
         	coupang(sUrl)
+
+        when "http://item2.gmarket.co.kr"
+            gmarket(sUrl)
+
+        when "http://itempage3.auction.co.kr"
+            auction(sUrl)
+            
+        when "http://www.wemakeprice.com"
+            wemakeprice(sUrl)
+
         end
 
         if @@b_in == false
@@ -41,10 +50,23 @@ class ParsingController < ApplicationController
         @@b_in = false
     end
 
+    def breakcomma(price)
+    	if price.index(",") == nil
+
+    	else
+    		separate_price = price.split ","
+    		price = String.new
+    		separate_price.each do |f|
+    			price = price + f
+    		end
+    	end
+
+    	return price;
+    end
+
     #사이트 기본 액션 템플렛
     # def site_name(url)
     #  	doc = Nokogiri::HTML(open(url))
-    # 	doc.css("meta")[5]['content']
     # 	data = {:message => "success", :title => title, :price => price ,:img => img, :url => url}
     # 	respond_to do |format|
     # 		format.html
@@ -104,18 +126,65 @@ class ParsingController < ApplicationController
     	@@b_in = true
     end
 
-    def breakcomma(price)
+    def gmarket(url)
+        doc = Nokogiri::HTML(open(url))
 
-    	if price.index(",") == nil
+        title = doc.css("meta[@property='twitter:description']")[0]['content']
+        price_1 = doc.css("span[@id='dc_price']").text.split("원")[0]
+        price_2 = price_1.split(",")
+        price = price_2[0] + price_2[1]
+        img = doc.css("meta[@property='twitter:image:src']")[0]['content']
 
-    	else
-    		separate_price = price.split ","
-    		price = String.new
-    		separate_price.each do |f|
-    			price = price + f
-    		end
-    	end
+        data = {:message => "success", :title => title, :price => price ,:img => img, :url => url}
 
-    	return price;
+        respond_to do |format|
+            format.html
+            format.json { render :json => data }
+        end
+
+        @@b_in = true
+    end
+
+    def wemakeprice(url)
+        doc = Nokogiri::HTML(open(url))
+   
+
+        title_s = doc.css('h4').children[0].text
+        title = title_s[4..title_s.length]
+        price = doc.css('li').css('.sale').children[0].children.text
+        price_s = price.split ","
+        price = price_s[0] + price_s[1]
+        img = doc.css('meta')[9].attributes['content'].value
+       
+        data = {:message => "success", :title => title, :price => price ,:img => img, :url => url}
+        
+        respond_to do |format|
+            format.html
+            format.json { render :json => data }
+        end
+
+        @@b_in = true 
+    end
+
+
+    def auction(url)
+        doc = Nokogiri::HTML(open(url).read.encode('utf-8', 'euc-kr'))
+
+        title = doc.css('.product div')[0].children[1].attributes['alt'].value
+        price_origin = doc.css('.product div')[1].children.children[2].children.text
+        price_temp = price_origin.split "원"
+        price_s = price_temp[0].split ","
+        price = price_s[0] + price_s[1]
+        img = doc.css('.product div')[0].children[1].attributes['src'].value
+
+        data = {:message => "success", :title => title, :price => price ,:img => img, :url => url}
+
+        respond_to do |format|
+            format.html
+            format.json { render :json => data }
+        end
+
+        @@b_in = true
+
     end
 end
