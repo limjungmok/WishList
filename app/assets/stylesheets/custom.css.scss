@@ -2,14 +2,14 @@
 @import "bootstrap";
 
 #logo {
-  font-family: 'Nanum Gothic', sans-serif;
+  font-family: 'Noto Sans KR', sans-serif;
   float: left;
   margin-right: 10px;
   font-size: 23px;
   text-transform: uppercase;
   letter-spacing: -1px;
   padding-top: 9px;
-  font-weight: bold;
+
   color:#fff;
   text-decoration:none !important;
 }
@@ -39,6 +39,8 @@ a{
 }
 
 .navbar-inverse .navbar-nav > li > a{
+ font-family: 'Noto Sans KR', sans-serif;
+ font-weight: lighter;
  width:auto;
  padding-left: 0px;
  padding-right : 0px;

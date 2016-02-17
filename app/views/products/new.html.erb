@@ -15,8 +15,9 @@ $(document).ready(function(){
     var w = window.innerWidth;//화면 가로
     var h = window.innerHeight;//화면세로
 
-    $("#div_main").width(w);
+    //$("#div_main").width(w);
     $("#div_main").height(h);
+    //$("#div_product").width(w);
     $('#div_main_box').css({'height': (h/1.8)});
     $('#url').css({'width': (w/3)});
 
@@ -421,6 +422,9 @@ $(document).ready(function(){
                <% end %>
 
            </div>
+           <div id="div_product_footer">
+
+           </div>
            <div>
              <%=link_to (image_tag("up.png", :width => "70px", :height => "70px")), '#div_main', id:"top"%>
            </div>
@@ -429,10 +433,10 @@ $(document).ready(function(){
     
     <div id="footer">
       <br>
-      <p style="font-size:20px ;font-weight: bold; font-family: 'Noto Sans Korean', sans-serif">Join us on</p>
+      <p style="font-size:20px ;font-weight: bold; font-family: 'Noto Sans Korean', sans-serif">Contact us</p>
       <hr id="footer_hr">
       Copyright © 2016 by <a href="https://www.facebook.com/openyearround/?fref=ts" target='_blank' id="footer_url">OpenYearRound</a>. Inc.
-      <p>
+      <p><br>
     </div>
 </body>
 </html>
