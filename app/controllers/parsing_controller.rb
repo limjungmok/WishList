@@ -71,14 +71,14 @@ class ParsingController < ApplicationController
 
     	if params.count > 4
     		params.each do |key,value|
-    			index = index + 1
     			if index < params.count - 3
-    				sFinalUrl = sFinalUrl + "&" + key + "=" + value
+    				if index > 0
+    					sFinalUrl = sFinalUrl + "&" + key + "=" + value
+    				end
     			end
+    			index = index + 1
     		end
     	end
-
-    	byebug
 
     	return sFinalUrl
     end
