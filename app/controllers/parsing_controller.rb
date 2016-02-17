@@ -5,9 +5,8 @@ class ParsingController < ApplicationController
 	def findParsingAction()
 
 		sUrl = params[:url]
-        #sUrl = "store.musinsa.com/app/product/detail/282220/0"
-
-        if sUrl.index("/",8) != nil
+		
+		if sUrl.index("/",8) != nil
             sUrlOriginal = sUrl[0,sUrl.index("/",8)] # url 중 original 주소만 가져 옴
         end
 
@@ -18,10 +17,23 @@ class ParsingController < ApplicationController
 
         when "http://www.zara.com"
 
+        when "http://www.11st.co.kr" , "http://deal.11st.co.kr"
+        	for_11st = params[:url]+"&prdNo="+params[:prdNo]
+        	_11st(for_11st)
+
+        when "https://www.coupang.com"
+        	coupang(sUrl)
+
+        when "http://item2.gmarket.co.kr"
+            gmarket(sUrl)
+
         when "http://itempage3.auction.co.kr"
-            auction(sUrl)
+        	for_auction = params[:url] + "&ItemNo=" + params[:ItemNo]
+            auction(for_auction)
+            
         when "http://www.wemakeprice.com"
             wemakeprice(sUrl)
+
         end
 
         if @@b_in == false
@@ -37,10 +49,29 @@ class ParsingController < ApplicationController
         @@b_in = false
     end
 
+    def breakcomma(price)
+    	if price.index(",") == nil
+
+    	else
+    		separate_price = price.split ","
+    		price = String.new
+    		separate_price.each do |f|
+    			price = price + f
+    		end
+    	end
+
+    	return price;
+    end
+
     #사이트 기본 액션 템플렛
     # def site_name(url)
-    #     doc = Nokogiri::HTML(open(url))
-    #     doc.css("meta")[5]['content']
+    #  	doc = Nokogiri::HTML(open(url))
+    # 	data = {:message => "success", :title => title, :price => price ,:img => img, :url => url}
+    # 	respond_to do |format|
+    # 		format.html
+    # 		format.json { render :json => data }
+    # 	end
+    # 	@@b_in = true
     # end
 
     def musinsa(url)
@@ -64,15 +95,59 @@ class ParsingController < ApplicationController
     	@@b_in = true
     end
 
+    def _11st(url)
+     	doc = Nokogiri::HTML(open(url))
+    	title = doc.css("title")[0].text
+    	price = doc.xpath("//meta[@property='price']/@content")[0].value
+    	img = doc.xpath("//meta[@property='og:image']/@content")[0].value
+
+    	data = {:message => "success", :title => title, :price => price ,:img => img, :url => url}
+    	respond_to do |format|
+    		format.html
+    		format.json { render :json => data }
+    	end
+    	@@b_in = true
+    end
+
+    def coupang(url)
+    	doc = Nokogiri::HTML(open(url))
+
+    	title = doc.xpath("//meta[@property='og:title']/@content")[0].value
+    	img = doc.xpath("//meta[@property='og:image']/@content")[0].value
+    	price = breakcomma(doc.xpath("//strong[@class='price']").text)
+
+    	data = {:message => "success", :title => title, :price => price ,:img => img, :url => url}
+    	respond_to do |format|
+    		format.html
+    		format.json { render :json => data }
+    	end
+    	@@b_in = true
+    end
+
+    def gmarket(url)
+        doc = Nokogiri::HTML(open(url))
+
+        title = doc.css("meta[@property='twitter:description']")[0]['content']
+        price = breakcomma(doc.css("span[@id='dc_price']").text.split("원")[0])
+        img = doc.css("meta[@property='twitter:image:src']")[0]['content']
+
+        data = {:message => "success", :title => title, :price => price ,:img => img, :url => url}
+
+        respond_to do |format|
+            format.html
+            format.json { render :json => data }
+        end
+
+        @@b_in = true
+    end
+
     def wemakeprice(url)
         doc = Nokogiri::HTML(open(url))
    
 
         title_s = doc.css('h4').children[0].text
         title = title_s[4..title_s.length]
-        price = doc.css('li').css('.sale').children[0].children.text
-        price_s = price.split ","
-        price = price_s[0] + price_s[1]
+        price = breakcomma(doc.css('li').css('.sale').children[0].children.text)
         img = doc.css('meta')[9].attributes['content'].value
        
         data = {:message => "success", :title => title, :price => price ,:img => img, :url => url}
@@ -103,6 +178,7 @@ class ParsingController < ApplicationController
             format.json { render :json => data }
         end
 
-        @@b_in = true 
+        @@b_in = true
+
     end
 end
