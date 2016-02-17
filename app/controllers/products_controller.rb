@@ -86,14 +86,14 @@ class ProductsController < ApplicationController
 
 	def extention_login
 		user = User.find_by(login_id: params[:id])
-		user_id_ = user.id
 
-		data = {:message => "success", :user_id => user_id_}
+		data = {:message => "success"}
 		data_ = {:message => "fail"}
 
 
 		if user && user.authenticate(params[:pw])
 
+			data = {:message => "success", :user_id => user.id}
 			respond_to do |format|
 				format.html
 				format.js
