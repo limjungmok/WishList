@@ -27,6 +27,8 @@ module WishList
 
     #corps 문제로 헤더추가!
     config.action_dispatch.default_headers.merge!('Access-Control-Allow-Origin' => '*')
-    config.action_dispatch.default_headers.merge!('Access-Control-Allow-Methods' => 'GET,POST,PUT,DELETE,OPTIONS')
+    config.action_dispatch.default_headers.merge!('Access-Control-Allow-Methods' => 'POST, GET, OPTIONS, DELETE, PUT')
+    config.action_dispatch.default_headers.merge!('Access-Control-Max-Age' => '3600')
+    config.action_dispatch.default_headers.merge!('Access-Control-Allow-Headers' => 'x-requested-with')
   end
 end
