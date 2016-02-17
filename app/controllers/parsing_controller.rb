@@ -35,6 +35,9 @@ class ParsingController < ApplicationController
         when "http://www.wemakeprice.com"
             wemakeprice(sUrl)
 
+        when "http://www.ticketmonster.co.kr"
+            ticketmonster(sUrl)
+
         end
 
         if @@b_in == false
@@ -200,5 +203,20 @@ class ParsingController < ApplicationController
 
         @@b_in = true
 
+    end
+
+    def ticketmonster(url)
+        doc = Nokogiri::HTML(open(url))
+
+        title = doc.css("h3[@class='tit']")[0].children[0]['alt']
+        price = breakcomma(doc.css("div[@class='lately on']").css("div[@class='lst']").css("div[@class='detail'] span em").text)
+        img = doc.css("ul[@class='roll']")[0].children.children[1].attributes["src"].value
+
+        data = {:message => "success", :title => title, :price => price ,:img => img, :url => url}
+        respond_to do |format|
+            format.html
+            format.json { render :json => data }
+        end
+        @@b_in = true
     end
 end
