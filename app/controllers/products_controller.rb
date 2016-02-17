@@ -86,8 +86,9 @@ class ProductsController < ApplicationController
 
 	def extention_login
 		user = User.find_by(login_id: params[:id])
+		user_id_ = user.id
 
-		data = {:message => "success", :user_id => user.id}
+		data = {:message => "success", :user_id => user_id_}
 		data_ = {:message => "fail"}
 
 
