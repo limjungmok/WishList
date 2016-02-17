@@ -10,6 +10,7 @@ class ParsingController < ApplicationController
             sUrlOriginal = sUrl[0,sUrl.index("/",8)] # url 중 original 주소만 가져 옴
         end
 
+        byebug
         # 액션과 연결시켜 주는 곳
         puts case sUrlOriginal
         when "http://store.musinsa.com"
@@ -21,7 +22,7 @@ class ParsingController < ApplicationController
         	for_11st = params[:url]+"&prdNo="+params[:prdNo]
         	_11st(for_11st)
 
-        when "https://www.coupang.com"
+        when "https://www.coupang.com" , "http://www.coupang.com"
         	coupang(sUrl)
 
         when "http://item2.gmarket.co.kr"
