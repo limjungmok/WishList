@@ -18,8 +18,9 @@ class ParsingController < ApplicationController
         when "http://www.zara.com"
 
         when "http://www.11st.co.kr" , "http://deal.11st.co.kr"
-        	for_11st = params[:url]+"&prdNo="+params[:prdNo]
-        	_11st(for_11st)
+        	#for_11st = params[:url]+"&prdNo="+params[:prdNo]
+        	#_11st(for_11st)
+        	_11st(breakParameter(params))
 
         when "https://www.coupang.com" , "http://www.coupang.com"
         	coupang(sUrl)
@@ -49,7 +50,7 @@ class ParsingController < ApplicationController
         @@b_in = false
     end
 
-    def breakcomma(price)
+    def breakComma(price)
     	if price.index(",") == nil
 
     	else
@@ -61,6 +62,18 @@ class ParsingController < ApplicationController
     	end
 
     	return price;
+    end
+
+    def breakParameter(params)
+    	#  http://www.naver.com?id=abcd&pw=qwer
+    	sFinalUrl = params[:url]
+    	if params.count > 1
+    		params.each do |key,value|
+    			sFinalUrl = sFinalUrl + "&" + key + "=" + value
+    		end
+    	end
+
+    	return sFinalUrl
     end
 
     #사이트 기본 액션 템플렛
@@ -114,7 +127,7 @@ class ParsingController < ApplicationController
 
     	title = doc.xpath("//meta[@property='og:title']/@content")[0].value
     	img = doc.xpath("//meta[@property='og:image']/@content")[0].value
-    	price = breakcomma(doc.xpath("//strong[@class='price']").text)
+    	price = breakComma(doc.xpath("//strong[@class='price']").text)
 
     	data = {:message => "success", :title => title, :price => price ,:img => img, :url => url}
     	respond_to do |format|
@@ -128,7 +141,7 @@ class ParsingController < ApplicationController
         doc = Nokogiri::HTML(open(url))
 
         title = doc.css("meta[@property='twitter:description']")[0]['content']
-        price = breakcomma(doc.css("span[@id='dc_price']").text.split("원")[0])
+        price = breakComma(doc.css("span[@id='dc_price']").text.split("원")[0])
         img = doc.css("meta[@property='twitter:image:src']")[0]['content']
 
         data = {:message => "success", :title => title, :price => price ,:img => img, :url => url}
@@ -147,7 +160,7 @@ class ParsingController < ApplicationController
 
         title_s = doc.css('h4').children[0].text
         title = title_s[4..title_s.length]
-        price = breakcomma(doc.css('li').css('.sale').children[0].children.text)
+        price = breakComma(doc.css('li').css('.sale').children[0].children.text)
         img = doc.css('meta')[9].attributes['content'].value
        
         data = {:message => "success", :title => title, :price => price ,:img => img, :url => url}
