@@ -33,11 +33,6 @@ class ProductsController < ApplicationController
  		@product = @user.products.find(params[:id])
  		@product.name = params[:name]
  		@product.save
- 
- 		respond_to do |format|
- 			format.html
- 			format.js
- 		end
  	end
 
 	def destroy

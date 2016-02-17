@@ -223,7 +223,7 @@ $(document).ready(function(){
       var item = $(".div_product_item_info").find('.edit' + id);
       var edit_name = $(item).children().val();
 
-      if(edit_name < 17) {
+      if(edit_name.length < 17) {
         var edit_slice_name = $(item).children().val();
         $(".div_product_item_info").find('.name' + id).html(edit_slice_name);
       }
