@@ -28,5 +28,13 @@ module WishList
     #corps 문제로 헤더추가!
     config.action_dispatch.default_headers.merge!('Access-Control-Allow-Origin' => '*')
 
-  end
+    config.middleware.use Rack::Cors do
+      allow do
+        origins '*'
+        resource %r{/users/\d+/products/\d+},
+        :headers => ['Origin', 'Accept', 'Content-Type'],
+        :methods => [:put]
+            end
+        end
+    end
 end
