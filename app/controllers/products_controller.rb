@@ -38,7 +38,18 @@ class ProductsController < ApplicationController
  			@product.img = params[:img]
  		end
  		@product.save
+ 	end
 
+ 	def update_for_extention
+ 		@user = User.find_by(id: params[:user_id])
+ 		@product = @user.products.find(params[:id])
+ 		@product.name = params[:name]
+ 		if params[:price] != nil
+ 			@product.price = params[:price]
+ 			@product.url = params[:url]
+ 			@product.img = params[:img]
+ 		end
+ 		@product.save
  	end
 
 	def destroy
