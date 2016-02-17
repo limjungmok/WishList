@@ -13,42 +13,7 @@ src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
             type:'POST',
             data:{'url':url},
             success:function(v){
-                console.log("hello world");
-                analyze(url);
             }
         });
     }
-
-    function analyze(_url){
-      $.ajax({
-       type: 'GET',
-       crossDomain: true,
-       dataType: 'json',
-       url: '/findParsingAction.json?url=' + _url,
-       success: function(data,status,xhr){
-          if(data.message == "success"){
-            var product_title = data.title;
-            var product_img = data.img;
-            var product_price = data.price;
-            var product_url = data.url;
-            $.ajax({
-              url:"/get_product_last_product",
-              type:"GET",
-              success:function(data) {
-               var product_id = data.id;
-               var product_create_at = data.created_at;
-
-               $.ajax({
-                  url:"/users/<%=@user.id%>/products/" + product_id,
-                  type:"PUT",
-                  data:{'name':product_title , 'price':product_price, 'url':product_url, 'img':product_img},
-                  success:function(v) {
-                  }
-              });
-           } 
-       });
-        }
-    }
-});
-  }
 </script>

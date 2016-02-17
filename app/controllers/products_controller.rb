@@ -62,6 +62,13 @@ class ProductsController < ApplicationController
 		render :json => data, :status => :ok
 	end
 
+	def get_user_id_for_extention
+		user_id = User.find_by login:params[:user_id]
+		user_id = user_id.id
+		data = {:user_id => user_id}
+		render :json => data, :status => :ok
+	end
+
 	def send_email
 		ExampleMailer.sample_email.deliver_now
 		redirect_to :back
@@ -80,7 +87,7 @@ class ProductsController < ApplicationController
 	def extention_login
 		user = User.find_by(login_id: params[:id])
 
-		data = {:message => "success"}
+		data = {:message => "success", :user_id => user.id}
 		data_ = {:message => "fail"}
 
 
