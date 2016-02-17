@@ -62,6 +62,13 @@ class ProductsController < ApplicationController
 		render :json => data, :status => :ok
 	end
 
+	def get_product_last_product_for_extention
+		user = User.find_by(id: params[:id])
+		last_product = user.products.last
+		data = {:id => last_product.id, :created_at => last_product.created_at.strftime("%Y-%m-%d")}
+		render :json => data, :status => :ok
+	end
+
 	def get_user_id_for_extention
 		user_id = User.find_by login:params[:user_id]
 		user_id = user_id.id
