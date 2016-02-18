@@ -53,6 +53,17 @@ class ParsingController < ApplicationController
 
         when "http://www.interpark.com"
         	interpark(breakParameter(params))
+
+        when "http://www.29cm.co.kr"
+            _29cm(breakParameter(params))
+
+
+        when "http://www.hm.com"
+            hnm(breakParameter(params))
+
+        when "http://www.abcmart.co.kr"
+            abcmart(breakParameter(params))
+
         end
 
         if @@b_in == false
@@ -255,6 +266,7 @@ class ParsingController < ApplicationController
         @@b_in = true
     end
 
+
     def _8seconds(url)
      	doc = Nokogiri::HTML(open(url))
 
@@ -328,5 +340,56 @@ class ParsingController < ApplicationController
     		format.json { render :json => data }
     	end
     	@@b_in = true
+
+    def _29cm(url)
+        doc = Nokogiri::HTML(open(url))
+
+        title = doc.css("meta[@property='og:title']")[0].attributes['content'].value
+
+        if !doc.css("div[@class='price']").empty?            
+            price = breakComma(doc.css("div[@class='price']")[0].children.text[doc.css("div[@class='price']")[0].children.text.index(" ")+12..doc.css("div[@class='price']")[0].children.text.index("won")-1])    
+        else
+            price = breakComma(doc.css("div[@class='o']")[0].children.text[0..doc.css("div[@class='o']")[0].children.text.index("won")-1])            
+        end
+ 
+        img = doc.css("link[@rel='image_src']")[0].attributes["href"].value[0..doc.css("link[@rel='image_src']")[0].attributes["href"].value.index("?")-1]
+
+        data = {:message => "success", :title => title, :price => price ,:img => img, :url => url}
+        respond_to do |format|
+            format.html
+            format.json { render :json => data }
+        end
+        @@b_in = true
+    end
+
+    def hnm(url)
+        doc = Nokogiri::HTML(open(url))
+
+        title_s= doc.css("meta[@property='og:title']")[0].attributes["content"].value.encode("iso-8859-1").force_encoding("utf-8")
+        title = title_s.split("￦")[0]
+        price_s = title_s.split("￦")
+        price = breakComma(price_s[1])
+        img = doc.css("div[@class='zoomable']")[0].children[1].attributes["src"].value
+        data = {:message => "success", :title => title, :price => price ,:img => img, :url => url}
+        respond_to do |format|
+            format.html
+            format.json { render :json => data }
+        end
+        @@b_in = true
+    end
+
+    def abcmart(url)
+      doc = Nokogiri::HTML(open(url))
+      title = doc.css("p[@class='korea']").children.text
+      price = breakComma(doc.css("span[@class='price']").children.children.text)
+      img = doc.css("div[@class='product_photo']").children.children[1].attributes["src"].value
+
+      data = {:message => "success", :title => title, :price => price ,:img => img, :url => url}
+      respond_to do |format|
+          format.html
+          format.json { render :json => data }
+      end
+      @@b_in = true
+
     end
 end
