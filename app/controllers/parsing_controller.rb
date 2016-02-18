@@ -1,6 +1,9 @@
 class ParsingController < ApplicationController
 
 	require 'open-uri'
+	require 'rkelly'
+
+	@@parser = RKelly::Parser.new
 	@@b_in = false
 	def findParsingAction()
 
@@ -216,15 +219,12 @@ class ParsingController < ApplicationController
     def uniqlo(url)
         doc = Nokogiri::HTML(open(url))
 
+        img_javascript = doc.xpath("//script[@type='text/javascript']")[18].text
+
         title = doc.css("h2[@id='goodsNmArea']").text[5..doc.css("h2[@id='goodsNmArea']").text.index("\r",7)-1]
         price = breakComma(doc.css("li[@class='price']").text[0..doc.css("li[@class='price']").text.index("원")-1])
-        
-        if img = doc.css("ul[@id='prodThumbImgs']")[0].children[1].children[1].attributes["href"].value
-            #착샷부분이 있으면 가져오고
-        else
-            img = doc.css("p[@class='tumb_img']")[0].children.children[0].attributes["src"].value
-            #없으면 비슷한놈꺼 가져온다
-        end
+
+        img = img_javascript[img_javascript.index("src_570")+9..img_javascript.index("src_1000")-8]
 
         #이미지는 자바스크립트에서 받아와야함
 
