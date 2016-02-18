@@ -412,6 +412,13 @@ class ParsingController < ApplicationController
 
         price = breakComma(doc.css("strong[@id='span_product_price_text']").text)
         img = doc.css("div[@class='xans-element- xans-product xans-product-image ']").css("div[@class='keyImg'] img")[0]['src']
+   
+        data = {:message => "success", :title => title, :price => price ,:img => img, :url => url}
+        respond_to do |format|
+            format.html
+            format.json { render :json => data }
+        end
+        @@b_in = true
     end
 
     def hnm(url)
