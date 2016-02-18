@@ -1,6 +1,7 @@
 class ParsingController < ApplicationController
 
 	require 'open-uri'
+
 	@@b_in = false
 	def findParsingAction()
 
@@ -46,6 +47,31 @@ class ParsingController < ApplicationController
 
         when "http://www.underthetoe.com"
             underthetoe(breakParameter(params))        
+
+        when "http://www.ssfshop.com"
+        	_8seconds(breakParameter(params))
+
+        when "http://www.spao.com"
+        	spao(breakParameter(params))
+
+        when "http://www.topten10.co.kr"
+        	topten10(breakParameter(params))
+
+        when "http://book.interpark.com"
+        	interpark_book(breakParameter(params))
+
+        when "http://www.interpark.com"
+        	interpark(breakParameter(params))
+
+        when "http://www.29cm.co.kr"
+            _29cm(breakParameter(params))
+
+
+        when "http://www.hm.com"
+            hnm(breakParameter(params))
+
+        when "http://www.abcmart.co.kr"
+            abcmart(breakParameter(params))
 
         end
 
@@ -122,7 +148,6 @@ class ParsingController < ApplicationController
     		format.html
     		format.json { render :json => data }
     	end
-
     	@@b_in = true
     end
 
@@ -168,13 +193,11 @@ class ParsingController < ApplicationController
             format.html
             format.json { render :json => data }
         end
-
         @@b_in = true
     end
 
     def wemakeprice(url)
         doc = Nokogiri::HTML(open(url))
-   
 
         title_s = doc.css('h4').children[0].text
         title = title_s[4..title_s.length]
@@ -187,7 +210,6 @@ class ParsingController < ApplicationController
             format.html
             format.json { render :json => data }
         end
-
         @@b_in = true 
     end
 
@@ -208,23 +230,18 @@ class ParsingController < ApplicationController
             format.html
             format.json { render :json => data }
         end
-
         @@b_in = true
-
     end
 
     def uniqlo(url)
         doc = Nokogiri::HTML(open(url))
 
+        img_javascript = doc.xpath("//script[@type='text/javascript']")[18].text
+
         title = doc.css("h2[@id='goodsNmArea']").text[5..doc.css("h2[@id='goodsNmArea']").text.index("\r",7)-1]
         price = breakComma(doc.css("li[@class='price']").text[0..doc.css("li[@class='price']").text.index("원")-1])
-        
-        if img = doc.css("ul[@id='prodThumbImgs']")[0].children[1].children[1].attributes["href"].value
-            #착샷부분이 있으면 가져오고
-        else
-            img = doc.css("p[@class='tumb_img']")[0].children.children[0].attributes["src"].value
-            #없으면 비슷한놈꺼 가져온다
-        end
+
+        img = img_javascript[img_javascript.index("src_570")+9..img_javascript.index("src_1000")-8]
 
         #이미지는 자바스크립트에서 받아와야함
 
@@ -235,7 +252,6 @@ class ParsingController < ApplicationController
         end
         @@b_in = true
     end
-
 
     def ticketmonster(url)
         doc = Nokogiri::HTML(open(url))
@@ -279,6 +295,95 @@ class ParsingController < ApplicationController
 
         price = breakComma(doc.css("span[@id='span_product_price_text']").text)
         img = doc.css("div[@class='xans-element- xans-product xans-product-image ']").css("div[@class='keyImg'] img")[0]['src']
+    end
+
+    def _8seconds(url)
+     	doc = Nokogiri::HTML(open(url))
+
+     	title = doc.xpath("//meta[@property='og:title']/@content")[0].value
+     	price = breakComma(doc.xpath("//strong[@id='sPriceStrong']").text)
+     	img = doc.xpath("//meta[@property='og:image']/@content")[0].value
+
+    	data = {:message => "success", :title => title, :price => price ,:img => img, :url => url}
+    	respond_to do |format|
+    		format.html
+    		format.json { render :json => data }
+    	end
+    	@@b_in = true
+    end
+
+    def spao(url)
+     	doc = Nokogiri::HTML(open(url))
+
+     	title = doc.xpath("//meta[@property='og:title']/@content")[0].value
+     	price = doc.xpath("//meta[@property='product:sale_price:amount']/@content")[0].value
+     	img = doc.xpath("//meta[@property='og:image']/@content")[0].value
+
+    	data = {:message => "success", :title => title, :price => price ,:img => img, :url => url}
+    	respond_to do |format|
+    		format.html
+    		format.json { render :json => data }
+    	end
+    	@@b_in = true
+    end
+
+    def topten10(url)
+     	doc = Nokogiri::HTML(open(url))
+
+     	title = doc.xpath("//meta[@property='product:plural_title']/@content")[0].value
+     	price = doc.xpath("//meta[@property='product:price:amount']/@content")[0].value
+     	img = doc.xpath("//meta[@property='product:image']/@content")[0].value
+
+    	data = {:message => "success", :title => title, :price => price ,:img => img, :url => url}
+    	respond_to do |format|
+    		format.html
+    		format.json { render :json => data }
+    	end
+    	@@b_in = true
+    end
+
+    def interpark_book(url)
+     	doc = Nokogiri::HTML(open(url))
+
+     	title = doc.xpath("//div[@class='prod_title']").children[1].text
+     	img = doc.xpath("//div[@class='imgBox']").children[3].attributes['src'].value
+     	price = doc.xpath("//input[@id='DISP_SALE_UNITCOST']")[0].attributes['value'].value
+
+    	data = {:message => "success", :title => title, :price => price ,:img => img, :url => url}
+    	respond_to do |format|
+    		format.html
+    		format.json { render :json => data }
+    	end
+    	@@b_in = true
+    end
+
+    def interpark(url)
+     	doc = Nokogiri::HTML(open(url))
+
+     	title = doc.xpath("//textarea[@id='prdTitle']").text[doc.xpath("//textarea[@id='prdTitle']").text.index("\r")+5..doc.xpath("//textarea[@id='prdTitle']").text.length-1]
+     	img = doc.xpath("//div[@class='prdBoxImg']")[0].children[1].attributes['src'].value
+     	price = breakComma(doc.xpath("//td[@class='salePrice']")[0].children.children[0].children.text)
+
+    	data = {:message => "success", :title => title, :price => price ,:img => img, :url => url}
+    	respond_to do |format|
+    		format.html
+    		format.json { render :json => data }
+    	end
+    	@@b_in = true
+    end
+
+    def _29cm(url)
+        doc = Nokogiri::HTML(open(url))
+
+        title = doc.css("meta[@property='og:title']")[0].attributes['content'].value
+
+        if !doc.css("div[@class='price']").empty?            
+            price = breakComma(doc.css("div[@class='price']")[0].children.text[doc.css("div[@class='price']")[0].children.text.index(" ")+12..doc.css("div[@class='price']")[0].children.text.index("won")-1])    
+        else
+            price = breakComma(doc.css("div[@class='o']")[0].children.text[0..doc.css("div[@class='o']")[0].children.text.index("won")-1])            
+        end
+ 
+        img = doc.css("link[@rel='image_src']")[0].attributes["href"].value[0..doc.css("link[@rel='image_src']")[0].attributes["href"].value.index("?")-1]
 
         data = {:message => "success", :title => title, :price => price ,:img => img, :url => url}
         respond_to do |format|
@@ -300,7 +405,16 @@ class ParsingController < ApplicationController
 
         price = breakComma(doc.css("strong[@id='span_product_price_text']").text)
         img = doc.css("div[@class='xans-element- xans-product xans-product-image ']").css("div[@class='keyImg'] img")[0]['src']
+    end
 
+    def hnm(url)
+        doc = Nokogiri::HTML(open(url))
+
+        title_s= doc.css("meta[@property='og:title']")[0].attributes["content"].value.encode("iso-8859-1").force_encoding("utf-8")
+        title = title_s.split("￦")[0]
+        price_s = title_s.split("￦")
+        price = breakComma(price_s[1])
+        img = doc.css("div[@class='zoomable']")[0].children[1].attributes["src"].value
         data = {:message => "success", :title => title, :price => price ,:img => img, :url => url}
         respond_to do |format|
             format.html
@@ -308,4 +422,18 @@ class ParsingController < ApplicationController
         end
         @@b_in = true
     end    
+
+    def abcmart(url)
+      doc = Nokogiri::HTML(open(url))
+      title = doc.css("p[@class='korea']").children.text
+      price = breakComma(doc.css("span[@class='price']").children.children.text)
+      img = doc.css("div[@class='product_photo']").children.children[1].attributes["src"].value
+
+      data = {:message => "success", :title => title, :price => price ,:img => img, :url => url}
+      respond_to do |format|
+          format.html
+          format.json { render :json => data }
+      end
+      @@b_in = true
+    end
 end
