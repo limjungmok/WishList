@@ -13,30 +13,30 @@ class ParsingController < ApplicationController
         # 액션과 연결시켜 주는 곳
         puts case sUrlOriginal
         when "http://store.musinsa.com"
-        	musinsa(sUrl)
+        	musinsa(breakParameter(params))
 
         when "http://www.zara.com"
 
         when "http://www.11st.co.kr" , "http://deal.11st.co.kr"
-        	#for_11st = params[:url]+"&prdNo="+params[:prdNo]
-        	#_11st(for_11st)
         	_11st(breakParameter(params))
 
         when "https://www.coupang.com" , "http://www.coupang.com"
-        	coupang(sUrl)
+        	coupang(breakParameter(params))
 
         when "http://item2.gmarket.co.kr"
-            gmarket(sUrl)
+            gmarket(breakParameter(params))
 
         when "http://itempage3.auction.co.kr"
-        	for_auction = params[:url] + "&ItemNo=" + params[:ItemNo]
-            auction(for_auction)
+            auction(breakParameter(params))
             
         when "http://www.wemakeprice.com"
-            wemakeprice(sUrl)
+            wemakeprice(breakParameter(params))
 
         when "http://www.ticketmonster.co.kr"
-            ticketmonster(sUrl)
+            ticketmonster(breakParameter(params))
+
+        when "http://www.uniqlo.kr"
+            uniqlo(breakParameter(params))
 
         end
 
@@ -68,7 +68,6 @@ class ParsingController < ApplicationController
     end
 
     def breakParameter(params)
-    	#  http://www.naver.com?id=abcd&pw=qwer
     	sFinalUrl = params[:url]
     	index = 0
 
@@ -205,11 +204,35 @@ class ParsingController < ApplicationController
 
     end
 
+    def uniqlo(url)
+        doc = Nokogiri::HTML(open(url))
+
+        title = doc.css("h2[@id='goodsNmArea']").text[5..doc.css("h2[@id='goodsNmArea']").text.index("\r",7)-1]
+        price = breakComma(doc.css("li[@class='price']").text[0..doc.css("li[@class='price']").text.index("원")-1])
+        
+        if img = doc.css("ul[@id='prodThumbImgs']")[0].children[1].children[1].attributes["href"].value
+            #착샷부분이 있으면 가져오고
+        else
+            img = doc.css("p[@class='tumb_img']")[0].children.children[0].attributes["src"].value
+            #없으면 비슷한놈꺼 가져온다
+        end
+
+        #이미지는 자바스크립트에서 받아와야함
+
+        data = {:message => "success", :title => title, :price => price ,:img => img, :url => url}
+        respond_to do |format|
+            format.html
+            format.json { render :json => data }
+        end
+        @@b_in = true
+    end
+
+
     def ticketmonster(url)
         doc = Nokogiri::HTML(open(url))
 
         title = doc.css("h3[@class='tit']")[0].children[0]['alt']
-        price = breakcomma(doc.css("div[@class='lately on']").css("div[@class='lst']").css("div[@class='detail'] span em").text)
+        price = breakComma(doc.css("div[@class='lately on']").css("div[@class='lst']").css("div[@class='detail'] span em").text)
         img = doc.css("ul[@class='roll']")[0].children.children[1].attributes["src"].value
 
         data = {:message => "success", :title => title, :price => price ,:img => img, :url => url}
