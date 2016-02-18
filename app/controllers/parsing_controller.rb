@@ -1,6 +1,7 @@
 class ParsingController < ApplicationController
 
 	require 'open-uri'
+    require 'openssl'
 
 	@@b_in = false
 	def findParsingAction()
@@ -65,7 +66,6 @@ class ParsingController < ApplicationController
 
         when "http://www.29cm.co.kr"
             _29cm(breakParameter(params))
-
 
         when "http://www.hm.com"
             hnm(breakParameter(params))
@@ -295,6 +295,13 @@ class ParsingController < ApplicationController
 
         price = breakComma(doc.css("span[@id='span_product_price_text']").text)
         img = doc.css("div[@class='xans-element- xans-product xans-product-image ']").css("div[@class='keyImg'] img")[0]['src']
+    
+        data = {:message => "success", :title => title, :price => price ,:img => img, :url => url}
+        respond_to do |format|
+            format.html
+            format.json { render :json => data }
+        end
+        @@b_in = true
     end
 
     def _8seconds(url)
@@ -408,20 +415,20 @@ class ParsingController < ApplicationController
     end
 
     def hnm(url)
-        doc = Nokogiri::HTML(open(url))
+        doc = Nokogiri::HTML(open(url, 'User-Agent' => 'ruby'))
 
-        title_s= doc.css("meta[@property='og:title']")[0].attributes["content"].value.encode("iso-8859-1").force_encoding("utf-8")
+        title_s= doc.css("meta[@property='go:title']")[0].attributes["content"].value.encode("iso-8859-1").force_encoding("utf-8")
         title = title_s.split("￦")[0]
         price_s = title_s.split("￦")
         price = breakComma(price_s[1])
         img = doc.css("div[@class='zoomable']")[0].children[1].attributes["src"].value
-        data = {:message => "success", :title => title, :price => price ,:img => img, :url => url}
+        data = {:message => "success", :title => title, :price => price ,:omg => omg, :url => url}
         respond_to do |format|
             format.html
             format.json { render :json => data }
         end
         @@b_in = true
-    end    
+    end
 
     def abcmart(url)
       doc = Nokogiri::HTML(open(url))
