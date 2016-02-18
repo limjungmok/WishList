@@ -1,9 +1,7 @@
 class ParsingController < ApplicationController
 
 	require 'open-uri'
-	require 'rkelly'
 
-	@@parser = RKelly::Parser.new
 	@@b_in = false
 	def findParsingAction()
 
@@ -41,6 +39,20 @@ class ParsingController < ApplicationController
         when "http://www.uniqlo.kr"
             uniqlo(breakParameter(params))
 
+        when "http://www.ssfshop.com"
+        	_8seconds(breakParameter(params))
+
+        when "http://www.spao.com"
+        	spao(breakParameter(params))
+
+        when "http://www.topten10.co.kr"
+        	topten10(breakParameter(params))
+
+        when "http://book.interpark.com"
+        	interpark_book(breakParameter(params))
+
+        when "http://www.interpark.com"
+        	interpark(breakParameter(params))
         end
 
         if @@b_in == false
@@ -241,5 +253,80 @@ class ParsingController < ApplicationController
             format.json { render :json => data }
         end
         @@b_in = true
+    end
+
+    def _8seconds(url)
+     	doc = Nokogiri::HTML(open(url))
+
+     	title = doc.xpath("//meta[@property='og:title']/@content")[0].value
+     	price = breakComma(doc.xpath("//strong[@id='sPriceStrong']").text)
+     	img = doc.xpath("//meta[@property='og:image']/@content")[0].value
+
+    	data = {:message => "success", :title => title, :price => price ,:img => img, :url => url}
+    	respond_to do |format|
+    		format.html
+    		format.json { render :json => data }
+    	end
+    	@@b_in = true
+    end
+
+    def spao(url)
+     	doc = Nokogiri::HTML(open(url))
+
+     	title = doc.xpath("//meta[@property='og:title']/@content")[0].value
+     	price = doc.xpath("//meta[@property='product:sale_price:amount']/@content")[0].value
+     	img = doc.xpath("//meta[@property='og:image']/@content")[0].value
+
+    	data = {:message => "success", :title => title, :price => price ,:img => img, :url => url}
+    	respond_to do |format|
+    		format.html
+    		format.json { render :json => data }
+    	end
+    	@@b_in = true
+    end
+
+    def topten10(url)
+     	doc = Nokogiri::HTML(open(url))
+
+     	title = doc.xpath("//meta[@property='product:plural_title']/@content")[0].value
+     	price = doc.xpath("//meta[@property='product:price:amount']/@content")[0].value
+     	img = doc.xpath("//meta[@property='product:image']/@content")[0].value
+
+    	data = {:message => "success", :title => title, :price => price ,:img => img, :url => url}
+    	respond_to do |format|
+    		format.html
+    		format.json { render :json => data }
+    	end
+    	@@b_in = true
+    end
+
+    def interpark_book(url)
+     	doc = Nokogiri::HTML(open(url))
+
+     	title = doc.xpath("//div[@class='prod_title']").children[1].text
+     	img = doc.xpath("//div[@class='imgBox']").children[3].attributes['src'].value
+     	price = doc.xpath("//input[@id='DISP_SALE_UNITCOST']")[0].attributes['value'].value
+
+    	data = {:message => "success", :title => title, :price => price ,:img => img, :url => url}
+    	respond_to do |format|
+    		format.html
+    		format.json { render :json => data }
+    	end
+    	@@b_in = true
+    end
+
+    def interpark(url)
+     	doc = Nokogiri::HTML(open(url))
+
+     	title = doc.xpath("//textarea[@id='prdTitle']").text[doc.xpath("//textarea[@id='prdTitle']").text.index("\r")+5..doc.xpath("//textarea[@id='prdTitle']").text.length-1]
+     	img = doc.xpath("//div[@class='prdBoxImg']")[0].children[1].attributes['src'].value
+     	price = breakComma(doc.xpath("//td[@class='salePrice']")[0].children.children[0].children.text)
+
+    	data = {:message => "success", :title => title, :price => price ,:img => img, :url => url}
+    	respond_to do |format|
+    		format.html
+    		format.json { render :json => data }
+    	end
+    	@@b_in = true
     end
 end
