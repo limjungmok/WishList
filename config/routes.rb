@@ -30,4 +30,8 @@ Rails.application.routes.draw do
   get 'findParsingAction' => 'parsing#findParsingAction'
   get 'get_product_last_product' => 'products#get_product_last_product'
 
+  get 'get_product_last_product_for_extention' => 'products#get_product_last_product_for_extention'
+
+  put 'update_for_extention/:user_id/products/:id' => 'products#update_for_extention'
+
 end 

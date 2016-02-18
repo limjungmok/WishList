@@ -77,14 +77,22 @@ body{
 		width: 60%;
 		height: 50px;
 	}
+	#url:focus {
+		outline: none;
+    	border: 2px solid #CD2026;
+    	box-shadow: none;
+	}
 	#submit{
 		width: auto;
 		height: 50px;
 		font-weight: bold;
 	}
+	#no_login_btn{
+		width: auto;
+		height: 50px;
+		font-weight: bold;
+	}
 }
-
-
 #div_main_info{
 	width: 100%;
 	height: 50px;
@@ -109,7 +117,6 @@ body{
 	margin-left: auto;
 	margin-right: auto;
 }
-
 #div_main_help_extend{
 	width: 49%;
 	height: 40px;
@@ -121,11 +128,9 @@ body{
 	line-height: 40px;
 	font-size: 16px;
 }
-
 #div_main_help_extend:hover{
 	color: #ccc;
 }
-
 #div_main_help_guide{
 	width: 49%;
 	height: 40px;
@@ -294,7 +299,7 @@ a:hover, a:visited, a:link, a:active{
 #edit_name:focus {
 	outline: none;
     border-color: #CD2026;
-    box-shadow: 0 0 10px #ccc;
+    box-shadow: none;
 }
 #edit_submit {
 	width: 20%;
