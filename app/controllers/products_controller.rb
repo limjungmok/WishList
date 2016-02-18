@@ -129,8 +129,7 @@ class ProductsController < ApplicationController
 
 	def extention_add
 		@user = User.find_by(login_id: params[:id])
-		@user.products.create(:url => params[:url])
-
+		@user.products.create(:url => params[:url],:user_info => @user.login_id)
 	end
 
 end

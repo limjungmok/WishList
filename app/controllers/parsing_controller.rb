@@ -13,27 +13,24 @@ class ParsingController < ApplicationController
         # 액션과 연결시켜 주는 곳
         puts case sUrlOriginal
         when "http://store.musinsa.com"
-        	musinsa(sUrl)
+        	musinsa(breakParameter(params))
 
         when "http://www.zara.com"
 
         when "http://www.11st.co.kr" , "http://deal.11st.co.kr"
-        	#for_11st = params[:url]+"&prdNo="+params[:prdNo]
-        	#_11st(for_11st)
         	_11st(breakParameter(params))
 
         when "https://www.coupang.com" , "http://www.coupang.com"
-        	coupang(sUrl)
+        	coupang(breakParameter(params))
 
         when "http://item2.gmarket.co.kr"
-            gmarket(sUrl)
+            gmarket(breakParameter(params))
 
         when "http://itempage3.auction.co.kr"
-        	for_auction = params[:url] + "&ItemNo=" + params[:ItemNo]
-            auction(for_auction)
+            auction(breakParameter(params))
             
         when "http://www.wemakeprice.com"
-            wemakeprice(sUrl)
+            wemakeprice(breakParameter(params))
 
         end
 
@@ -65,7 +62,6 @@ class ParsingController < ApplicationController
     end
 
     def breakParameter(params)
-    	#  http://www.naver.com?id=abcd&pw=qwer
     	sFinalUrl = params[:url]
     	index = 0
 
