@@ -38,6 +38,15 @@ class ParsingController < ApplicationController
         when "http://www.uniqlo.kr"
             uniqlo(breakParameter(params))
 
+        when "http://www.ba-on.com", "http://www.bit-da.com"
+            cafe24_ver_1(breakParameter(params))
+
+        when "http://www.moxnix.co.kr", "http://www.bonzishop.com"
+            cafe24_ver_2(breakParameter(params))
+
+        when "http://www.underthetoe.com"
+            underthetoe(breakParameter(params))        
+
         end
 
         if @@b_in == false
@@ -242,4 +251,61 @@ class ParsingController < ApplicationController
         end
         @@b_in = true
     end
+
+    def cafe24_ver_1(url)
+        doc = Nokogiri::HTML(open(url))
+
+        title = doc.css("tr[@class=' xans-record-'] td")[0].text
+        price = breakComma(doc.css("tr[@class=' xans-record-'] strong").text)
+        img = doc.css("div[@class='xans-element- xans-product xans-product-image imgArea ']").css("div[@class='keyImg'] img")[0]['src']
+
+        data = {:message => "success", :title => title, :price => price ,:img => img, :url => url}
+        respond_to do |format|
+            format.html
+            format.json { render :json => data }
+        end
+        @@b_in = true
+    end
+
+    def cafe24_ver_2(url)
+        doc = Nokogiri::HTML(open(url))
+
+        title_origin = doc.css("div[@id='prdInfo'] h3")[0].text.split " "
+
+        title = String.new
+        title_origin.each do |t|
+            title = title + " " + t
+        end
+
+        price = breakComma(doc.css("span[@id='span_product_price_text']").text)
+        img = doc.css("div[@class='xans-element- xans-product xans-product-image ']").css("div[@class='keyImg'] img")[0]['src']
+
+        data = {:message => "success", :title => title, :price => price ,:img => img, :url => url}
+        respond_to do |format|
+            format.html
+            format.json { render :json => data }
+        end
+        @@b_in = true
+    end
+
+    def underthetoe(url)
+        doc = Nokogiri::HTML(open(url))
+
+        title_origin = doc.css("div[@id='prdInfo'] h3")[0].text.split " "
+
+        title = String.new
+        title_origin.each do |t|
+            title = title + " " + t
+        end
+
+        price = breakComma(doc.css("strong[@id='span_product_price_text']").text)
+        img = doc.css("div[@class='xans-element- xans-product xans-product-image ']").css("div[@class='keyImg'] img")[0]['src']
+
+        data = {:message => "success", :title => title, :price => price ,:img => img, :url => url}
+        respond_to do |format|
+            format.html
+            format.json { render :json => data }
+        end
+        @@b_in = true
+    end    
 end
