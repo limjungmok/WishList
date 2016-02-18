@@ -46,7 +46,7 @@ class ParsingController < ApplicationController
         when "http://www.moxnix.co.kr", "http://www.bonzishop.com"
             cafe24_ver_2(breakParameter(params))
 
-        when "http://www.underthetoe.com"
+        when "http://www.underthetoe.com", "http://underthetoe.com"
             underthetoe(breakParameter(params))        
 
         when "http://www.ssfshop.com"
@@ -304,6 +304,27 @@ class ParsingController < ApplicationController
         @@b_in = true
     end
 
+    def underthetoe(url)
+        doc = Nokogiri::HTML(open(url))
+
+        title_origin = doc.css("div[@id='prdInfo'] h3")[0].text.split " "
+
+        title = String.new
+        title_origin.each do |t|
+            title = title + " " + t
+        end
+
+        price = breakComma(doc.css("strong[@id='span_product_price_text']").text)
+        img = doc.css("div[@class='xans-element- xans-product xans-product-image ']").css("div[@class='keyImg'] img")[0]['src']
+   
+        data = {:message => "success", :title => title, :price => price ,:img => img, :url => url}
+        respond_to do |format|
+            format.html
+            format.json { render :json => data }
+        end
+        @@b_in = true
+    end
+
     def _8seconds(url)
      	doc = Nokogiri::HTML(open(url))
 
@@ -392,27 +413,6 @@ class ParsingController < ApplicationController
  
         img = doc.css("link[@rel='image_src']")[0].attributes["href"].value[0..doc.css("link[@rel='image_src']")[0].attributes["href"].value.index("?")-1]
 
-        data = {:message => "success", :title => title, :price => price ,:img => img, :url => url}
-        respond_to do |format|
-            format.html
-            format.json { render :json => data }
-        end
-        @@b_in = true
-    end
-
-    def underthetoe(url)
-        doc = Nokogiri::HTML(open(url))
-
-        title_origin = doc.css("div[@id='prdInfo'] h3")[0].text.split " "
-
-        title = String.new
-        title_origin.each do |t|
-            title = title + " " + t
-        end
-
-        price = breakComma(doc.css("strong[@id='span_product_price_text']").text)
-        img = doc.css("div[@class='xans-element- xans-product xans-product-image ']").css("div[@class='keyImg'] img")[0]['src']
-   
         data = {:message => "success", :title => title, :price => price ,:img => img, :url => url}
         respond_to do |format|
             format.html
