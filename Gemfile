@@ -28,6 +28,10 @@ gem "figaro"
 gem 'mailgun-ruby', '~> 1.0', '>= 1.0.3'
 gem 'sweetalert-rails'
 gem 'rack-cors', :require => 'rack/cors'
+gem 'rkelly-remix'
+gem 'rkelly'
+
+
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
