@@ -1,28 +1,29 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <%= stylesheet_link_tag 'application', media: 'all','data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-    
-    </head>
-    <body>
+  <head>
+    <%= stylesheet_link_tag 'application', media: 'all','data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+  </head>
+
+  <body>
       <%= render 'layouts/header' %>
-        <div>
-          <% flash.each do |message_type, message| %>
-          <div class="alert alert-<%= message_type %>"><%= message %></div>
-      <% end %>
-    <script>
-       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-       })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+          <div>
+            <% flash.each do |message_type, message| %>
+                <div class="alert alert-<%= message_type %>"><%= message %></div>
+            <% end %>
 
-       ga('create', 'UA-73008078-1', 'auto');
-       ga('send', 'pageview');
+            <script>
+                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-    </script>
+                ga('create', 'UA-73008078-1', 'auto');
+                ga('send', 'pageview');
+
+            </script>
       <%= yield %>
-    </div>
+          </div>
   </body>
-  </html>
+</html>

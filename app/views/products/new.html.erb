@@ -35,7 +35,6 @@ $(document).ready(function(){
     }).trigger('resize');
   });
 
-
   $(document).ready(function($) {
     $('a[href^="#"]').bind('click.smoothscroll', function(e) {
       e.preventDefault();
@@ -54,44 +53,44 @@ $(document).ready(function(){
   
   //헤더부분 
   function refresh(){
-   $.ajax({ 
-     type: 'GET',
-     url: '/get_product_count',
-     success: function(data,status,xhr){
-       console.log(data);
-       $('#header_product_count').html(data.message);
-       $('#div_product_info_total').html('<div id="div_product_info_total_text">총</div>' + ' ');
+    $.ajax({ 
+      type: 'GET',
+      url: '/get_product_count',
+      success: function(data,status,xhr){
+        console.log(data);
+        $('#header_product_count').html(data.message);
+        $('#div_product_info_total').html('<div id="div_product_info_total_text">총</div>' + ' ');
 
-       $('#div_product_info_total').append('<div class="circle" id="div_product_info_total">'+ data.message +'</div>');
+        $('#div_product_info_total').append('<div class="circle" id="div_product_info_total">'+ data.message +'</div>');
 
-       $('#div_product_info_total').append(' '+'<div id="div_product_info_total_text">개 상품이 등록되어 있습니다</div>');
-     },
-     error: function(xhr,status,error){
-       console.log(xhr);
-       alert(error);
+        $('#div_product_info_total').append(' '+'<div id="div_product_info_total_text">개 상품이 등록되어 있습니다</div>');
+      },
+      error: function(xhr,status,error){
+        console.log(xhr);
+        alert(error);
       }
     });
   }
 
- //이메일 전송
+  //이메일 전송
   function send_e(){
     $.ajax({
-       type: 'GET',
-       url: '/send_email',
-       success: function(data,status,xhr){
-       },
-       error: function(xhr,status,error){
-       }
+      type: 'GET',
+      url: '/send_email',
+      success: function(data,status,xhr){
+      },
+      error: function(xhr,status,error){
+      }
     });
   }
 
- function resize_(){
-  var main = $('#div_product_lists'),
-    centerized = main.find('.div_product_lists_centerized'),
-    itemWidth = main.find('.div_product_item').outerWidth(true);
+  function resize_(){
+    var main = $('#div_product_lists'),
+      centerized = main.find('.div_product_lists_centerized'),
+      itemWidth = main.find('.div_product_item').outerWidth(true);
 
-    var fitItems = (main.width() / itemWidth) | 0;
-    centerized.width(fitItems * itemWidth);
+      var fitItems = (main.width() / itemWidth) | 0;
+      centerized.width(fitItems * itemWidth);
   }
 
   //URL 축소된 url을 전송하는 함수
@@ -120,8 +119,7 @@ $(document).ready(function(){
 
             resize_();
             refresh();
-            send_e();
-            
+            send_e();            
         }
     });
   }
@@ -143,12 +141,12 @@ $(document).ready(function(){
   }
 
   function analyze(_url){
-      $.ajax({
-     type: 'GET',
-     crossDomain: true,
-     dataType: 'json',
-     url: '/findParsingAction.json?url=' + _url,
-     success: function(data,status,xhr){
+    $.ajax({
+    type: 'GET',
+    crossDomain: true,
+    dataType: 'json',
+    url: '/findParsingAction.json?url=' + _url,
+    success: function(data,status,xhr){
           if(data.message == "success"){
             var product_title = data.title;
             var product_img = data.img;
@@ -169,7 +167,7 @@ $(document).ready(function(){
             location.reload();
           },
       });
-                 $('#ex').append(' <div class="div_product_item item'+product_id+'"><div id="div_product_item_image"><img class="image_aspect_ratio" src='+product_img+'></div><div id="div_product_item_hover_icon"><span><a target="_blank" href='+product_url+'><i class="glyphicon glyphicon-search"></i></a></span><a id="div_product_item_hover_icon_edit" href="#" class="div_product_item_hover_icon_edit '+product_id+'"><i class="glyphicon glyphicon-pencil"> </i> </a><a id="div_product_item_hover_icon_delete" href="#" class="div_product_item_hover_icon_delete '+product_id+'"><i class="glyphicon glyphicon-trash"> </i></a></div><div id="div_product_item_info" class="div_product_item_info"><div class = "div_text name'+product_id+'" id="div_product_item_info_name" style="width : 100px">'+product_title+'</div><br><div class = "div_text edit'+product_id+'" id="div_product_item_edit_name"><input type="text" name='+product_title+' id="edit_name" class="form-control" value='+product_title+'><button type="submit" id="edit_submit" class="btn btn-default" onclick="edit('+product_id+');">수정</button></div><div class = "div_text" id="div_product_item_info_price">'+ product_price+' ￦</div><br><div class = "div_text" id="div_product_item_info_date">'+product_create_at+'</div></div></div>')
+                $('#ex').append(' <div class="div_product_item item'+product_id+'"><div id="div_product_item_image"><img class="image_aspect_ratio" src='+product_img+'></div><div id="div_product_item_hover_icon"><a id="div_product_item_hover_icon_edit" href="#" class="div_product_item_hover_icon_edit '+product_id+'"><i class="glyphicon glyphicon-pencil"> </i> </a><a id="div_product_item_hover_icon_delete" href="#" class="div_product_item_hover_icon_delete '+product_id+'"><i class="glyphicon glyphicon-trash"> </i></a></div><div id="div_product_item_info" class="div_product_item_info"><div class = "div_text name'+product_id+'" id="div_product_item_info_name" style="width : 100px">'+product_title+'</div><br><div class = "div_text edit'+product_id+'" id="div_product_item_edit_name"><input type="text" name='+product_title+' id="edit_name" class="form-control" value='+product_title+'><button type="submit" id="edit_submit" class="btn btn-default" onclick="edit('+product_id+');">수정</button></div><div class = "div_text" id="div_product_item_info_price">'+ product_price+' ￦</div><br><div class = "div_text" id="div_product_item_info_date">'+product_create_at+'</div></div></div>')
               }
             });
 
@@ -194,13 +192,12 @@ $(document).ready(function(){
   $("#url").keydown(function(e){
     if(e.keyCode == 13){
       document.getElementById("submit").value = "상품 분석중";
-	      document.getElementById("submit").disabled = true;
+	    document.getElementById("submit").disabled = true;
       parsing_url();
       $("#url").val('');
     }else{
     }
   });
-
 
   //가격순으로 보기
   $("#sort_by_id").click(function(){
@@ -216,7 +213,6 @@ $(document).ready(function(){
 
 		var scrollPercent = (targetHeight - window.scrollY) / targetHeight;
 
-
 	    if ($(this).scrollTop() > (h-50)){
 	    	$('#header').css({'background-color':'rgba(0, 0, 0, 0.5)'});
         $('#top').css({'visibility':'visible'});
@@ -224,8 +220,6 @@ $(document).ready(function(){
 	    	$('#header').css({'background-color':'transparent'});
         $('#top').css({'visibility':'hidden'});
 	    }
-	    
-
   	});
   });
 
@@ -240,126 +234,124 @@ $(document).ready(function(){
     }).trigger('resize');
   });
 
-    // 수정버튼 클릭 시
-    $(document).ready(function() {
-      $(".div_product_item_hover_icon_edit").click(function() {
+  // 수정버튼 클릭 시
+  $(document).ready(function() {
+    $(".div_product_item_hover_icon_edit").click(function() {
           
-          $('.div_product_item').addClass("no-hover");
+      $('.div_product_item').addClass("no-hover");
 
-          var id = [];
-          id = $(this).attr('class').split(" ");
-          var a = id[1];
+      var id = [];
+      id = $(this).attr('class').split(" ");
+      var a = id[1];
 
-          $(".div_product_item_info").find('.name' + a).hide();
-          $(".div_product_item_info").find('.edit' + a).show();
-      });
+      $(".div_product_item_info").find('.name' + a).hide();
+      $(".div_product_item_info").find('.edit' + a).show();
     });
+  });
 
-    // 등록된 제품명 수정
-    function edit(id) {
+  // 등록된 제품명 수정
+  function edit(id) {
 
-      var item = $(".div_product_item_info").find('.edit' + id);
-      var edit_name = $(item).children().val();
+    var item = $(".div_product_item_info").find('.edit' + id);
+    var edit_name = $(item).children().val();
 
-      if(edit_name.length < 17) {
-        var edit_slice_name = $(item).children().val();
-        $(".div_product_item_info").find('.name' + id).html(edit_slice_name);
-      }
-      else {
-        var edit_slice_name = $(item).children().val().substr(0, 17);
-        $(".div_product_item_info").find('.name' + id).html(edit_slice_name + "...");
-      }
-
-      $(".div_product_item_info").find('.name' + id).show();
-      $(".div_product_item_info").find('.edit' + id).hide();
-      $('.div_product_item').removeClass('no-hover');
-
-      $.ajax({
-          url:"/users/<%=@user.id%>/products/" + id,
-          type:"PATCH",
-          data:{'name':edit_name},
-          success:function(v) {}
-      });
+    if(edit_name.length < 17) {
+      var edit_slice_name = $(item).children().val();
+      $(".div_product_item_info").find('.name' + id).html(edit_slice_name);
+    }
+    else {
+      var edit_slice_name = $(item).children().val().substr(0, 17);
+      $(".div_product_item_info").find('.name' + id).html(edit_slice_name + "...");
     }
 
-    // 등록된 제품 삭제
-    $(document).ready(function() {
+    $(".div_product_item_info").find('.name' + id).show();
+    $(".div_product_item_info").find('.edit' + id).hide();
+    $('.div_product_item').removeClass('no-hover');
 
-      function refresh(){
-   $.ajax({ 
-     type: 'GET',
-     url: '/get_product_count',
-     success: function(data,status,xhr){
-       console.log(data);
-       $('#header_product_count').html(data.message);
-       $('#div_product_info_total').html('<div id="div_product_info_total_text">총</div>' + ' ');
+    $.ajax({
+        url:"/users/<%=@user.id%>/products/" + id,
+        type:"PATCH",
+        data:{'name':edit_name},
+        success:function(v) {}
+    });
+  }
 
-       $('#div_product_info_total').append('<div class="circle" id="div_product_info_total">'+ data.message +'</div>');
+  // 등록된 제품 삭제
+  $(document).ready(function() {
+    function refresh(){
+    
+    $.ajax({ 
+      type: 'GET',
+      url: '/get_product_count',
+      success: function(data,status,xhr){
+        console.log(data);
+        $('#header_product_count').html(data.message);
+        $('#div_product_info_total').html('<div id="div_product_info_total_text">총</div>' + ' ');
 
-       $('#div_product_info_total').append(' '+'<div id="div_product_info_total_text">개 상품이 등록되어 있습니다</div>');
-     },
-     error: function(xhr,status,error){
-       console.log(xhr);
-       alert(error);
+        $('#div_product_info_total').append('<div class="circle" id="div_product_info_total">'+ data.message +'</div>');
+
+        $('#div_product_info_total').append(' '+'<div id="div_product_info_total_text">개 상품이 등록되어 있습니다</div>');
+      },
+      error: function(xhr,status,error){
+        console.log(xhr);
+        alert(error);
       }
     });
   }
   
-      $(".div_product_item_hover_icon_delete").click(function() {
+  $(".div_product_item_hover_icon_delete").click(function() {
 
-        var id = [];
-        id = $(this).attr('class').split(" ");
-        var a = id[1];
+    var id = [];
+    id = $(this).attr('class').split(" ");
+    var a = id[1];
 
-        sweetAlert ({
-            title: "정말 삭제하시겠습니까?",
-            type: "warning",
-            customClass: a,
-            confirmButtonColor: "#cd2026",
-            confirmButtonText: "예, 삭제하겠습니다",
-            showCancelButton: true,
-            cancelButtonText: "아니오, 삭제하지 않습니다",          
-            closeOnConfirm: false,
-            closeOnCancel: false
-        },
+    sweetAlert ({
+        title: "정말 삭제하시겠습니까?",
+        type: "warning",
+        customClass: a,
+        confirmButtonColor: "#cd2026",
+        confirmButtonText: "예, 삭제하겠습니다",
+        showCancelButton: true,
+        cancelButtonText: "아니오, 삭제하지 않습니다",          
+        closeOnConfirm: false,
+        closeOnCancel: false
+    },
 
-        function(isConfirm) {
+    function(isConfirm) {
 
-          var id = $(this).attr('customClass');
+      var id = $(this).attr('customClass');
 
-          if(isConfirm) {
+        if(isConfirm) {
 
-                $(".div_product_lists_centerized").find('.item' + id).remove();
+            $(".div_product_lists_centerized").find('.item' + id).remove();
 
-                sweetAlert({
-                    title: "삭제되었습니다.",
-                    type: "success",
-                    timer: 1200,
-                    showConfirmButton: false
-                });
-
-                $.ajax({
-                    url:"/users/<%=@user.id%>/products/" + id,
-                    type:"DELETE",
-                    success:function(v) {
-                      refresh();
-                      console.log("여기들어옴");
-                    }
-
-                });
-          }
-          else {
             sweetAlert({
-              title: "삭제되지 않았습니다.",
-              type: "error",
-              timer: 1200,
-              showConfirmButton: false
+                title: "삭제되었습니다.",
+                type: "success",
+                timer: 1200,
+                showConfirmButton: false
             });
-          }
-        });
+
+            $.ajax({
+                url:"/users/<%=@user.id%>/products/" + id,
+                type:"DELETE",
+                success:function(v) {
+                    refresh();
+                }
+
+            });
+        }
+        else {
+            sweetAlert({
+                title: "삭제되지 않았습니다.",
+                type: "error",
+                timer: 1200,
+                showConfirmButton: false
+            });
+        }
       });
     });
-
+  });
 
 </script>
 
@@ -466,11 +458,7 @@ $(document).ready(function(){
                                     </div>
 
                                    <div id="div_product_item_info" class="div_product_item_info">
-                                       <p>
-                                        <div class = "div_text name<%= p.id %>" id="div_product_item_info_name">
-                                          <%= link_to truncate(p.name, length: 20), p.url, :target => "_blank" , id:"product_name" %>
-                                        </div>
-                                       </p>
+                                       <p><div class = "div_text name<%= p.id %>" id="div_product_item_info_name"><%= truncate(p.name, length: 20) %></div></p>
                                        <div class = "div_text edit<%= p.id %>" id="div_product_item_edit_name">
                                         <input type="text" name="name" id="edit_name" class="form-control" value="<%= p.name %>">
                                         <button type="submit" id="edit_submit" class="btn btn-default" onclick="edit(<%= p.id %>);">수정</button>
