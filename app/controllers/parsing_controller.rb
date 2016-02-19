@@ -75,6 +75,9 @@ class ParsingController < ApplicationController
 
         when "http://storefarm.naver.com"
             storefarm(breakParameter(params))
+
+        when "http://shopping.naver.com"
+            naver_shopping(breakParameter(params))
         end
 
         if @@b_in == false
@@ -445,6 +448,7 @@ class ParsingController < ApplicationController
         price_s = title_s.split("￦")
         price = breakComma(price_s[1])
         img = doc.css("div[@class='zoomable']")[0].children[1].attributes["src"].value
+
         data = {:message => "success", :title => title, :price => price ,:omg => omg, :url => url}
         respond_to do |format|
             format.html
@@ -455,6 +459,7 @@ class ParsingController < ApplicationController
 
     def abcmart(url)
       doc = Nokogiri::HTML(open(url))
+
       title = doc.css("p[@class='korea']").children.text
       price = breakComma(doc.css("span[@class='price']").children.children.text)
       img = doc.css("div[@class='product_photo']").children.children[1].attributes["src"].value
@@ -471,6 +476,21 @@ class ParsingController < ApplicationController
       doc = Nokogiri::HTML(open(url))
       title = doc.css("meta[@property='og:title']")[0].attributes["content"].value
       price = breakComma(doc.css("p[@class='sale']")[0].children.children.children[0].text)
+      img = doc.css("meta[@property='og:image']")[0].attributes["content"].value
+
+      data = {:message => "success", :title => title, :price => price ,:img => img, :url => url}
+      respond_to do |format|
+          format.html
+          format.json { render :json => data }
+      end
+      @@b_in = true
+    end
+
+    def naver_shopping(url)
+      doc = Nokogiri::HTML(open(url).read.encode('utf-8', 'euc-kr'))
+
+      title = doc.css("div[@class='h_area'] h2")[0].text
+      price = breakComma(doc.css("span[@class='low_price'] em")[0].text)
       img = doc.css("meta[@property='og:image']")[0].attributes["content"].value
 
       data = {:message => "success", :title => title, :price => price ,:img => img, :url => url}
