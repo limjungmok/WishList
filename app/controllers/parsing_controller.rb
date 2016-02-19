@@ -11,7 +11,6 @@ class ParsingController < ApplicationController
 		if sUrl.index("/",8) != nil
             sUrlOriginal = sUrl[0,sUrl.index("/",8)] # url 중 original 주소만 가져 옴
         end
-        byebug
 
         # 액션과 연결시켜 주는 곳
         puts case sUrlOriginal
@@ -228,7 +227,7 @@ class ParsingController < ApplicationController
         price_s = price_temp[0].split ","
         price = price_s[0] + price_s[1]
         img = doc.css('.product div')[0].children[1].attributes['src'].value
-        byebug
+
         data = {:message => "success", :title => title, :price => price ,:img => img, :url => url}
 
         respond_to do |format|
