@@ -76,8 +76,6 @@ class ParsingController < ApplicationController
         when "http://storefarm.naver.com"
             storefarm(breakParameter(params))
 
-        when "http://shopping.naver.com"
-            naver_shopping(breakParameter(params))
         end
 
         if @@b_in == false
@@ -486,18 +484,18 @@ class ParsingController < ApplicationController
       @@b_in = true
     end
 
-    def naver_shopping(url)
-      doc = Nokogiri::HTML(open(url).read.encode('utf-8', 'euc-kr'))
+#    def naver_shopping(url)
+#      doc = Nokogiri::HTML(open(url).read.encode('utf-8', 'euc-kr'))
 
-      title = doc.css("div[@class='h_area'] h2")[0].text
-      price = breakComma(doc.css("span[@class='low_price'] em")[0].text)
-      img = doc.css("meta[@property='og:image']")[0].attributes["content"].value
+#      title = doc.css("div[@class='h_area'] h2")[0].text
+#      price = breakComma(doc.css("span[@class='low_price'] em")[0].text)
+#      img = doc.css("meta[@property='og:image']")[0].attributes["content"].value
 
-      data = {:message => "success", :title => title, :price => price ,:img => img, :url => url}
-      respond_to do |format|
-          format.html
-          format.json { render :json => data }
-      end
-      @@b_in = true
-    end
+#      data = {:message => "success", :title => title, :price => price ,:img => img, :url => url}
+#      respond_to do |format|
+#          format.html
+#          format.json { render :json => data }
+#      end
+#      @@b_in = true
+#    end
 end
