@@ -11,6 +11,7 @@ class ParsingController < ApplicationController
             sUrlOriginal = sUrl[0,sUrl.index("/",8)] # url 중 original 주소만 가져 옴
         end
 
+
         # 액션과 연결시켜 주는 곳
         puts case sUrlOriginal
         when "http://store.musinsa.com"
@@ -30,7 +31,7 @@ class ParsingController < ApplicationController
         when "http://itempage3.auction.co.kr"
             auction(breakParameter(params))
 
-        when "http://www.wemakeprice.com"
+        when "http://www.wemakeprice.com", "http://wemakeprice.com"
             wemakeprice(breakParameter(params))
 
         when "http://www.ticketmonster.co.kr"
@@ -72,6 +73,8 @@ class ParsingController < ApplicationController
         when "http://www.abcmart.co.kr"
             abcmart(breakParameter(params))
 
+        when "http://storefarm.naver.com"
+            storefarm(breakParameter(params))
         end
 
         if @@b_in == false
@@ -181,6 +184,11 @@ class ParsingController < ApplicationController
     end
 
     def gmarket(url)
+
+        if !url.index("&search_keyword").nil?
+            url = url[0..url.index("&search_keyword")-2]
+        end
+
         doc = Nokogiri::HTML(open(url))
 
         title = doc.css("meta[@property='twitter:description']")[0]['content']
@@ -197,6 +205,11 @@ class ParsingController < ApplicationController
     end
 
     def wemakeprice(url)
+
+        if !url.index("?source").nil?
+            url = url[0..url.index("?source")-2]
+        end
+
         doc = Nokogiri::HTML(open(url))
 
         title_s = doc.css('h4').children[0].text
@@ -445,6 +458,20 @@ class ParsingController < ApplicationController
       title = doc.css("p[@class='korea']").children.text
       price = breakComma(doc.css("span[@class='price']").children.children.text)
       img = doc.css("div[@class='product_photo']").children.children[1].attributes["src"].value
+
+      data = {:message => "success", :title => title, :price => price ,:img => img, :url => url}
+      respond_to do |format|
+          format.html
+          format.json { render :json => data }
+      end
+      @@b_in = true
+    end
+
+    def storefarm(url)
+      doc = Nokogiri::HTML(open(url))
+      title = doc.css("meta[@property='og:title']")[0].attributes["content"].value
+      price = breakComma(doc.css("p[@class='sale']")[0].children.children.children[0].text)
+      img = doc.css("meta[@property='og:image']")[0].attributes["content"].value
 
       data = {:message => "success", :title => title, :price => price ,:img => img, :url => url}
       respond_to do |format|
