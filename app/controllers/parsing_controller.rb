@@ -2,7 +2,6 @@ class ParsingController < ApplicationController
 
 	require 'open-uri'
 
-
 	@@b_in = false
 	def findParsingAction()
 
