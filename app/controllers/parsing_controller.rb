@@ -183,6 +183,12 @@ class ParsingController < ApplicationController
     end
 
     def gmarket(url)
+
+        byebug
+        if !url.index("&search_keyword").nil?
+            url = url[0..url.index("&search_keyword")-2]
+        end
+
         doc = Nokogiri::HTML(open(url))
 
         title = doc.css("meta[@property='twitter:description']")[0]['content']
