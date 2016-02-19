@@ -1,10 +1,15 @@
 class OyrAdminController < ApplicationController
 
 	def index
-		@add_things = Product.where(name: '')
+		if current_user.login_id == "admin"
+		
+			@add_things = Product.where(name: '')
 
-		@add_things.each do |f|
-			f.url
+			@add_things.each do |f|
+				f.url
+			end
+		else
+			redirect_to root_path
 		end
 	end
 
