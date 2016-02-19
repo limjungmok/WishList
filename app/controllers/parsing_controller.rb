@@ -1,9 +1,7 @@
 class ParsingController < ApplicationController
 
 	require 'open-uri'
-	require 'rkelly'
 
-	@@parser = RKelly::Parser.new
 	@@b_in = false
 	def findParsingAction()
 
@@ -12,6 +10,7 @@ class ParsingController < ApplicationController
 		if sUrl.index("/",8) != nil
             sUrlOriginal = sUrl[0,sUrl.index("/",8)] # url 중 original 주소만 가져 옴
         end
+        byebug
 
         # 액션과 연결시켜 주는 곳
         puts case sUrlOriginal
@@ -31,7 +30,7 @@ class ParsingController < ApplicationController
 
         when "http://itempage3.auction.co.kr"
             auction(breakParameter(params))
-            
+
         when "http://www.wemakeprice.com"
             wemakeprice(breakParameter(params))
 
@@ -43,7 +42,6 @@ class ParsingController < ApplicationController
 
         when "http://www.29cm.co.kr"
             _29cm(breakParameter(params))
-
 
         when "http://www.hm.com"
             hnm(breakParameter(params))
@@ -109,6 +107,7 @@ class ParsingController < ApplicationController
     # end
 
     def musinsa(url)
+
     	doc = Nokogiri::HTML(open(url))
 
     	title_with_price = doc.css("meta")[5]['content']
@@ -196,6 +195,9 @@ class ParsingController < ApplicationController
 
 
     def auction(url)
+        if !url.index("keyword").nil?
+            url = url[0..url.index("keyword")-2]
+        end
         doc = Nokogiri::HTML(open(url).read.encode('utf-8', 'euc-kr'))
 
         title = doc.css('.product div')[0].children[1].attributes['alt'].value
@@ -204,7 +206,7 @@ class ParsingController < ApplicationController
         price_s = price_temp[0].split ","
         price = price_s[0] + price_s[1]
         img = doc.css('.product div')[0].children[1].attributes['src'].value
-
+        byebug
         data = {:message => "success", :title => title, :price => price ,:img => img, :url => url}
 
         respond_to do |format|
