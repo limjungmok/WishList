@@ -52,7 +52,7 @@ class ParsingController < ApplicationController
         when "http://www.ssfshop.com"
         	_8seconds(breakParameter(params))
 
-        when "http://www.spao.com"
+        when "http://www.spao.com", "http://base.spaokr.cafe24.com"
         	spao(breakParameter(params))
 
         when "http://www.topten10.co.kr"
