@@ -11,7 +11,7 @@ class ParsingController < ApplicationController
 		if sUrl.index("/",8) != nil
             sUrlOriginal = sUrl[0,sUrl.index("/",8)] # url 중 original 주소만 가져 옴
         end
-        byebug
+
 
         # 액션과 연결시켜 주는 곳
         puts case sUrlOriginal
@@ -32,7 +32,7 @@ class ParsingController < ApplicationController
         when "http://itempage3.auction.co.kr"
             auction(breakParameter(params))
 
-        when "http://www.wemakeprice.com"
+        when "http://www.wemakeprice.com", "http://wemakeprice.com"
             wemakeprice(breakParameter(params))
 
         when "http://www.ticketmonster.co.kr"
@@ -199,6 +199,11 @@ class ParsingController < ApplicationController
     end
 
     def wemakeprice(url)
+
+        if !url.index("?source").nil?
+            url = url[0..url.index("?source")-2]
+        end
+
         doc = Nokogiri::HTML(open(url))
 
         title_s = doc.css('h4').children[0].text
@@ -228,7 +233,7 @@ class ParsingController < ApplicationController
         price_s = price_temp[0].split ","
         price = price_s[0] + price_s[1]
         img = doc.css('.product div')[0].children[1].attributes['src'].value
-        byebug
+
         data = {:message => "success", :title => title, :price => price ,:img => img, :url => url}
 
         respond_to do |format|
