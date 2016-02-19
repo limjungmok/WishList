@@ -74,6 +74,8 @@ class ParsingController < ApplicationController
         when "http://www.abcmart.co.kr"
             abcmart(breakParameter(params))
 
+        when "http://storefarm.naver.com"
+            storefarm(breakParameter(params))
         end
 
         if @@b_in == false
@@ -458,6 +460,20 @@ class ParsingController < ApplicationController
       title = doc.css("p[@class='korea']").children.text
       price = breakComma(doc.css("span[@class='price']").children.children.text)
       img = doc.css("div[@class='product_photo']").children.children[1].attributes["src"].value
+
+      data = {:message => "success", :title => title, :price => price ,:img => img, :url => url}
+      respond_to do |format|
+          format.html
+          format.json { render :json => data }
+      end
+      @@b_in = true
+    end
+
+    def storefarm(url)
+      doc = Nokogiri::HTML(open(url))
+      title = doc.css("meta[@property='og:title']")[0].attributes["content"].value
+      price = breakComma(doc.css("p[@class='sale']")[0].children.children.children[0].text)
+      img = doc.css("meta[@property='og:image']")[0].attributes["content"].value
 
       data = {:message => "success", :title => title, :price => price ,:img => img, :url => url}
       respond_to do |format|
