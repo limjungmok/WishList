@@ -1,7 +1,9 @@
 class OyrAdminController < ApplicationController
 
 	def index
-		if current_user.login_id == "admin"
+		if !logged_in?
+			redirect_to root_path
+		elsif current_user.login_id == "admin"
 		
 			@add_things = Product.where(name: '')
 
