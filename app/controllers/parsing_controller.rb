@@ -186,7 +186,6 @@ class ParsingController < ApplicationController
 
     def gmarket(url)
 
-        byebug
         if !url.index("&search_keyword").nil?
             url = url[0..url.index("&search_keyword")-2]
         end
