@@ -6,7 +6,7 @@ class ParsingController < ApplicationController
 	def findParsingAction()
 
 		sUrl = params[:url]
-		
+
 		if sUrl.index("/",8) != nil
             sUrlOriginal = sUrl[0,sUrl.index("/",8)] # url 중 original 주소만 가져 옴
         end
@@ -14,6 +14,13 @@ class ParsingController < ApplicationController
 
         # 액션과 연결시켜 주는 곳
         puts case sUrlOriginal
+
+        when "http://www.mixxmix.com", "http://mixxmix.com"
+            mixxmix(breakParameter(params))
+
+        when "http://www.mocobling.com", "http://www.dailymonday.com"
+            cafe24_ver_3(breakParameter(params))
+
         when "http://www.fromgirls.co.kr"
             fromgirls(breakParameter(params))
 
@@ -21,6 +28,7 @@ class ParsingController < ApplicationController
         	musinsa(breakParameter(params))
 
         when "http://www.zara.com"
+            zara(sUrl)
 
         when "http://www.11st.co.kr" , "http://deal.11st.co.kr"
         	_11st(breakParameter(params))
@@ -43,7 +51,7 @@ class ParsingController < ApplicationController
         when "http://www.uniqlo.kr"
             uniqlo(breakParameter(params))
 
-        when "http://www.ba-on.com", "http://www.bit-da.com"
+        when "http://www.ba-on.com", "http://www.bit-da.com", "http://www.withyoon.com"
             cafe24_ver_1(breakParameter(params))
 
         when "http://www.moxnix.co.kr", "http://www.bonzishop.com"
@@ -136,6 +144,34 @@ class ParsingController < ApplicationController
     # 	end
     # 	@@b_in = true
     # end
+
+    def mixxmix(url)
+        doc = Nokogiri::HTML(open(url))
+
+        title_origin = doc.css("tr[@class=' hide xans-record-'] td")[0].text.split "<br>"
+
+        title = String.new
+        title_origin.each do |t|
+            title = title + t
+        end
+
+        if !doc.css("span[@id='span_product_price_sale']").empty?            
+            price = breakComma(doc.css("span[@id='span_product_price_sale']")[0].text)
+        else
+            price = breakComma(doc.css("tr[@class=' xans-record-']").css("strong[@id='span_product_price_text']")[0].text)
+        end
+
+        img = doc.css("meta[@property='og:image']")[0]['content']
+
+        data = {:message => "success", :title => title, :price => price ,:img => img, :url => url}
+
+        respond_to do |format|
+            format.html
+            format.json { render :json => data }
+        end
+        @@b_in = true
+
+    end
 
     def fromgirls(url)
         doc = Nokogiri::HTML(open(url))
@@ -253,7 +289,6 @@ class ParsingController < ApplicationController
         @@b_in = true 
     end
 
-
     def auction(url)
         doc = Nokogiri::HTML(open(url).read.encode('utf-8', 'euc-kr'))
 
@@ -337,6 +372,37 @@ class ParsingController < ApplicationController
         img = doc.css("div[@class='xans-element- xans-product xans-product-image ']").css("div[@class='keyImg'] img")[0]['src']
     
         data = {:message => "success", :title => title, :price => price ,:img => img, :url => url}
+        respond_to do |format|
+            format.html
+            format.json { render :json => data }
+        end
+        @@b_in = true
+    end
+
+    def cafe24_ver_3(url)
+        doc = Nokogiri::HTML(open(url))
+
+        if url.index("/",8) != nil
+            sUrlOriginal = url[0,url.index("/",8)] # url 중 original 주소만 가져 옴
+        end
+
+        title_origin = doc.css('title')[0].text.split ""
+        title = String.new
+        title_origin[1..-2].each do |t|
+            title = title + t
+        end
+
+        if !doc.css("input[@id='disprice']")[0]['value'].empty?            
+            price = breakComma(doc.css("input[@id='disprice']")[0]['value'])
+        else
+            price = breakComma(doc.css("input[@id='price']")[0]['value'])
+        end
+
+        img_origin = doc.css("div[@class='thumb'] img")[0]['src']
+        img = sUrlOriginal + img_origin
+
+        data = {:message => "success", :title => title, :price => price ,:img => img, :url => url}
+
         respond_to do |format|
             format.html
             format.json { render :json => data }
@@ -498,6 +564,22 @@ class ParsingController < ApplicationController
       title = doc.css("meta[@property='og:title']")[0].attributes["content"].value
       price = breakComma(doc.css("p[@class='sale']")[0].children.children.children[0].text)
       img = doc.css("meta[@property='og:image']")[0].attributes["content"].value
+
+      data = {:message => "success", :title => title, :price => price ,:img => img, :url => url}
+      respond_to do |format|
+          format.html
+          format.json { render :json => data }
+      end
+      @@b_in = true
+    end
+
+    def zara(url)
+      doc = Nokogiri::HTML(open(url, 'User-Agent' => 'Chrome'))
+
+      title = doc.xpath("//meta[@name='description']/@content")[0].value
+      og_price = doc.xpath("//span[@class='price']")[0].attributes['data-price'].value
+      price = breakComma(og_price[0..og_price.index("0 ")])
+      img = doc.xpath("//div[@class='media-wrap image-wrap full  imageZoom ']")[0].children[1].attributes['href'].value
 
       data = {:message => "success", :title => title, :price => price ,:img => img, :url => url}
       respond_to do |format|
