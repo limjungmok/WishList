@@ -2,7 +2,6 @@ class ParsingController < ApplicationController
 
 	require 'open-uri'
 
-
 	@@b_in = false
 	def findParsingAction()
 
@@ -87,7 +86,10 @@ class ParsingController < ApplicationController
             _66girls(breakParameter(params))
 
         when "http://prod.danawa.com"
-            danawa(breakParameter(params))
+            danawa(sUrl)
+
+        when "http://shopping.naver.com"
+            naver_shopping(breakParameter(params))
         end
 
         if @@b_in == false
@@ -462,6 +464,7 @@ class ParsingController < ApplicationController
         img = doc.css("div[@class='zoomable']")[0].children[1].attributes["src"].value[2..doc.css("div[@class='zoomable']")[0].children[1].attributes["src"].value.length]
 
         data = {:message => "success", :title => title, :price => price ,:img => img, :url => url}
+
         respond_to do |format|
             format.html
             format.json { render :json => data }
@@ -471,6 +474,7 @@ class ParsingController < ApplicationController
 
     def abcmart(url)
       doc = Nokogiri::HTML(open(url))
+
       title = doc.css("p[@class='korea']").children.text
       price = breakComma(doc.css("span[@class='price']").children.children.text)
       img = doc.css("div[@class='product_photo']").children.children[1].attributes["src"].value
@@ -522,7 +526,22 @@ class ParsingController < ApplicationController
 
       price = breakComma(doc.css("dd[@class='salePrice']").children.text[0..doc.css("dd[@class='salePrice']").children.text.index("원")-1])
       img = doc.css("input[@name='ITEM_IMAGE']")[0].attributes['value'].value
-    #byebug
+
+      data = {:message => "success", :title => title, :price => price ,:img => img, :url => url}
+        respond_to do |format|
+          format.html
+          format.json { render :json => data }
+      end
+      @@b_in = true
+    end
+
+    def naver_shopping(url)
+      doc = Nokogiri::HTML(open(url).read.encode('utf-8', 'euc-kr'))
+
+      title = doc.css("div[@class='h_area'] h2")[0].text
+      price = breakComma(doc.css("span[@class='low_price'] em")[0].text)
+      img = doc.css("meta[@property='og:image']")[0].attributes["content"].value
+
       data = {:message => "success", :title => title, :price => price ,:img => img, :url => url}
       respond_to do |format|
           format.html
@@ -559,4 +578,5 @@ class ParsingController < ApplicationController
       end
       @@b_in = true
     end
+
 end
