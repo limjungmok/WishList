@@ -14,6 +14,9 @@ class ParsingController < ApplicationController
 
         # 액션과 연결시켜 주는 곳
         puts case sUrlOriginal
+        when "http://www.fromgirls.co.kr"
+            fromgirls(breakParameter(params))
+
         when "http://store.musinsa.com"
         	musinsa(breakParameter(params))
 
@@ -133,6 +136,29 @@ class ParsingController < ApplicationController
     # 	end
     # 	@@b_in = true
     # end
+
+    def fromgirls(url)
+        doc = Nokogiri::HTML(open(url))
+
+        title_origin = doc.css('title')[0].text.split ""
+
+        title = String.new
+        title_origin[1..-2].each do |t|
+            title = title + t
+        end
+
+        price = breakComma(doc.css("div[@class='prd-price']").css("span[@id='pricevalue']")[0].text)
+        img_origin = doc.css("img[@class='detail_image']")[0]['src']
+        img = 'http://www.fromgirls.co.kr/' + img_origin
+
+        data = {:message => "success", :title => title, :price => price ,:img => img, :url => url}
+
+        respond_to do |format|
+            format.html
+            format.json { render :json => data }
+        end
+        @@b_in = true
+    end
 
     def musinsa(url)
 
@@ -480,19 +506,4 @@ class ParsingController < ApplicationController
       end
       @@b_in = true
     end
-
-#    def naver_shopping(url)
-#      doc = Nokogiri::HTML(open(url).read.encode('utf-8', 'euc-kr'))
-
-#      title = doc.css("div[@class='h_area'] h2")[0].text
-#      price = breakComma(doc.css("span[@class='low_price'] em")[0].text)
-#      img = doc.css("meta[@property='og:image']")[0].attributes["content"].value
-
-#      data = {:message => "success", :title => title, :price => price ,:img => img, :url => url}
-#      respond_to do |format|
-#          format.html
-#          format.json { render :json => data }
-#      end
-#      @@b_in = true
-#    end
 end
