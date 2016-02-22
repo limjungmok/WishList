@@ -6,7 +6,7 @@ class ParsingController < ApplicationController
 	def findParsingAction()
 
 		sUrl = params[:url]
-		
+
 		if sUrl.index("/",8) != nil
             sUrlOriginal = sUrl[0,sUrl.index("/",8)] # url 중 original 주소만 가져 옴
         end
@@ -18,6 +18,7 @@ class ParsingController < ApplicationController
         	musinsa(breakParameter(params))
 
         when "http://www.zara.com"
+            zara(sUrl)
 
         when "http://www.11st.co.kr" , "http://deal.11st.co.kr"
         	_11st(breakParameter(params))
@@ -644,7 +645,25 @@ class ParsingController < ApplicationController
       img = doc.css("input[@name='ITEM_IMAGE']")[0].attributes['value'].value
 
       data = {:message => "success", :title => title, :price => price ,:img => img, :url => url}
-        respond_to do |format|
+      respond_to do |format|
+          format.html
+          format.json { render :json => data }
+      end
+      @@b_in = true
+    end
+
+    def zara(url)
+      doc = Nokogiri::HTML(open(url, 'User-Agent' => 'Chrome'))
+
+      
+
+      title = doc.xpath("//meta[@name='description']/@content")[0].value
+      og_price = doc.xpath("//span[@class='price']")[0].attributes['data-price'].value
+      price = breakComma(og_price[0..og_price.index("0 ")])
+      img = doc.xpath("//div[@class='media-wrap image-wrap full  imageZoom ']")[0].children[1].attributes['href'].value
+
+      data = {:message => "success", :title => title, :price => price ,:img => img, :url => url}
+      respond_to do |format|
           format.html
           format.json { render :json => data }
       end
