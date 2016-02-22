@@ -229,9 +229,6 @@ class ParsingController < ApplicationController
 
 
     def auction(url)
-        if !url.index("keyword").nil?
-            url = url[0..url.index("keyword")-2]
-        end
         doc = Nokogiri::HTML(open(url).read.encode('utf-8', 'euc-kr'))
 
         title = doc.css('.product div')[0].children[1].attributes['alt'].value
@@ -275,7 +272,7 @@ class ParsingController < ApplicationController
 
         title = doc.css("h3[@class='tit']")[0].children[0]['alt']
         price = breakComma(doc.css("div[@class='lately on']").css("div[@class='lst']").css("div[@class='detail'] span em").text)
-        img = doc.css("ul[@class='roll']")[0].children.children[1].attributes["src"].value
+        img = doc.xpath("//meta[@property='og:image']/@content")[0].value
 
         data = {:message => "success", :title => title, :price => price ,:img => img, :url => url}
         respond_to do |format|
