@@ -458,7 +458,8 @@ $(document).ready(function(){
                                     </div>
 
                                    <div id="div_product_item_info" class="div_product_item_info">
-                                       <p><div class = "div_text name<%= p.id %>" id="div_product_item_info_name"><%= truncate(p.name, length: 20) %></div></p>
+                                       <p><div class = "div_text name<%= p.id %>" id="div_product_item_info_name">
+                                        <%= link_to truncate(p.name, length: 20) , p.url , :id=>"product_item_info_name"%></div></p>
                                        <div class = "div_text edit<%= p.id %>" id="div_product_item_edit_name">
                                         <input type="text" name="name" id="edit_name" class="form-control" value="<%= p.name %>">
                                         <button type="submit" id="edit_submit" class="btn btn-default" onclick="edit(<%= p.id %>);">수정</button>
