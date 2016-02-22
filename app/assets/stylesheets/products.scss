@@ -283,6 +283,12 @@ a:hover, a:visited, a:link, a:active{
 	font-size: 18px;
 	font-weight: 600;
 }
+#product_item_info_name{
+	color: #000;
+}
+#product_item_info_name:hover{
+	color: #555;
+}
 #div_product_item_edit_name {
 	display: none;
 	width: 95%;
