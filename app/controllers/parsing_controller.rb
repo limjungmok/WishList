@@ -109,6 +109,9 @@ class ParsingController < ApplicationController
 
         when "http://www.hyundaihmall.com"
             hyundaihmall(sUrl)
+
+        when "http://www.1300k.com", "http://m.1300k.com"
+            _1300k(sUrl)
         end
 
         if @@b_in == false
@@ -160,14 +163,26 @@ class ParsingController < ApplicationController
 
     #사이트 기본 액션 템플렛
     # def site_name(url)
-    #  	doc = Nokogiri::HTML(open(url))
-    # 	data = {:message => "success", :title => title, :price => price ,:img => img, :url => url}
-    # 	respond_to do |format|
-    # 		format.html
-    # 		format.json { render :json => data }
-    # 	end
-    # 	@@b_in = true
+    #     doc = Nokogiri::HTML(open(url))
+    #     data = {:message => "success", :title => title, :price => price ,:img => img, :url => url}
+    #     respond_to do |format|
+    #         format.html
+    #         format.json { render :json => data }
+    #     end
+    #     @@b_in = true
     # end
+
+    def _1300k(url)
+        doc = Nokogiri::HTML(open(url))
+        byebug
+        data = {:message => "success", :title => title, :price => price ,:img => img, :url => url}
+        respond_to do |format|
+            format.html
+            format.json { render :json => data }
+        end
+        @@b_in = true
+    end
+
 
     def hyundaihmall(url)
         doc = Nokogiri::HTML(open(url))
