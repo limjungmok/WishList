@@ -15,8 +15,8 @@ gem 'coffee-rails', '~> 4.1.0'
 gem 'therubyracer', platforms: :ruby
 gem 'bootstrap-sass',       '3.2.0.0'
 
-gem 'activeadmin'
-
+gem 'activeadmin', github: 'activeadmin'
+gem 'mechanize'
 # Plus integrations with:
 gem 'devise'
 gem 'cancan' # or cancancan
@@ -41,6 +41,9 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
+
+gem 'pg', group: :production
+gem 'rails_12factor', group: :production
 
 # Use Unicorn as the app server
 # gem 'unicorn'

@@ -25,6 +25,8 @@ module WishList
     config.time_zone = 'Seoul'
     config.active_record.default_timezone = :local
 
+
+
     #corps 문제로 헤더추가!
     config.action_dispatch.default_headers.merge!('Access-Control-Allow-Origin' => '*')
 

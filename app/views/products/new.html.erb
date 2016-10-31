@@ -50,27 +50,6 @@ $(document).ready(function(){
       });
     });
   });
-  
-  //헤더부분 
-  function refresh(){
-    $.ajax({ 
-      type: 'GET',
-      url: '/get_product_count',
-      success: function(data,status,xhr){
-        console.log(data);
-        $('#header_product_count').html(data.message);
-        $('#div_product_info_total').html('<div id="div_product_info_total_text">총</div>' + ' ');
-
-        $('#div_product_info_total').append('<div class="circle" id="div_product_info_total">'+ data.message +'</div>');
-
-        $('#div_product_info_total').append(' '+'<div id="div_product_info_total_text">개 상품이 등록되어 있습니다</div>');
-      },
-      error: function(xhr,status,error){
-        console.log(xhr);
-        alert(error);
-      }
-    });
-  }
 
   //이메일 전송
   function send_e(){
@@ -93,9 +72,30 @@ $(document).ready(function(){
       centerized.width(fitItems * itemWidth);
   }
 
+  //URL 을 파싱한 뒤
+  function parsing_url(){
+    //입력한 URL을 변수에 담고
+    var url=$("#url").val();
+    //URL을 검사할 정규표현식
+    var urlRegex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+    //Valid한 URL인지 검사하고
+    var urltest=urlRegex.test(url);
+    //Valide한 URL이라면,
+    if(urltest){
+        // submit_url을 호출한다.
+        submit_url(url);
+
+    }else{
+        alert("Bad URL");
+    }
+  }
+
   //URL 축소된 url을 전송하는 함수
   function submit_url(url){
     $.ajax({
+        //Ajax를 통해 상품컨트롤러의 create 호출한다.
+        //전송하는 데이터는 url이고
+        //통신이 성공하면 analyze 함수를 호출하며 sweetAlert를 띄운다.
         url:"/users/<%=current_user.id%>/products",
         type:'POST',
         data:{'url':url},
@@ -118,25 +118,10 @@ $(document).ready(function(){
             });
 
             resize_();
-            refresh();            
+            refresh();
+            send_e();            
         }
     });
-  }
-
-  //URL 을 파싱한 뒤
-  function parsing_url(){
-    var url=$("#url").val();
-    var urlRegex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
-    var urltest=urlRegex.test(url);
-
-    if(urltest){
-        //제출이 끝난 후
-        //URL 을 축소시킨다.
-        submit_url(url);
-
-    }else{
-        alert("Bad URL");
-    }
   }
 
   function analyze(_url){
@@ -151,6 +136,7 @@ $(document).ready(function(){
             var product_img = data.img;
             var product_price = data.price;
             var product_url = data.url;
+            console.log(product_title, product_img);
             $.ajax({
               url:"/get_product_last_product",
               type:"GET",
@@ -158,25 +144,19 @@ $(document).ready(function(){
                  var product_id = data.id;
                  var product_create_at = data.created_at;
 
-                 $.ajax({
-          url:"/users/<%=@user.id%>/products/" + product_id,
-          type:"PUT",
-          data:{'name':product_title , 'price':product_price, 'url':product_url, 'img':product_img},
-          success:function(v) {
-            location.reload();
-          },
-      });
+                $.ajax({
+                  url:"/users/<%=@user.id%>/products/" + product_id,
+                  type:"PUT",
+                  data:{'name':product_title , 'price':product_price, 'url':product_url, 'img':product_img},
+                  success:function(v) {
+                    location.reload();
+                  },
+                });
                 $('#ex').append(' <div class="div_product_item item'+product_id+'"><div id="div_product_item_image"><img class="image_aspect_ratio" src='+product_img+'></div><div id="div_product_item_hover_icon"><a id="div_product_item_hover_icon_edit" href="#" class="div_product_item_hover_icon_edit '+product_id+'"><i class="glyphicon glyphicon-pencil"> </i> </a><a id="div_product_item_hover_icon_delete" href="#" class="div_product_item_hover_icon_delete '+product_id+'"><i class="glyphicon glyphicon-trash"> </i></a></div><div id="div_product_item_info" class="div_product_item_info"><div class = "div_text name'+product_id+'" id="div_product_item_info_name" style="width : 100px">'+product_title+'</div><br><div class = "div_text edit'+product_id+'" id="div_product_item_edit_name"><input type="text" name='+product_title+' id="edit_name" class="form-control" value='+product_title+'><button type="submit" id="edit_submit" class="btn btn-default" onclick="edit('+product_id+');">수정</button></div><div class = "div_text" id="div_product_item_info_price">'+ product_price+' ￦</div><br><div class = "div_text" id="div_product_item_info_date">'+product_create_at+'</div></div></div>')
               }
             });
-
           }
-          else{
-            send_e();
-            $('#ex').append('<div class="div_product_item"><div id="div_prodcut_item_image">'+'<%= link_to image_tag("loading.gif", class: "image_aspect_ratio"), "#", :target => "_blank" %></div><div id="div_product_item_info">'+'<div class = "div_text" id="div_product_item_info_name">상품 분석중</div><br><div class = "div_text" id="div_product_item_info_price">'+'<%= number_with_delimiter("0", :delimiter => ",") %>'+' ￦</div></div></div>');
-          }
-      } 
-        
+        } 
       });
     }
 
@@ -195,8 +175,7 @@ $(document).ready(function(){
 	    document.getElementById("submit").disabled = true;
       parsing_url();
       $("#url").val('');
-    }else{
-    }
+    }else{}
   });
 
   //가격순으로 보기
@@ -236,8 +215,7 @@ $(document).ready(function(){
 
   // 수정버튼 클릭 시
   $(document).ready(function() {
-    $(".div_product_item_hover_icon_edit").click(function() {
-          
+    $(".div_product_item_hover_icon_edit").click(function() { 
       $('.div_product_item').addClass("no-hover");
 
       var id = [];
@@ -318,27 +296,21 @@ $(document).ready(function(){
     },
 
     function(isConfirm) {
-
       var id = $(this).attr('customClass');
-
         if(isConfirm) {
-
             $(".div_product_lists_centerized").find('.item' + id).remove();
-
             sweetAlert({
                 title: "삭제되었습니다.",
                 type: "success",
                 timer: 1200,
                 showConfirmButton: false
             });
-
             $.ajax({
                 url:"/users/<%=@user.id%>/products/" + id,
                 type:"DELETE",
                 success:function(v) {
                     refresh();
                 }
-
             });
         }
         else {
@@ -352,13 +324,9 @@ $(document).ready(function(){
       });
     });
   });
-
 </script>
-
 <body>
-
     <div id="div_total">
-
         <div id="div_main">
             <div id="div_main_box" style="width: 55%">
                 <div id="div_main_frame">
@@ -366,12 +334,10 @@ $(document).ready(function(){
                   <div id="div_main_title" align="center">
                     Shop-in
                   </div>
-
                   <!--타이틀 서브 텍스트-->
                   <div id="div_main_title_sub" align="center">
                         여러 상품을 한 곳에 담다
                   </div>
-                  
                   <!--메인 URL 입력 폼-->
                   <div id="div_main_url_form" class="form-inline" align="center">
                     <div id="div_main_url_input" align="center" class="form-group">
@@ -381,13 +347,11 @@ $(document).ready(function(){
                   </div>
 
                   <div id="div_main_help">
-
                     <a href="https://chrome.google.com/webstore/detail/shop-in/inkgpdfkjhckpjhimallbplbnjhdnmdd?hl=ko" target="_blank">
                     <div id ="div_main_help_extend" style="float:left">
                       확장프로그램
                     </div>  
                     </a>
-
                     <!--맨 아래 SHOP IN 이용방법-->
                     <a data-toggle="modal" href="#div_main_useage_modal">
                     <div id ="div_main_help_guide" style="float:right">
@@ -395,7 +359,6 @@ $(document).ready(function(){
                     </div>
                     </a>
                   </div>
-
                 </div>
             </div>
         </div>
@@ -414,11 +377,10 @@ $(document).ready(function(){
            <div id="div_product_title">
                Product
            </div>
-
            <div id="div_product_info">
                <div id="div_product_info_total">
                    <div id="div_product_info_total_text">총</div>
-                   <div class="circle" id="div_product_info_total"><%= current_user.products.count %></div>
+                   <div class="circle" id="div_product_info_total"><%= current_user.products.where.not(name: "").count %></div>
                    <div id="div_product_info_total_text">개 상품이 등록되어 있습니다</div>
                </div>
 
@@ -430,19 +392,7 @@ $(document).ready(function(){
 
                            <% if p.name == "" %>
 
-                               <div class="div_product_item">
-                                    <div id="div_product_item_image">
-                                       <%= link_to image_tag('loading.gif', class: "image_aspect_ratio"), p.url , :target => "_blank" %>
-                                   </div>
-                                   <div id="div_product_item_info">
-                                      <div class = "div_text" id="div_product_item_info_name">상품 분석중</div><br>
-                                      <div class = "div_text" id="div_product_item_info_price"><%= number_with_delimiter(p.price, :delimiter => ',') %> ￦</div>
-                                   </div>
-                               </div>
-
                             <% else %>
-
-
                                 <div class="div_product_item item<%= p.id %>">
                                    <div id="div_product_item_image">
                                        <%= link_to image_tag(p.img, class: "image_aspect_ratio"), p.url, :target => "_blank" %>
@@ -459,7 +409,7 @@ $(document).ready(function(){
 
                                    <div id="div_product_item_info" class="div_product_item_info">
                                        <p><div class = "div_text name<%= p.id %>" id="div_product_item_info_name">
-                                        <%= link_to truncate(p.name, length: 20) , p.url , :id=>"product_item_info_name"%></div></p>
+                                        <%= link_to truncate(p.name, length: 20) , p.url , :id=>"product_item_info_name", :target=>"_blank"%></div></p>
                                        <div class = "div_text edit<%= p.id %>" id="div_product_item_edit_name">
                                         <input type="text" name="name" id="edit_name" class="form-control" value="<%= p.name %>">
                                         <button type="submit" id="edit_submit" class="btn btn-default" onclick="edit(<%= p.id %>);">수정</button>
@@ -468,22 +418,21 @@ $(document).ready(function(){
                                        <div class = "div_text" id="div_product_item_info_date"><%= p.created_at.strftime("%Y-%m-%d") %></div>
                                    </div>
                                </div>
-
                             <% end %>
-
                        <% end %>
                    </div>
                </div>
 
                <% end %>
 
+               <div>
+                 <%=link_to (image_tag("up.png", :width => "70px", :height => "70px")), '#div_main', id:"top"%>
+               </div>               
            </div>
            <div id="div_product_footer">
 
            </div>
-           <div>
-             <%=link_to (image_tag("up.png", :width => "70px", :height => "70px")), '#div_main', id:"top"%>
-           </div>
+
        </div>
     </div>
     

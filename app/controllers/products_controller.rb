@@ -23,19 +23,23 @@ class ProductsController < ApplicationController
 		else
 			render 'new'
 		end
-		# 내칭구 왤캐 열심히하냥ㅎ
+		
 	end
 
 	def update
+		
  		@user = current_user
  		@product = @user.products.find(params[:id])
  		@product.name = params[:name]
+ 		
  		if params[:price] != nil
  			@product.price = params[:price]
  			@product.url = params[:url]
  			@product.img = params[:img]
  		end
+
  		@product.save
+
  	end
 
  	def update_for_extention
@@ -61,7 +65,7 @@ class ProductsController < ApplicationController
 	end
 
 	def get_product_count
-		data = {:message => current_user.products.count, :watting => current_user.products.where(name: "").count}
+		data = {:message => current_user.products.where.not(name: "").count, :watting => current_user.products.where(name: "").count}
 		render :json => data, :status => :ok
 	end
 

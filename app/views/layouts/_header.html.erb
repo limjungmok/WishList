@@ -9,7 +9,7 @@
        <li id="header_menu"><%= link_to "상품 등록", '#div_main' %></li>
 
        <li id="header_menu_right"><%= link_to "담은 상품", '#div_product'%>
-        <span class="step" id="header_product_count"><%= current_user.products.count %></span>
+        <span class="step" id="header_product_count"><%= current_user.products.where.not(name: "").count %></span>
        </li>
 
        <li class="dropdown">
@@ -30,12 +30,15 @@
 </header>
 <body>
 
+
+<!-- 크게 modal 안에 다이얼로그를 띄우고, 컨텐츠 안에 body를 넣고 tab을 생성한다.-->
 <div class="modal fade" id="div_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-body">
-
+        <!--여기서부터 탭 속성 크게묶고-->
         <div role="tabpanel">
+          <!-- ul, li를 이용해 탭을 2개만든다 -->
           <ul class="nav nav-tabs" role="tablist" id="div_modal_tab">
             <li role="presentation" class="active">
               <a href="#div_modal_login" aria-controls="div_modal_login" role="tab" data-toggle="tab"> 로그인 </a>
@@ -46,27 +49,41 @@
           </ul>
         </div>
 
+        <!-- 크게 탭이 하나있다.-->
         <div class="tab-content">
-
+          <!--패널중 첫번째 탭 기본 활성화-->
           <div role="tabpanel" class="tab-pane active" id="div_modal_login">
+            <!-- 로그인을 위한 폼, ajax를 쓰기위해 form을 안씀-->
             <div id="div_modal_login_input">
-              <input class="decorative-input inspectletIgnore" id="div_modal_login_input_ID" name="ID" placeholder="아이디">
-              <input class="decorative-input inspectletIgnore" id="div_modal_login_input_PW" name="PW" placeholder="비밀번호" type="password">
+              <!-- 로그인을 위해 데이터를 넘기기위한 input박스 -->
+              <input class="decorative-input inspectletIgnore" 
+                      id="div_modal_login_input_ID" name="ID" placeholder="아이디">
+              <input class="decorative-input inspectletIgnore" 
+                      id="div_modal_login_input_PW" name="PW" placeholder="비밀번호"
+                      type="password">
             </div>
-
-            <button type="submit" class="btn btn-block btn-primary btn-large" id="div_modal_login_btn">
+            <!-- 이버튼을 누르면, ajax실행-->
+            <button type="submit" class="btn btn-block btn-primary btn-large" 
+                    id="div_modal_login_btn">
               로그인
             </button>
           </div>
-
+          <!--패널중 두번째 탭-->
           <div role="tabpanel" class="tab-pane" id="div_modal_signup">
+            <!-- 회원가입을 위한 폼, ajax를 쓰기위해 form을 안씀-->
             <div id="div_modal_signup_input">
-              <input class="decorative-input inspectletIgnore" id="div_modal_signup_input_ID" name="ID" placeholder="아이디">
-              <input class="decorative-input inspectletIgnore" id="div_modal_signup_input_PW" name="PW" placeholder="비밀번호" type="password">
-              <input class="decorative-input inspectletIgnore" id="div_modal_signup_input_PW_confirm" name="PW_confirm" placeholder="비밀번호 확인" type="password">
+              <!-- 회원가입을 위해 input 태그 사용-->
+              <input class="decorative-input inspectletIgnore" 
+                      id="div_modal_signup_input_ID" name="ID" placeholder="아이디">
+              <input class="decorative-input inspectletIgnore" 
+                      id="div_modal_signup_input_PW" name="PW" placeholder="비밀번호" 
+                      type="password">
+              <input class="decorative-input inspectletIgnore" 
+                      id="div_modal_signup_input_PW_confirm" name="PW_confirm" placeholder="비밀번호 확인" type="password">
             </div>
-
-            <button type="submit" class="btn btn-block btn-primary btn-large" id="div_modal_signup_btn">
+            <!-- 이버튼을 누르면, ajax실행-->
+            <button type="submit" class="btn btn-block btn-primary btn-large" 
+                    id="div_modal_signup_btn">
               회원가입
             </button>
           </div>
@@ -82,51 +99,64 @@
 </html>
 
 <script>
+
 // 로그인_modal ajax
 $('#div_modal_login_btn').click(function(){
-    var id = $('#div_modal_login_input_ID').val();
-    var password = $('#div_modal_login_input_PW').val();
-    console.log("id : ", id);
-    login(id, password);
+  //input 태그의 해당 아이디, 비밀번호 값 참조
+  var id = $('#div_modal_login_input_ID').val();
+  var password = $('#div_modal_login_input_PW').val();
+
+  //로그인 함수 호출.
+  login(id, password);
 });
 
 function login(ID, PW){
-    $.ajax({
-        url: '/login',
-        type:'POST',
-        data:{'login_id':ID, 'password':PW},
-        success:function(v){
-          location.reload();
-        }
-    });
+  //ajax를 통해 POST방식으로 데이터 전송
+  //ajax를 통해 데이터를 전송할 때, 
+  //컨트롤러에서 params[:login_id] 이렇게 받도록 쿼리를 지정할수있다.
+  $.ajax({
+      url: '/login',
+      type:'POST',
+      data:{'login_id':ID, 'password':PW},
+      success:function(v){
+        //새로고침
+        location.reload();
+      }
+  });
 }
 
 // 회원가입_modal ajax
 $('#div_modal_signup_btn').click(function() {
+  //로그인과 똑같이, id, pwd, pwd_con값을 참조
   var id = $('#div_modal_signup_input_ID').val();
   var password = $('#div_modal_signup_input_PW').val();
   var password_confirm = $('#div_modal_signup_input_PW_confirm').val();
-  console.log("id: ", id);
+  
+  //회원가입 함수 호출
   signup(id, password, password_confirm);
 });
 
 function signup(ID, PW, PW_confirm){
+    //똑같이 POST 방식으로 데이터 전송.
     $.ajax({
         url: '/users',
         type:'POST',
-        data:{'user[login_id]':ID, 'user[password]':PW, 'user[password_confirmation]':PW_confirm},
+        data:{'user[login_id]':ID, 'user[password]':PW,
+         'user[password_confirmation]':PW_confirm},
         success:function(v){
           location.reload();
         }
     });
 }
 
+//로그인 탭에서 엔터누르면 로그인버튼 클릭
 $("#div_modal_login_input_PW").keydown(function(e){
     if(e.keyCode == 13){
         $("#div_modal_login_btn").click();
     }
 });
 
+//회원가입 탭에서 엔터 누르면 회원가입 버튼 클릭
 $("#div_modal_signup_input_PW_confirm").keydown(function(e){
     if(e.keyCode == 13){
         $("#div_modal_signup_btn").click();
